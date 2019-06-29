@@ -10,18 +10,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class CheckInCommand extends Command
 {
-    private $loginUrl;
-    private $checkInUrl;
+    private $baseUrl;
+    private $checkInEndpoint;
     private $user;
     private $password;
 
-    public function __construct(string $loginUrl, string $checkInUrl, string $user, string $password)
+    public function __construct(string $baseUrl, string $checkInEndpoint, string $user, string $pass)
     {
-        parent::__construct();
-        $this->loginUrl = $loginUrl;
-        $this->checkInUrl = $checkInUrl;
+        $this->baseUrl = $baseUrl;
+        $this->checkInEndpoint = $checkInEndpoint;
         $this->user = $user;
-        $this->password = $password;
+        $this->password = $pass;
+
+        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
