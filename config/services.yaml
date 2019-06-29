@@ -17,12 +17,16 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
+    http.client:
+        class: App\Domain\Client\Client
+        arguments:
+            - "%env(BASE_URL)%"
+            - "%env(USER)%"
+            - "%env(PASS)%"
+
     command.checkin:
         class: App\Entrypoint\Command\CheckInCommand
         arguments:
-            - '%env(BASE_URL)%'
-            - '%env(CHECKIN_ENDPOINT)%'
-            - '%env(USER)%'
-            - '%env(PASS)%'
+            - '@http.client'
         tags:
             - { name: console.command, command: 'ocib:checkin' }

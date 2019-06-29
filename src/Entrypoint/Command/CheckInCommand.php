@@ -3,40 +3,29 @@
 namespace App\Entrypoint\Command;
 
 use App\Domain\Client\Client;
-use GuzzleHttp\RequestOptions;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final class CheckInCommand extends Command
 {
-    private $baseUrl;
-    private $checkInEndpoint;
-    private $user;
-    private $password;
+    private $client;
 
-    public function __construct(string $baseUrl, string $checkInEndpoint, string $user, string $pass)
+    public function __construct(Client $client)
     {
-        $this->baseUrl = $baseUrl;
-        $this->checkInEndpoint = $checkInEndpoint;
-        $this->user = $user;
-        $this->password = $pass;
-
+        $this->client = $client;
         parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $client = new Client();
+        $data = $this->client->login();
 
-        $login = $client->post('url', [
-            RequestOptions::JSON => [
-                'Login' => $this->user,
-                'Password' => $this->password,
-                'ConnId' => null,
-                'SSOId' => null,
-                'Ldap' => false,
-            ]
-        ]);
+        if ($data->Token === null && $data->TokenDesbloqueo !== null) {
+            $this->client->unlock($data);
+            $data = $this->client->login();
+        }
+
+        $this->client->checkIn($data);
     }
 }
