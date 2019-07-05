@@ -12,3 +12,7 @@
 ###> JetBrains
 .idea/
 ###< JetBrains
+
+###> Sqlite temp files
+*.db-journall
+###< Sqlite temp files

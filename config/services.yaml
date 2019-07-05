@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-
+    db: '%env(DATABASE_URL)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -17,6 +17,15 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
+    sqlite_repository:
+        class: App\Infrastructure\SqliteRepository
+        arguments:
+            - '%db%'
+
+    repository.not-working-days:
+        class: App\Infrastructure\NotWorkingDays\Repository\NotWorkingDaysSqliteRepository
+        parent: sqlite_repository
+
     http.client:
         class: App\Domain\Client\Client
         arguments:
@@ -28,5 +37,6 @@ services:
         class: App\Entrypoint\Command\CheckInCommand
         arguments:
             - '@http.client'
+            - '@repository.not-working-days'
         tags:
             - { name: console.command, command: 'ocib:checkin' }
