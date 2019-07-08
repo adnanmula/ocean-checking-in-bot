@@ -66,7 +66,7 @@ class Client extends \GuzzleHttp\Client
         ]);
     }
 
-    public function checkIn(\stdClass $data)
+    public function checkIn(\stdClass $data): void
     {
         $this->post(
             '/data/marcajes/realizar-manual', [
