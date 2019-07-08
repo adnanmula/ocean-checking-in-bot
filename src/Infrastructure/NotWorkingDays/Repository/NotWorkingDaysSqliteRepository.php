@@ -6,6 +6,14 @@ use App\Infrastructure\SqliteRepository;
 
 class NotWorkingDaysSqliteRepository extends SqliteRepository
 {
+    public function add(\DateTimeInterface $date): void
+    {
+        $stmt = $this->connection->prepare('INSERT into not_working_days (date) values (:date)');
+        $stmt->bindValue('date', $date->format('Y-m-d'), SQLITE3_TEXT);
+
+        $stmt->execute();
+    }
+
     public function all(): array
     {
         $days = $this->connection->query('SELECT date FROM not_working_days');

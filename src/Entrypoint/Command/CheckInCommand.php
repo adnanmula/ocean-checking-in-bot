@@ -23,13 +23,11 @@ final class CheckInCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $data = $this->client->login();
-
-        if ($data->Token === null && $data->TokenDesbloqueo !== null) {
-            $this->client->unlock($data);
-            $data = $this->client->login();
+        if ($this->repository->check(new \DateTimeImmutable())) {
+            $this->client->checkIn();
+            $output->writeln('Succesfully checked in.');
+        } else {
+            $output->writeln('Today is a not working day.');
         }
-
-        $this->client->checkIn($data);
     }
 }

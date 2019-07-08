@@ -7,8 +7,6 @@ use GuzzleHttp\RequestOptions;
 class Client extends \GuzzleHttp\Client
 {
     private $baseUrl;
-    private $user;
-    private $password;
     private $latitude;
     private $longitude;
 
@@ -20,53 +18,68 @@ class Client extends \GuzzleHttp\Client
         float $longitude
     ) {
         $this->baseUrl = $baseUrl;
-        $this->user = $user;
-        $this->password = $password;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
 
-        parent::__construct(['base_uri' => $this->baseUrl]);
+        //TODO fix this
+        $data = $this->login($user, $password);
+
+        if ($data->Token === null && $data->TokenDesbloqueo !== null) {
+            $this->unlock($data->Usuario->Id, $data->TokenDesbloqueo, $data->Usuario->EmpresaId);
+            $data = $this->login($user, $password);
+        }
+
+        parent::__construct([
+            'base_uri' => $baseUrl,
+            'headers' => ['Authorization' => 'Bearer ' . $data->Token]
+        ]);
     }
 
-    public function login(): \stdClass
+    private function login(string $user, string $password): \stdClass
     {
-        $login = $this->post('/data/auth', [
+        $client = new \GuzzleHttp\Client(['base_uri' => $this->baseUrl]);
+
+        $login = $client->post('/data/auth', [
             RequestOptions::JSON => [
-                'Login' => $this->user,
-                'Password' => $this->password,
+                'Login' => $user,
+                'Password' => $password,
                 'ConnId' => null,
                 'SSOId' => null,
                 'Ldap' => false,
-            ],
-            RequestOptions::HEADERS => [
-                'origin' => $this->baseUrl,
-                'pragma' => 'no-cache',
-                'referer' => $this->baseUrl,
-                'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
             ]
         ]);
 
         return json_decode($login->getBody()->getContents());
     }
 
-    public function unlock(\stdClass $data): void
+    private function unlock(int $userId, string $unlockToken, int $corporationId): void
     {
-        $this->post('/data/auth/unlock', [
+        $client = new \GuzzleHttp\Client(['base_uri' => $this->baseUrl]);
+
+        $client->post('/data/auth/unlock', [
             RequestOptions::JSON => [
-                'usuarioId' => $data->Usuario->Id,
-                'tokenDesbloqueo' => $data->TokenDesbloqueo,
-                'empresaId' => $data->Usuario->EmpresaId,
-            ],
-            RequestOptions::HEADERS => [
-                'origin' => $this->baseUrl,
-                'pragma' => 'no-cache',
-                'referer' => $this->baseUrl,
-                'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+                'usuarioId' => $userId,
+                'tokenDesbloqueo' => $unlockToken,
+                'empresaId' => $corporationId,
             ]
         ]);
     }
 
-    public function checkIn(\stdClass $data): void
+    private function forceLogin(): \stdClass
+    {
+        $login = $this->get(
+            '/data/auth/actual',
+            [
+                RequestOptions::QUERY => [
+                    'force' => true,
+                ],
+            ]
+        );
+
+        return json_decode($login->getBody()->getContents());
+    }
+
+    public function checkIn(): void
     {
         $this->post(
             '/data/marcajes/realizar-manual', [
@@ -77,15 +90,27 @@ class Client extends \GuzzleHttp\Client
                     'Nota' => null,
                     'Tipo' => 'P',
                     'TipoProd' => 1,
-                ],
-                RequestOptions::HEADERS => [
-                    'origin' => $this->baseUrl,
-                    'pragma' => 'no-cache',
-                    'referer' => $this->baseUrl,
-                    'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
-                    'authorization' => 'Bearer ' . $data->Token
                 ]
             ]
         );
+    }
+
+    public function checkIns(\DateTimeInterface $from, \DateTimeInterface $to): array
+    {
+        $data = $this->forceLogin();
+
+        $response = $this->get(
+            '/data/marcajes',
+            [
+                RequestOptions::QUERY => [
+                    'Desde' => $from->format('Y-m-d'),
+                    'EmpleadoId' => $data->Usuario->Id,
+                    'Hasta' => $to->format('Y-m-d'),
+                    'Tipo' => 'P',
+                ],
+            ]
+        );
+
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

@@ -20,7 +20,7 @@ services:
     http.client:
         class: App\Domain\Client\Client
         arguments:
-            - "%env(BASE_URL)%"
+            - "%env(OCEAN_URL)%"
             - "%env(USER)%"
             - "%env(PASS)%"
             - "%env(LAT)%"
@@ -32,4 +32,18 @@ services:
             - '@http.client'
             - '@repository.not-working-days'
         tags:
-            - { name: console.command, command: 'ocib:checkin' }
+            - { name: console.command, command: 'ocib:checkin:add' }
+
+    command.get-checkins:
+        class: App\Entrypoint\Command\GetCheckInsCommand
+        arguments:
+            - '@http.client'
+        tags:
+            - { name: console.command, command: 'ocib:checkin:get' }
+
+    command.add-not-working-day:
+        class: App\Entrypoint\Command\AddNotWorkingDaysCommand
+        arguments:
+            - '@repository.not-working-days'
+        tags:
+            - { name: console.command, command: 'ocib:not-working-days:add' }
