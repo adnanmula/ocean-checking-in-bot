@@ -5,6 +5,7 @@
         "php": "^7.3.6",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "ext-sqlite3": "*",
         "guzzlehttp/guzzle": "^6.3",
         "symfony/console": "4.3.*",

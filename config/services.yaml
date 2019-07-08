@@ -23,6 +23,8 @@ services:
             - "%env(BASE_URL)%"
             - "%env(USER)%"
             - "%env(PASS)%"
+            - "%env(LAT)%"
+            - "%env(LON)%"
 
     command.checkin:
         class: App\Entrypoint\Command\CheckInCommand
