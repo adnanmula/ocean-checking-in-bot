@@ -28,6 +28,10 @@ class NotWorkingDaysSqliteRepository extends SqliteRepository
 
     public function check(\DateTimeInterface $date): bool
     {
+        if ($date->format('N') >= 6) {
+            return true;
+        }
+
         $stmt = $this->connection->prepare('SELECT date FROM not_working_days WHERE date = :date');
         $stmt->bindValue('date', $date->format('Y-m-d'), SQLITE3_TEXT);
         $result = $stmt->execute();
