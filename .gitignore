@@ -14,5 +14,5 @@
 ###< JetBrains
 
 ###> Sqlite temp files
-*.db-journall
+*.db-journal
 ###< Sqlite temp files

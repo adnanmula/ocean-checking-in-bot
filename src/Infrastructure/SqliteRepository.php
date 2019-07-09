@@ -9,6 +9,5 @@ class SqliteRepository
     public function __construct(string $url)
     {
         $this->connection = new \SQLite3($url);
-
     }
 }

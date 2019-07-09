@@ -8,9 +8,3 @@ services:
     volumes:
       - .:/var/www/html
       - ~/.composer:/.composer
-    networks:
-      - network
-
-networks:
-  network:
-    driver: bridge

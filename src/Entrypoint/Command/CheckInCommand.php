@@ -24,10 +24,10 @@ final class CheckInCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($this->repository->check(new \DateTimeImmutable())) {
+            $output->writeln('Today is a not working day.');
+        } else {
             $this->client->checkIn();
             $output->writeln('Succesfully checked in.');
-        } else {
-            $output->writeln('Today is a not working day.');
         }
     }
 }
