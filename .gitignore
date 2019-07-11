@@ -16,3 +16,7 @@
 ###> Sqlite temp files
 *.db-journal
 ###< Sqlite temp files
+
+###> Telegram client
+TelegramErrorLogger.txt
+###< Telegram client

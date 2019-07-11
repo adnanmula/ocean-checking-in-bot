@@ -17,8 +17,12 @@ services:
         autowire: false
         autoconfigure: false
 
+    http.client.factory:
+        class: App\Domain\Client\ClientFactory
+
     http.client:
         class: App\Domain\Client\Client
+        factory: ['@http.client.factory', build]
         arguments:
             - "%env(OCEAN_URL)%"
             - "%env(USER)%"

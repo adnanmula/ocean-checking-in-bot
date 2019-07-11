@@ -6,66 +6,21 @@ use GuzzleHttp\RequestOptions;
 
 class Client extends \GuzzleHttp\Client
 {
-    private $baseUrl;
     private $latitude;
     private $longitude;
 
     public function __construct(
-        string $baseUrl,
-        string $user,
-        string $password,
+        array $config,
         float $latitude,
         float $longitude
     ) {
-        $this->baseUrl = $baseUrl;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
 
-        //TODO fix this
-        $data = $this->login($user, $password);
-
-        if ($data->Token === null && $data->TokenDesbloqueo !== null) {
-            $this->unlock($data->Usuario->Id, $data->TokenDesbloqueo, $data->Usuario->EmpresaId);
-            $data = $this->login($user, $password);
-        }
-
-        parent::__construct([
-            'base_uri' => $baseUrl,
-            'headers' => ['Authorization' => 'Bearer ' . $data->Token]
-        ]);
+        parent::__construct($config);
     }
 
-    private function login(string $user, string $password): \stdClass
-    {
-        $client = new \GuzzleHttp\Client(['base_uri' => $this->baseUrl]);
-
-        $login = $client->post('/data/auth', [
-            RequestOptions::JSON => [
-                'Login' => $user,
-                'Password' => $password,
-                'ConnId' => null,
-                'SSOId' => null,
-                'Ldap' => false,
-            ]
-        ]);
-
-        return json_decode($login->getBody()->getContents());
-    }
-
-    private function unlock(int $userId, string $unlockToken, int $corporationId): void
-    {
-        $client = new \GuzzleHttp\Client(['base_uri' => $this->baseUrl]);
-
-        $client->post('/data/auth/unlock', [
-            RequestOptions::JSON => [
-                'usuarioId' => $userId,
-                'tokenDesbloqueo' => $unlockToken,
-                'empresaId' => $corporationId,
-            ]
-        ]);
-    }
-
-    private function forceLogin(): \stdClass
+    public function forceLogin(): \stdClass
     {
         $login = $this->get(
             '/data/auth/actual',
