@@ -2,9 +2,10 @@
 
 namespace App\Infrastructure\NotWorkingDays\Repository;
 
+use App\Domain\NotWorkingDays\Repository\NotWorkingDaysRepository;
 use App\Infrastructure\SqliteRepository;
 
-class NotWorkingDaysSqliteRepository extends SqliteRepository
+class NotWorkingDaysSqliteRepository extends SqliteRepository implements NotWorkingDaysRepository
 {
     public function add(\DateTimeInterface $date): void
     {
@@ -19,7 +20,7 @@ class NotWorkingDaysSqliteRepository extends SqliteRepository
         $days = $this->connection->query('SELECT date FROM not_working_days');
 
         $notWorkingDays = [];
-        while($day = $days->fetchArray(SQLITE3_ASSOC)){
+        while ($day = $days->fetchArray(SQLITE3_ASSOC)) {
             $notWorkingDays[] = $day['date'];
         }
 

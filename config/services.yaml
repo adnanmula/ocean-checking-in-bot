@@ -26,11 +26,18 @@ services:
             - "%env(LAT)%"
             - "%env(LON)%"
 
+    service.notification:
+        class: App\Infrastructure\Notification\TelegramNotificationService
+        arguments:
+            - "%env(TELEGRAM_TOKEN)%"
+            - "%env(TELEGRAM_CHAT_ID)%"
+
     command.checkin:
         class: App\Entrypoint\Command\CheckInCommand
         arguments:
             - '@http.client'
             - '@repository.not-working-days'
+            - '@service.notification'
         tags:
             - { name: console.command, command: 'ocib:checkin:add' }
 
@@ -38,6 +45,7 @@ services:
         class: App\Entrypoint\Command\GetCheckInsCommand
         arguments:
             - '@http.client'
+            - '@service.notification'
         tags:
             - { name: console.command, command: 'ocib:checkin:get' }
 

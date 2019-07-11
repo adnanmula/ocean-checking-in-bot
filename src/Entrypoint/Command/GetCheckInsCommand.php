@@ -3,6 +3,7 @@
 namespace App\Entrypoint\Command;
 
 use App\Domain\Client\Client;
+use App\Domain\Notification\NotificationService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -11,10 +12,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class GetCheckInsCommand extends Command
 {
     private $client;
+    private $notificationService;
 
-    public function __construct(Client $client)
+    public function __construct(Client $client, NotificationService $notificationService)
     {
         $this->client = $client;
+        $this->notificationService = $notificationService;
         parent::__construct();
     }
 
@@ -33,11 +36,18 @@ final class GetCheckInsCommand extends Command
 
         $checkIns = $this->client->checkIns($from, $to);
 
+        $msg = '';
         foreach ($checkIns['Detalles'] as $day) {
-            $output->writeln("- Fichajes del " . $day['Fecha']);
+            $date = (new \DateTimeImmutable($day['Fecha']))->format('l, d-m-Y');
+
+            $output->writeln("- Fichajes del " . $date);
+            $msg .= "Fichajes del *" . $date . '*' . PHP_EOL;
             foreach ($day['Marcajes'] as $marcaje) {
                 $output->writeln("  - " . $marcaje['MarcajeEntrada']['Hora'] . ' -> ' . $marcaje['MarcajeSalida']['Hora']);
+                $msg .= "_- " . $marcaje['MarcajeEntrada']['Hora'] . ' -> ' . $marcaje['MarcajeSalida']['Hora'] . '_' . PHP_EOL;
             }
         }
+
+        $this->notificationService->notify($msg);
     }
 }
