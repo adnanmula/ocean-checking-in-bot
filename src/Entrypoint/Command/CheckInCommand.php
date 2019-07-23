@@ -12,6 +12,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class CheckInCommand extends Command
 {
+    private const DEFAULT_MAX_WAIT = 600;
+
     private $client;
     private $repository;
     private $notificationService;
@@ -39,12 +41,21 @@ final class CheckInCommand extends Command
             return;
         }
 
-        if (true === $input->hasParameterOption(['--random', '-r'])) {
-            sleep(mt_rand(0, 600));
-        }
+        $this->wait($input);
 
         $this->client->checkIn();
         $output->writeln('Succesfully checked in.');
         $this->notificationService->notify('Succesfully checked in.');
+    }
+
+    private function wait(InputInterface $input)
+    {
+        if (true === $input->hasParameterOption(['--random', '-r'])) {
+            $max = is_numeric($input->getOption('random'))
+                ? (int) $input->getOption('random')
+                : self::DEFAULT_MAX_WAIT;
+
+            sleep(mt_rand(0, $max));
+        }
     }
 }
