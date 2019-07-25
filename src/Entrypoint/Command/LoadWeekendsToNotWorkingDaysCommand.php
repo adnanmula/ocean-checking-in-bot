@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class AddNotWorkingDaysCommand extends Command
+final class LoadWeekendsToNotWorkingDaysCommand extends Command
 {
     private $repository;
 
@@ -21,17 +21,22 @@ final class AddNotWorkingDaysCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Add dates to not working days')
-            ->addArgument('dates', InputOption::VALUE_REQUIRED, 'Comma separated dates to be added as not working days');;
+        $this->setDescription('Load weekends of given year to not working days db')
+            ->addArgument('year', InputOption::VALUE_REQUIRED, 'Year to be loaded');;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dates = \array_map('trim', \array_filter(\explode(',', $input->getArgument('dates'))));
+        $year = $input->getArgument('year');
 
-        foreach ($dates as $date) {
-            $this->repository->add(new \DateTimeImmutable($date));
-            $output->writeln($date . ' added');
+        $day = new \DateTime($year . '-01-01');
+        while ($year === $day->format('Y')) {
+            if (true === \in_array((int) ($day->format('N')), [6, 7])) {
+                $this->repository->add($day);
+                $output->writeln($day->format('Y-m-d') . ' added');
+            }
+
+            $day->add(new \DateInterval('P1D'));
         }
     }
 }

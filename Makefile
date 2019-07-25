@@ -19,13 +19,16 @@ install: ## make composer install
 	docker-compose -f ${FILE} exec --user=${UID} ${CONTAINER} sh -c "php bin/composer.phar install"
 
 checkin: ## new checkin
-	docker-compose -f ${FILE} exec --user=${UID} ${CONTAINER} sh -c "php bin/console ocib:checkin:add"
+	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:checkin:add
 
 get-checkins: ## get check ins for a given date
-	docker-compose -f ${FILE} exec --user=${UID} ${CONTAINER} sh -c "php bin/console ocib:checkin:get $(date)"
+	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:checkin:get $(date)
 
 add-not-working-days: ## adds dates to not working days
-	docker-compose -f ${FILE} exec --user=${UID} ${CONTAINER} sh -c "php bin/console ocib:not-working-days:add $(dates)"
+	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:not-working-days:add $(dates)
+
+load-not-working-days: ## load weekends of given year to not working days db
+	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:not-working-days:load $(year)
 
 help: ## Display this help message
 	@cat $(MAKEFILE_LIST) | grep -e "^[a-zA-Z_\-]*: *.*## *" | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

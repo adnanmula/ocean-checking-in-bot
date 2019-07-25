@@ -59,3 +59,10 @@ services:
             - '@repository.not-working-days'
         tags:
             - { name: console.command, command: 'ocib:not-working-days:add' }
+
+    command.load-not-working-days:
+        class: App\Entrypoint\Command\LoadWeekendsToNotWorkingDaysCommand
+        arguments:
+            - '@repository.not-working-days'
+        tags:
+            - { name: console.command, command: 'ocib:not-working-days:load' }
