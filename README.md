@@ -1,12 +1,15 @@
 # Ocean checking-in bot
 Tired of receiving HR mails because you always forget (or you are too lazy) to check-in?
-Then it's your lucky day, just plug in your raspberry pi or whatever and forget that you are subdued to this archaic presence control system.
+Then it's your lucky day, just plug in your raspberry pi or whatever and forget that you are subdued to this archaic control system.
 
 ## Not working days
-A sqlite db is used to keep track of non working days, add them using yor favorite client or with the following command:
+A sqlite db is used to keep track of non working days, add them using your favorite client or with the following commands:
 
 ```bash
+# add specific days
 ocib:not-working-days:add 2019-07-01,2019-07-02
+# add weekends of year
+ocib:not-working-days:load 2019
 ```
 
 ## Checking-in
