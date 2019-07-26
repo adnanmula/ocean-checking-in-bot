@@ -26,12 +26,12 @@ final class GetCheckInsCommand extends Command
         $this
             ->setDescription('Get check ins')
             ->addArgument('from', InputOption::VALUE_REQUIRED)
-            ->addArgument('to', InputOption::VALUE_OPTIONAL);
+            ->addArgument('to', InputOption::VALUE_REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $from = new \DateTimeImmutable($input->getArgument('from'));
+        $from = $input->getArgument('from') ? new \DateTimeImmutable($input->getArgument('from')) :  new \DateTimeImmutable();
         $to = $input->getArgument('to') ? new \DateTimeImmutable($input->getArgument('to')) : $from;
 
         $checkIns = $this->client->checkIns($from, $to);
