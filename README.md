@@ -19,3 +19,13 @@ ocib:not-working-days:load 2019
 # check-in example in crontab
 0 8 * * 1-5 docker-compose run php php bin/console ocib:checkin:add -r 600
 ```
+
+## Get checking-ins
+Returns checking-ins of a given date or interval, if no argument is provided current date is used.
+
+```bash
+# examples
+ocib:checkin:get
+ocib:checkin:get 2019-07-01
+ocib:checkin:get 2019-07-01 2019-07-10
+```
