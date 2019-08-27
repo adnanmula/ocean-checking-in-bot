@@ -18,6 +18,9 @@ down: ## down dockers
 install: ## make composer install
 	docker-compose -f ${FILE} exec --user=${UID} ${CONTAINER} sh -c "php bin/composer.phar install"
 
+init: ## init environment
+	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:environment:init
+
 checkin: ## new checkin
 	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:checkin:add
 

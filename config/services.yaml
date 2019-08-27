@@ -36,6 +36,18 @@ services:
             - "%env(TELEGRAM_TOKEN)%"
             - "%env(TELEGRAM_CHAT_ID)%"
 
+    migration.sqlite:
+        class: App\Infrastructure\SqliteMigration
+        arguments:
+            - '%db%'
+
+    command.init-environment:
+        class: App\Entrypoint\Command\InitEnvironmentCommand
+        arguments:
+            - '@migration.sqlite'
+        tags:
+            - { name: console.command, command: 'ocib:environment:init' }
+
     command.checkin:
         class: App\Entrypoint\Command\CheckInCommand
         arguments:
