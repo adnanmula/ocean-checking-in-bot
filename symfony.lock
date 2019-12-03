@@ -11,6 +11,9 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
+    "php": {
+        "version": "7.3"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
