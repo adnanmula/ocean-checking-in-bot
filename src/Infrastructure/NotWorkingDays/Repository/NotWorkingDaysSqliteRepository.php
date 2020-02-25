@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Infrastructure\NotWorkingDays\Repository;
+namespace DemigrantSoft\Infrastructure\NotWorkingDays\Repository;
 
-use App\Domain\NotWorkingDays\Repository\NotWorkingDaysRepository;
-use App\Infrastructure\SqliteRepository;
+use DemigrantSoft\Domain\NotWorkingDays\Repository\NotWorkingDaysRepository;
+use DemigrantSoft\Infrastructure\SqliteRepository;
 
 class NotWorkingDaysSqliteRepository extends SqliteRepository implements NotWorkingDaysRepository
 {

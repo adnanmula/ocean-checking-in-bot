@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Infrastructure\Notification;
+namespace DemigrantSoft\Infrastructure\Notification;
 
-use App\Domain\Notification\NotificationService;
-use App\Infrastructure\TelegramService;
+use DemigrantSoft\Domain\Notification\NotificationService;
+use DemigrantSoft\Infrastructure\TelegramService;
 
 final class TelegramNotificationService extends TelegramService implements NotificationService
 {

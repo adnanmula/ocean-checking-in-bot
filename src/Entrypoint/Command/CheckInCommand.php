@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace App\Entrypoint\Command;
+namespace DemigrantSoft\Entrypoint\Command;
 
-use App\Domain\Client\Client;
-use App\Domain\Notification\NotificationService;
-use App\Domain\NotWorkingDays\Repository\NotWorkingDaysRepository;
+use DemigrantSoft\Domain\Client\Client;
+use DemigrantSoft\Domain\Notification\NotificationService;
+use DemigrantSoft\Domain\NotWorkingDays\Repository\NotWorkingDaysRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,9 +14,9 @@ final class CheckInCommand extends Command
 {
     private const DEFAULT_MAX_WAIT = 600;
 
-    private $client;
-    private $repository;
-    private $notificationService;
+    private Client $client;
+    private NotWorkingDaysRepository $repository;
+    private NotificationService $notificationService;
 
     public function __construct(Client $client, NotWorkingDaysRepository $repository, NotificationService $notificationService)
     {
@@ -27,18 +27,18 @@ final class CheckInCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Add checkin')
             ->addOption('random', 'r', InputOption::VALUE_OPTIONAL, 'Wait a random amount of minutes before checking in', false);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->repository->check(new \DateTimeImmutable())) {
             $output->writeln('Today is a not working day.');
-            return;
+            return 0;
         }
 
         $this->wait($input);
@@ -46,9 +46,11 @@ final class CheckInCommand extends Command
         $this->client->checkIn();
         $output->writeln('Succesfully checked in.');
         $this->notificationService->notify('Succesfully checked in.');
+
+        return 0;
     }
 
-    private function wait(InputInterface $input)
+    private function wait(InputInterface $input): void
     {
         if (true === $input->hasParameterOption(['--random', '-r'])) {
             $max = is_numeric($input->getOption('random'))

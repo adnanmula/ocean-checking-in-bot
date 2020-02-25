@@ -33,5 +33,8 @@ add-not-working-days: ## adds dates to not working days
 load-not-working-days: ## load weekends of given year to not working days db
 	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:not-working-days:load $(year)
 
+stan: ## pass phpstan
+	docker-compose -f ${FILE} exec --user=${UID} php sh -c "php -d memory_limit=256M vendor/bin/phpstan analyse -c phpstan.neon"
+
 help: ## Display this help message
 	@cat $(MAKEFILE_LIST) | grep -e "^[a-zA-Z_\-]*: *.*## *" | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

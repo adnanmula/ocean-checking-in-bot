@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace App\Infrastructure;
+namespace DemigrantSoft\Infrastructure;
 
 class TelegramService
 {
-    protected $client;
-    protected $chatId;
+    protected \Telegram $client;
+    protected string $chatId;
 
     public function __construct(string $token, string $chatId)
     {

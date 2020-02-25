@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace App\Domain\Client;
+namespace DemigrantSoft\Domain\Client;
 
 use GuzzleHttp\RequestOptions;
 
 class Client extends \GuzzleHttp\Client
 {
-    private $latitude;
-    private $longitude;
+    private float $latitude;
+    private float $longitude;
 
     public function __construct(
         array $config,
@@ -50,6 +50,7 @@ class Client extends \GuzzleHttp\Client
         );
     }
 
+    /** @return array[] */
     public function checkIns(\DateTimeInterface $from, \DateTimeInterface $to): array
     {
         $data = $this->forceLogin();

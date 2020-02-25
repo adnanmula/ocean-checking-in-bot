@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Entrypoint\Command;
+namespace DemigrantSoft\Entrypoint\Command;
 
-use App\Infrastructure\NotWorkingDays\Repository\NotWorkingDaysSqliteRepository;
+use DemigrantSoft\Infrastructure\NotWorkingDays\Repository\NotWorkingDaysSqliteRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class LoadWeekendsToNotWorkingDaysCommand extends Command
 {
-    private $repository;
+    private NotWorkingDaysSqliteRepository $repository;
 
     public function __construct(NotWorkingDaysSqliteRepository $repository)
     {
@@ -19,17 +19,17 @@ final class LoadWeekendsToNotWorkingDaysCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Load weekends of given year to not working days db')
             ->addArgument('year', InputOption::VALUE_REQUIRED, 'Year to be loaded');;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $year = $input->getArgument('year');
 
-        $day = new \DateTime($year . '-01-01');
+        $day = new \DateTime((string) $year . '-01-01');
         while ($year === $day->format('Y')) {
             if (true === \in_array((int) ($day->format('N')), [6, 7])) {
                 $this->repository->add($day);
@@ -38,5 +38,7 @@ final class LoadWeekendsToNotWorkingDaysCommand extends Command
 
             $day->add(new \DateInterval('P1D'));
         }
+
+        return 0;
     }
 }

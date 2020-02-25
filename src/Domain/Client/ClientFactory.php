@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace App\Domain\Client;
+namespace DemigrantSoft\Domain\Client;
 
 use GuzzleHttp\RequestOptions;
 
 final class ClientFactory
 {
-    private $baseUrl;
+    private string $baseUrl;
 
     public function build(string $baseUrl, string $user, string $password, float $latitude, float $longitude): Client
     {

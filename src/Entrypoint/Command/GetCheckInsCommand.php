@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Entrypoint\Command;
+namespace DemigrantSoft\Entrypoint\Command;
 
-use App\Domain\Client\Client;
-use App\Domain\Notification\NotificationService;
+use DemigrantSoft\Domain\Client\Client;
+use DemigrantSoft\Domain\Notification\NotificationService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -11,8 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class GetCheckInsCommand extends Command
 {
-    private $client;
-    private $notificationService;
+    private Client $client;
+    private NotificationService $notificationService;
 
     public function __construct(Client $client, NotificationService $notificationService)
     {
@@ -21,7 +21,7 @@ final class GetCheckInsCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Get check ins')
@@ -29,7 +29,7 @@ final class GetCheckInsCommand extends Command
             ->addArgument('to', InputOption::VALUE_REQUIRED);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $from = $input->getArgument('from') ? new \DateTimeImmutable($input->getArgument('from')) :  new \DateTimeImmutable();
         $to = $input->getArgument('to') ? new \DateTimeImmutable($input->getArgument('to')) : $from;
@@ -49,5 +49,7 @@ final class GetCheckInsCommand extends Command
         }
 
         $this->notificationService->notify($msg);
+
+        return 0;
     }
 }

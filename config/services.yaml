@@ -7,21 +7,21 @@ services:
         autoconfigure: false
 
     sqlite_repository:
-        class: App\Infrastructure\SqliteRepository
+        class: DemigrantSoft\Infrastructure\SqliteRepository
         arguments:
             - '%db%'
 
     repository.not-working-days:
-        class: App\Infrastructure\NotWorkingDays\Repository\NotWorkingDaysSqliteRepository
+        class: DemigrantSoft\Infrastructure\NotWorkingDays\Repository\NotWorkingDaysSqliteRepository
         parent: sqlite_repository
         autowire: false
         autoconfigure: false
 
     http.client.factory:
-        class: App\Domain\Client\ClientFactory
+        class: DemigrantSoft\Domain\Client\ClientFactory
 
     http.client:
-        class: App\Domain\Client\Client
+        class: DemigrantSoft\Domain\Client\Client
         factory: ['@http.client.factory', build]
         arguments:
             - "%env(OCEAN_URL)%"
@@ -31,25 +31,25 @@ services:
             - "%env(LON)%"
 
     service.notification:
-        class: App\Infrastructure\Notification\TelegramNotificationService
+        class: DemigrantSoft\Infrastructure\Notification\TelegramNotificationService
         arguments:
             - "%env(TELEGRAM_TOKEN)%"
             - "%env(TELEGRAM_CHAT_ID)%"
 
     migration.sqlite:
-        class: App\Infrastructure\SqliteMigration
+        class: DemigrantSoft\Infrastructure\SqliteMigration
         arguments:
             - '%db%'
 
     command.init-environment:
-        class: App\Entrypoint\Command\InitEnvironmentCommand
+        class: DemigrantSoft\Entrypoint\Command\InitEnvironmentCommand
         arguments:
             - '@migration.sqlite'
         tags:
             - { name: console.command, command: 'ocib:environment:init' }
 
     command.checkin:
-        class: App\Entrypoint\Command\CheckInCommand
+        class: DemigrantSoft\Entrypoint\Command\CheckInCommand
         arguments:
             - '@http.client'
             - '@repository.not-working-days'
@@ -58,7 +58,7 @@ services:
             - { name: console.command, command: 'ocib:checkin:add' }
 
     command.get-checkins:
-        class: App\Entrypoint\Command\GetCheckInsCommand
+        class: DemigrantSoft\Entrypoint\Command\GetCheckInsCommand
         arguments:
             - '@http.client'
             - '@service.notification'
@@ -66,14 +66,14 @@ services:
             - { name: console.command, command: 'ocib:checkin:get' }
 
     command.add-not-working-day:
-        class: App\Entrypoint\Command\AddNotWorkingDaysCommand
+        class: DemigrantSoft\Entrypoint\Command\AddNotWorkingDaysCommand
         arguments:
             - '@repository.not-working-days'
         tags:
             - { name: console.command, command: 'ocib:not-working-days:add' }
 
     command.load-not-working-days:
-        class: App\Entrypoint\Command\LoadWeekendsToNotWorkingDaysCommand
+        class: DemigrantSoft\Entrypoint\Command\LoadWeekendsToNotWorkingDaysCommand
         arguments:
             - '@repository.not-working-days'
         tags:

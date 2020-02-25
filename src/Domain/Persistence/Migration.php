@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Domain\Persistence;
+namespace DemigrantSoft\Domain\Persistence;
 
 interface Migration
 {

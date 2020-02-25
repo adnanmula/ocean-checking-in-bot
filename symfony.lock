@@ -12,12 +12,18 @@
         "version": "1.5.2"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
+    },
+    "phpstan/phpstan": {
+        "version": "0.12.11"
     },
     "psr/cache": {
         "version": "1.0.1"
     },
     "psr/container": {
+        "version": "1.0.0"
+    },
+    "psr/event-dispatcher": {
         "version": "1.0.0"
     },
     "psr/http-message": {
@@ -51,14 +57,14 @@
             "config/bootstrap.php"
         ]
     },
-    "symfony/debug": {
-        "version": "v4.3.1"
-    },
     "symfony/dependency-injection": {
         "version": "v4.3.1"
     },
     "symfony/dotenv": {
         "version": "v4.3.1"
+    },
+    "symfony/error-handler": {
+        "version": "v5.0.4"
     },
     "symfony/event-dispatcher": {
         "version": "v4.3.1"

@@ -1,0 +1,9 @@
+parameters:
+    level: 6
+    checkMissingIterableValueType: false
+    paths:
+        -   src
+    ignoreErrors:
+        -
+            message: '#Cannot call method [a-zA-Z\\]+\(\) on (SQLite3Stmt|SQLite3Result)\|false#'
+            path: %currentWorkingDirectory%/src/Infrastructure/*
