@@ -1,6 +1,6 @@
 <?php
 
-namespace DemigrantSoft;
+namespace DemigrantSoft\ClockInBot;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;

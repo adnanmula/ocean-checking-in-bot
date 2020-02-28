@@ -8,3 +8,25 @@ services:
     volumes:
       - .:/var/www/html
       - ~/.composer:/.composer
+    networks:
+      - network_ocib
+  adminer:
+    image: adminer:latest
+    container_name: ocib_adminer
+    ports:
+      - ${ADMINER_PORT}:8080
+    networks:
+      - network_ocib
+  postgres:
+    image: postgres:11.1-alpine
+    container_name: ocib_postgres
+    ports:
+      - ${POSTGRES_PORT}:5432
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - network_ocib
+
+networks:
+  network_ocib:
+    driver: bridge

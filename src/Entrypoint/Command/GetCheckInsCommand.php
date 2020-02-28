@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\Entrypoint\Command;
+namespace DemigrantSoft\ClockInBot\Entrypoint\Command;
 
-use DemigrantSoft\Domain\Client\Client;
-use DemigrantSoft\Domain\Notification\NotificationService;
+use DemigrantSoft\ClockInBot\Model\Client\Client;
+use DemigrantSoft\ClockInBot\Service\Notification\NotificationService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

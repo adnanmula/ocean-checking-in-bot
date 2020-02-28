@@ -1,10 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\Entrypoint\Command;
+namespace DemigrantSoft\ClockInBot\Entrypoint\Command;
 
-use DemigrantSoft\Domain\Client\Client;
-use DemigrantSoft\Domain\Notification\NotificationService;
-use DemigrantSoft\Domain\NotWorkingDays\Repository\NotWorkingDaysRepository;
+use DemigrantSoft\ClockInBot\Model\NotWorkingDay\NotWorkingDaysRepository;
+use DemigrantSoft\ClockInBot\Model\Shared\ValueObject\Uuid;
+use DemigrantSoft\ClockInBot\Service\Notification\NotificationService;
+use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\User\UserRepository;
+use DemigrantSoft\ClockInBot\Infrastructure\Service\CheckIn\ClientData;
+use DemigrantSoft\ClockInBot\Infrastructure\Service\CheckIn\ClientFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,15 +17,21 @@ final class CheckInCommand extends Command
 {
     private const DEFAULT_MAX_WAIT = 600;
 
-    private Client $client;
     private NotWorkingDaysRepository $repository;
     private NotificationService $notificationService;
+    private UserRepository $userRepository;
+    private ClientFactory $clientFactory;
 
-    public function __construct(Client $client, NotWorkingDaysRepository $repository, NotificationService $notificationService)
-    {
-        $this->client = $client;
+    public function __construct(
+        UserRepository $userRepository,
+        NotificationService $notificationService,
+        NotWorkingDaysRepository $repository,
+        ClientFactory $clientFactory
+    ) {
+        $this->userRepository = $userRepository;
         $this->repository = $repository;
         $this->notificationService = $notificationService;
+        $this->clientFactory = $clientFactory;
 
         parent::__construct();
     }
@@ -31,19 +40,34 @@ final class CheckInCommand extends Command
     {
         $this
             ->setDescription('Add checkin')
-            ->addOption('random', 'r', InputOption::VALUE_OPTIONAL, 'Wait a random amount of minutes before checking in', false);
+            ->addOption('user', 'u', InputOption::VALUE_REQUIRED, 'User id', false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if ($this->repository->check(new \DateTimeImmutable())) {
+        $userId = $input->getArgument('user')
+            ? Uuid::from($input->getArgument('user'))
+            : null;
+
+        if (null === $userId) {
+            throw new \Exception();
+        }
+
+        $user = $this->userRepository->byId($userId);
+
+        $client = $this->clientFactory->build($user->settings()->client(), ClientData::from([]));
+
+
+
+        if ($this->repository->check($user->id(), new \DateTimeImmutable())) {
             $output->writeln('Today is a not working day.');
             return 0;
         }
 
-        $this->wait($input);
+//        $input
+        $this->wait($user->settings()->schedule());
 
-        $this->client->checkIn();
+        $client->checkIn();
         $output->writeln('Succesfully checked in.');
         $this->notificationService->notify('Succesfully checked in.');
 

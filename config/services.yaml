@@ -1,80 +1,98 @@
 parameters:
-    db: '%env(resolve:DATABASE_URL)%'
+    db_url: '%env(resolve:DATABASE_URL)%'
 
 services:
     _defaults:
         autowire: false
         autoconfigure: false
 
-    sqlite_repository:
-        class: DemigrantSoft\Infrastructure\SqliteRepository
+#    sqlite_repository:
+#        class: DemigrantSoft\Infrastructure\SqliteRepository
+#        arguments:
+#            - '%db%'
+
+#    repository.not-working-days:
+#        class: DemigrantSoft\Infrastructure\NotWorkingDays\Repository\NotWorkingDaysSqliteRepository
+#        parent: sqlite_repository
+#        autowire: false
+#        autoconfigure: false
+
+#    http.client.factory:
+#        class: DemigrantSoft\ClockInBot\Domain\Client\ClientFactory
+
+#    http.client:
+#        class: DemigrantSoft\ClockInBot\Domain\Client\Client
+#        factory: ['@http.client.factory', build]
+#        arguments:
+#            - "%env(OCEAN_URL)%"
+#            - "%env(USER)%"
+#            - "%env(PASS)%"
+#            - "%env(LAT)%"
+#            - "%env(LON)%"
+
+#    service.notification:
+#        class: DemigrantSoft\ClockInBot\Infrastructure\Notification\TelegramNotificationService
+#        arguments:
+#            - "%env(TELEGRAM_TOKEN)%"
+#            - "%env(TELEGRAM_CHAT_ID)%"
+
+    connection.dbal:
+        class: Doctrine\DBAL\Connection
+        factory: 'Doctrine\DBAL\DriverManager::getConnection'
         arguments:
-            - '%db%'
+            - url: '%db_url%'
+              driver: 'pdo_pgsql'
 
-    repository.not-working-days:
-        class: DemigrantSoft\Infrastructure\NotWorkingDays\Repository\NotWorkingDaysSqliteRepository
-        parent: sqlite_repository
-        autowire: false
-        autoconfigure: false
-
-    http.client.factory:
-        class: DemigrantSoft\Domain\Client\ClientFactory
-
-    http.client:
-        class: DemigrantSoft\Domain\Client\Client
-        factory: ['@http.client.factory', build]
+    migration.dbal:
+        class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\DbalMigration
         arguments:
-            - "%env(OCEAN_URL)%"
-            - "%env(USER)%"
-            - "%env(PASS)%"
-            - "%env(LAT)%"
-            - "%env(LON)%"
+            - '@connection.dbal'
 
-    service.notification:
-        class: DemigrantSoft\Infrastructure\Notification\TelegramNotificationService
+    repository.dbal:
+        class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\DbalRepository
         arguments:
-            - "%env(TELEGRAM_TOKEN)%"
-            - "%env(TELEGRAM_CHAT_ID)%"
+            - '@connection.dbal'
 
-    migration.sqlite:
-        class: DemigrantSoft\Infrastructure\SqliteMigration
-        arguments:
-            - '%db%'
+#    repository.app.dbal:
+#        class: DemigrantSoft\Infrastructure\Persistence\Repository\App\AppDbalRepository
+#        parent: repository.dbal
+#        autowire: false
+#        autoconfigure: false
 
     command.init-environment:
-        class: DemigrantSoft\Entrypoint\Command\InitEnvironmentCommand
+        class: DemigrantSoft\ClockInBot\Entrypoint\Command\InitEnvironmentCommand
         arguments:
-            - '@migration.sqlite'
+            - '@migration.dbal'
         tags:
             - { name: console.command, command: 'ocib:environment:init' }
 
-    command.checkin:
-        class: DemigrantSoft\Entrypoint\Command\CheckInCommand
-        arguments:
-            - '@http.client'
-            - '@repository.not-working-days'
-            - '@service.notification'
-        tags:
-            - { name: console.command, command: 'ocib:checkin:add' }
+#    command.checkin:
+#        class: DemigrantSoft\Entrypoint\Command\CheckInCommand
+#        arguments:
+#            - '@http.client'
+#            - '@repository.not-working-days'
+#            - '@service.notification'
+#        tags:
+#            - { name: console.command, command: 'ocib:checkin:add' }
 
-    command.get-checkins:
-        class: DemigrantSoft\Entrypoint\Command\GetCheckInsCommand
-        arguments:
-            - '@http.client'
-            - '@service.notification'
-        tags:
-            - { name: console.command, command: 'ocib:checkin:get' }
+#    command.get-checkins:
+#        class: DemigrantSoft\ClockInBot\Entrypoint\Command\GetCheckInsCommand
+#        arguments:
+#            - '@http.client'
+#            - '@service.notification'
+#        tags:
+#            - { name: console.command, command: 'ocib:checkin:get' }
 
-    command.add-not-working-day:
-        class: DemigrantSoft\Entrypoint\Command\AddNotWorkingDaysCommand
-        arguments:
-            - '@repository.not-working-days'
-        tags:
-            - { name: console.command, command: 'ocib:not-working-days:add' }
+#    command.add-not-working-day:
+#        class: DemigrantSoft\Entrypoint\Command\AddNotWorkingDaysCommand
+#        arguments:
+#            - '@repository.not-working-days'
+#        tags:
+#            - { name: console.command, command: 'ocib:not-working-days:add' }
 
-    command.load-not-working-days:
-        class: DemigrantSoft\Entrypoint\Command\LoadWeekendsToNotWorkingDaysCommand
-        arguments:
-            - '@repository.not-working-days'
-        tags:
-            - { name: console.command, command: 'ocib:not-working-days:load' }
+#    command.load-not-working-days:
+#        class: DemigrantSoft\Entrypoint\Command\LoadWeekendsToNotWorkingDaysCommand
+#        arguments:
+#            - '@repository.not-working-days'
+#        tags:
+#            - { name: console.command, command: 'ocib:not-working-days:load' }

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\Entrypoint\Command;
+namespace DemigrantSoft\ClockInBot\Entrypoint\Command;
 
-use DemigrantSoft\Domain\Persistence\Migration;
+use DemigrantSoft\ClockInBot\Domain\Service\Persistence\Migration;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,7 +32,7 @@ final class InitEnvironmentCommand extends Command
                 $migration->down();
                 $migration->up();
 
-                $output->writeln(get_class($migration) . ' executed');
+                $output->writeln(\get_class($migration) . ' executed');
             }
         );
 

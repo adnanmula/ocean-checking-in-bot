@@ -1,9 +1,11 @@
 parameters:
-    level: 6
+    level: 1
     checkMissingIterableValueType: false
     paths:
-        -   src
+        - src
+    universalObjectCratesClasses:
+        - DemigrantSoft\Infrastructure\Service\CheckIn\ClientData
     ignoreErrors:
         -
-            message: '#Cannot call method [a-zA-Z\\]+\(\) on (SQLite3Stmt|SQLite3Result)\|false#'
-            path: %currentWorkingDirectory%/src/Infrastructure/*
+          message: '#Cannot call method [a-zA-Z\\]+\(\) on (SQLite3Stmt|SQLite3Result)\|false#'
+          path: %currentWorkingDirectory%/src/Infrastructure/*

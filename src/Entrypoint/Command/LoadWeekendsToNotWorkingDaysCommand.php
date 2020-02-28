@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\Entrypoint\Command;
+namespace DemigrantSoft\ClockInBot\Entrypoint\Command;
 
-use DemigrantSoft\Infrastructure\NotWorkingDays\Repository\NotWorkingDaysSqliteRepository;
+use DemigrantSoft\ClockInBot\Model\NotWorkingDay\NotWorkingDaysRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -10,9 +10,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class LoadWeekendsToNotWorkingDaysCommand extends Command
 {
-    private NotWorkingDaysSqliteRepository $repository;
+    private NotWorkingDaysRepository $repository;
 
-    public function __construct(NotWorkingDaysSqliteRepository $repository)
+    public function __construct(NotWorkingDaysRepository $repository)
     {
         $this->repository = $repository;
 
