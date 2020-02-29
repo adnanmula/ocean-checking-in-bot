@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository;
+namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository;
 
 use DemigrantSoft\ClockInBot\Domain\Service\Persistence\Migration;
 use Doctrine\DBAL\Connection;
@@ -16,14 +16,16 @@ final class DbalMigration implements Migration
 
     public function up(): void
     {
-//        $this->connection->exec('
-//          CREATE TABLE users (
-//                id uuid NOT NULL,
-//                email character varying(128) NOT NULL,
-//                password character varying(128) NOT NULL,
-//                PRIMARY KEY(id)
-//            )'
-//        );
+        $this->connection->exec('
+          CREATE TABLE users (
+                id uuid NOT NULL,
+                reference character varying(32) NOT NULL
+                    CONSTRAINT reference_unique UNIQUE,
+                email character varying(128) NOT NULL,
+                password character varying(128) NOT NULL,
+                PRIMARY KEY(id)
+            )'
+        );
 
         $this->connection->exec('CREATE TABLE "not-working-days" (date TEXT NOT NULL)');
     }
@@ -31,6 +33,6 @@ final class DbalMigration implements Migration
     public function down(): void
     {
         $this->connection->exec('DROP TABLE IF EXISTS "not-working-days"');
-//        $this->connection->exec('DROP TABLE IF EXISTS "users"');
+        $this->connection->exec('DROP TABLE IF EXISTS "users"');
     }
 }

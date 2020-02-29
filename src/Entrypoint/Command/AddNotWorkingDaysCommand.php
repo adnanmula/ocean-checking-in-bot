@@ -2,7 +2,7 @@
 
 namespace DemigrantSoft\ClockInBot\Entrypoint\Command;
 
-use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\User\UserRepository;
+use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\User\UserDbalRepository;
 use DemigrantSoft\ClockInBot\Model\NotWorkingDay\NotWorkingDaysRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,9 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class AddNotWorkingDaysCommand extends Command
 {
     private NotWorkingDaysRepository $repository;
-    private UserRepository $userRepository;
+    private UserDbalRepository $userRepository;
 
-    public function __construct(UserRepository $userRepository, NotWorkingDaysRepository $repository)
+    public function __construct(UserDbalRepository $userRepository, NotWorkingDaysRepository $repository)
     {
         $this->userRepository = $userRepository;
         $this->repository = $repository;

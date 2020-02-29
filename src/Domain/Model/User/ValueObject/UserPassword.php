@@ -2,7 +2,8 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject;
 
-final class UserPassword
-{
+use DemigrantSoft\ClockInBot\Domain\Model\Shared\ValueObject\StringValueObject;
 
+final class UserPassword extends StringValueObject
+{
 }

@@ -2,40 +2,6 @@ parameters:
     db_url: '%env(resolve:DATABASE_URL)%'
 
 services:
-    _defaults:
-        autowire: false
-        autoconfigure: false
-
-#    sqlite_repository:
-#        class: DemigrantSoft\Infrastructure\SqliteRepository
-#        arguments:
-#            - '%db%'
-
-#    repository.not-working-days:
-#        class: DemigrantSoft\Infrastructure\NotWorkingDays\Repository\NotWorkingDaysSqliteRepository
-#        parent: sqlite_repository
-#        autowire: false
-#        autoconfigure: false
-
-#    http.client.factory:
-#        class: DemigrantSoft\ClockInBot\Domain\Client\ClientFactory
-
-#    http.client:
-#        class: DemigrantSoft\ClockInBot\Domain\Client\Client
-#        factory: ['@http.client.factory', build]
-#        arguments:
-#            - "%env(OCEAN_URL)%"
-#            - "%env(USER)%"
-#            - "%env(PASS)%"
-#            - "%env(LAT)%"
-#            - "%env(LON)%"
-
-#    service.notification:
-#        class: DemigrantSoft\ClockInBot\Infrastructure\Notification\TelegramNotificationService
-#        arguments:
-#            - "%env(TELEGRAM_TOKEN)%"
-#            - "%env(TELEGRAM_CHAT_ID)%"
-
     connection.dbal:
         class: Doctrine\DBAL\Connection
         factory: 'Doctrine\DBAL\DriverManager::getConnection'
@@ -44,55 +10,34 @@ services:
               driver: 'pdo_pgsql'
 
     migration.dbal:
-        class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\DbalMigration
+        class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalMigration
         arguments:
             - '@connection.dbal'
 
     repository.dbal:
-        class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\DbalRepository
+        class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository
         arguments:
             - '@connection.dbal'
-
-#    repository.app.dbal:
-#        class: DemigrantSoft\Infrastructure\Persistence\Repository\App\AppDbalRepository
-#        parent: repository.dbal
-#        autowire: false
-#        autoconfigure: false
 
     command.init-environment:
         class: DemigrantSoft\ClockInBot\Entrypoint\Command\InitEnvironmentCommand
         arguments:
             - '@migration.dbal'
         tags:
-            - { name: console.command, command: 'ocib:environment:init' }
+            - { name: console.command, command: 'demigrantsoft:clock-in-bot:environment:init' }
 
-#    command.checkin:
-#        class: DemigrantSoft\Entrypoint\Command\CheckInCommand
-#        arguments:
-#            - '@http.client'
-#            - '@repository.not-working-days'
-#            - '@service.notification'
-#        tags:
-#            - { name: console.command, command: 'ocib:checkin:add' }
+    repository.doctrine.user:
+        class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\User\UserDbalRepository
+        parent: 'repository.dbal'
 
-#    command.get-checkins:
-#        class: DemigrantSoft\ClockInBot\Entrypoint\Command\GetCheckInsCommand
-#        arguments:
-#            - '@http.client'
-#            - '@service.notification'
-#        tags:
-#            - { name: console.command, command: 'ocib:checkin:get' }
+    service.user.creator:
+        class: DemigrantSoft\ClockInBot\Domain\Service\User\UserCreator
+        arguments:
+            - '@repository.doctrine.user'
 
-#    command.add-not-working-day:
-#        class: DemigrantSoft\Entrypoint\Command\AddNotWorkingDaysCommand
-#        arguments:
-#            - '@repository.not-working-days'
-#        tags:
-#            - { name: console.command, command: 'ocib:not-working-days:add' }
-
-#    command.load-not-working-days:
-#        class: DemigrantSoft\Entrypoint\Command\LoadWeekendsToNotWorkingDaysCommand
-#        arguments:
-#            - '@repository.not-working-days'
-#        tags:
-#            - { name: console.command, command: 'ocib:not-working-days:load' }
+    command.user.register:
+        class: DemigrantSoft\ClockInBot\Entrypoint\Command\UserRegisterCommand
+        arguments:
+            - '@service.user.creator'
+        tags:
+            - { name: console.command, command: 'demigrantsoft:clock-in-bot:user:register' }

@@ -4,10 +4,10 @@ namespace DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObj
 
 use DemigrantSoft\ClockInBot\Model\CheckIn\CheckIn;
 
-final class CheckInSchedule
+final class ClockInSchedule
 {
     public static function from(CheckIn ...$checkIn)
     {
-
+        return new self();
     }
 }

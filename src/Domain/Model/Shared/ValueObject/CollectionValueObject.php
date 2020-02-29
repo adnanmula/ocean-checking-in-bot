@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Model\Shared\ValueObject;
+namespace DemigrantSoft\ClockInBot\Domain\Model\Shared\ValueObject;
 
 class CollectionValueObject implements \Iterator, \Countable, ValueObject
 {

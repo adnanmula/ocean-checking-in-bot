@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\NotWorkingDays;
+namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\NotWorkingDays;
 
+use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
 use DemigrantSoft\ClockInBot\Model\Shared\ValueObject\Uuid;
-use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\DbalRepository;
-use DemigrantSoft\ClockInBot\Model\NotWorkingDay\NotWorkingDaysRepository as NotWorkingDaysRepositoryInterface;
+use DemigrantSoft\ClockInBot\Model\NotWorkingDay\NotWorkingDaysRepository;
 
-final class NotWorkingDaysRepository extends DbalRepository implements NotWorkingDaysRepositoryInterface
+final class NotWorkingDaysDbalRepository extends DbalRepository implements NotWorkingDaysRepository
 {
     public function add(Uuid $userId, \DateTimeInterface $date): void
     {

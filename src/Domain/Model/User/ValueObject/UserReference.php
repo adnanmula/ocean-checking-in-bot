@@ -4,6 +4,6 @@ namespace DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject;
 
 use DemigrantSoft\ClockInBot\Domain\Model\Shared\ValueObject\StringValueObject;
 
-final class UserEmail extends StringValueObject
+final class UserReference extends StringValueObject
 {
 }

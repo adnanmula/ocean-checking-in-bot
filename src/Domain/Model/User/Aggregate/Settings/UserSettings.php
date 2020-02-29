@@ -1,40 +1,40 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Model\User\Aggregate\Settings;
+namespace DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\CheckInMode;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\CheckInSchedule;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\UserClient;
+use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInMode;
+use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInSchedule;
+use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInPlatform;
 
 final class UserSettings
 {
-    private CheckInMode $mode;
-    private CheckInSchedule $schedule;
-    private UserClient $client;
+    private ClockInMode $mode;
+    private ClockInSchedule $schedule;
+    private ClockInPlatform $client;
 
-    private function __construct(UserClient $client, CheckInMode $mode, CheckInSchedule $schedule)
+    private function __construct(ClockInPlatform $client, ClockInMode $mode, ClockInSchedule $schedule)
     {
         $this->client = $client;
         $this->mode = $mode;
         $this->schedule = $schedule;
     }
 
-    public static function from(UserClient $client, CheckInMode $mode, CheckInSchedule $schedule): self
+    public static function from(ClockInPlatform $client, ClockInMode $mode, ClockInSchedule $schedule): self
     {
         return new self($client, $mode, $schedule);
     }
 
-    public function client(): UserClient
+    public function client(): ClockInPlatform
     {
         return $this->client;
     }
 
-    public function mode(): CheckInMode
+    public function mode(): ClockInMode
     {
         return $this->mode;
     }
 
-    public function schedule(): CheckInSchedule
+    public function schedule(): ClockInSchedule
     {
         return $this->schedule;
     }

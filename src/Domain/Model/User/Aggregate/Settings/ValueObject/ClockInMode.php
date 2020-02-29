@@ -2,9 +2,9 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject;
 
-use DemigrantSoft\ClockInBot\Model\Shared\ValueObject\EnumValueObject;
+use DemigrantSoft\ClockInBot\Domain\Model\Shared\ValueObject\EnumValueObject;
 
-final class CheckInMode extends EnumValueObject
+final class ClockInMode extends EnumValueObject
 {
     public const MODE_AUTO = 'auto';
     public const MODE_MANUAL = 'manual';

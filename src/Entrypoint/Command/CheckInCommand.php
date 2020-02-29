@@ -5,7 +5,7 @@ namespace DemigrantSoft\ClockInBot\Entrypoint\Command;
 use DemigrantSoft\ClockInBot\Model\NotWorkingDay\NotWorkingDaysRepository;
 use DemigrantSoft\ClockInBot\Model\Shared\ValueObject\Uuid;
 use DemigrantSoft\ClockInBot\Service\Notification\NotificationService;
-use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\User\UserRepository;
+use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Repository\User\UserDbalRepository;
 use DemigrantSoft\ClockInBot\Infrastructure\Service\CheckIn\ClientData;
 use DemigrantSoft\ClockInBot\Infrastructure\Service\CheckIn\ClientFactory;
 use Symfony\Component\Console\Command\Command;
@@ -19,11 +19,11 @@ final class CheckInCommand extends Command
 
     private NotWorkingDaysRepository $repository;
     private NotificationService $notificationService;
-    private UserRepository $userRepository;
+    private UserDbalRepository $userRepository;
     private ClientFactory $clientFactory;
 
     public function __construct(
-        UserRepository $userRepository,
+        UserDbalRepository $userRepository,
         NotificationService $notificationService,
         NotWorkingDaysRepository $repository,
         ClientFactory $clientFactory

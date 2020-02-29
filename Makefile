@@ -19,7 +19,7 @@ install: ## make composer install
 	docker-compose -f ${FILE} exec --user=${UID} ${CONTAINER} sh -c "php bin/composer.phar install"
 
 init: ## init environment
-	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:environment:init
+	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console demigrantsoft:clock-in-bot:environment:init
 
 checkin: ## new checkin
 	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:checkin:add
@@ -31,7 +31,7 @@ add-not-working-days: ## adds dates to not working days
 	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:not-working-days:add $(dates)
 
 load-not-working-days: ## load weekends of given year to not working days db
-	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:not-working-days:load $(year)
+	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console demigrantsoft:clock-in-bot:not-working-days:load $(year)
 
 stan: ## pass phpstan
 	docker-compose -f ${FILE} exec --user=${UID} php sh -c "php -d memory_limit=256M vendor/bin/phpstan analyse -c phpstan.neon"
