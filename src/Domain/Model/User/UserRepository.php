@@ -2,12 +2,12 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\Shared\ValueObject\Uuid;
+use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 
 interface UserRepository
 {
-    public function byId(Uuid $reference): ?User;
+    public function byId(UserId $reference): ?User;
     public function byReference(UserReference $reference): ?User;
     public function save(User $user): void;
 }

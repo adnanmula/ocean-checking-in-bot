@@ -2,11 +2,11 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject;
 
-use DemigrantSoft\ClockInBot\Model\CheckIn\CheckIn;
+use DemigrantSoft\ClockInBot\Model\CheckIn\ClockIn;
 
 final class ClockInSchedule
 {
-    public static function from(CheckIn ...$checkIn)
+    public static function from(ClockIn ...$checkIn)
     {
         return new self();
     }

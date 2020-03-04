@@ -2,8 +2,8 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject;
 
-use DemigrantSoft\ClockInBot\Domain\Model\Shared\ValueObject\EnumValueObject;
 use DemigrantSoft\ClockInBot\Infrastructure\Service\CheckIn\Ocean\OceanClient;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\EnumValueObject;
 
 final class ClockInPlatform extends EnumValueObject
 {

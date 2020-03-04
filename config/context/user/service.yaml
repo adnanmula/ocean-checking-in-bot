@@ -1,0 +1,5 @@
+services:
+  service.user.creator:
+    class: DemigrantSoft\ClockInBot\Domain\Service\User\UserCreator
+    arguments:
+      - '@repository.dbal.user'

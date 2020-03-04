@@ -4,6 +4,6 @@ namespace DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject;
 
 use Pccomponentes\Ddd\Domain\Model\ValueObject\StringValueObject;
 
-final class UserPassword extends StringValueObject
+final class UserUsername extends StringValueObject
 {
 }

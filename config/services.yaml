@@ -2,42 +2,10 @@ parameters:
     db_url: '%env(resolve:DATABASE_URL)%'
 
 services:
-    connection.dbal:
-        class: Doctrine\DBAL\Connection
-        factory: 'Doctrine\DBAL\DriverManager::getConnection'
-        arguments:
-            - url: '%db_url%'
-              driver: 'pdo_pgsql'
 
-    migration.dbal:
-        class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalMigration
-        arguments:
-            - '@connection.dbal'
 
-    repository.dbal:
-        class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository
-        arguments:
-            - '@connection.dbal'
-
-    command.init-environment:
-        class: DemigrantSoft\ClockInBot\Entrypoint\Command\InitEnvironmentCommand
-        arguments:
-            - '@migration.dbal'
-        tags:
-            - { name: console.command, command: 'demigrantsoft:clock-in-bot:environment:init' }
-
-    repository.doctrine.user:
-        class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\User\UserDbalRepository
-        parent: 'repository.dbal'
-
-    service.user.creator:
-        class: DemigrantSoft\ClockInBot\Domain\Service\User\UserCreator
-        arguments:
-            - '@repository.doctrine.user'
-
-    command.user.register:
-        class: DemigrantSoft\ClockInBot\Entrypoint\Command\UserRegisterCommand
-        arguments:
-            - '@service.user.creator'
-        tags:
-            - { name: console.command, command: 'demigrantsoft:clock-in-bot:user:register' }
+imports:
+    - { resource: context/system/repository.yaml }
+    - { resource: context/system/command.yaml }
+    - { resource: context/user/repository.yaml }
+    - { resource: context/user/service.yaml }

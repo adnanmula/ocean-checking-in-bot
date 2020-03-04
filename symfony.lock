@@ -1,4 +1,7 @@
 {
+    "beberlei/assert": {
+        "version": "v3.2.7"
+    },
     "doctrine/cache": {
         "version": "1.10.0"
     },
@@ -19,6 +22,9 @@
     },
     "guzzlehttp/psr7": {
         "version": "1.5.2"
+    },
+    "pccomponentes/ddd": {
+        "version": "v1.2.4"
     },
     "php": {
         "version": "7.4"

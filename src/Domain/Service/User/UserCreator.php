@@ -2,12 +2,12 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Service\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\Shared\ValueObject\Uuid;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\UserSettings;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Exception\UserAlreadyExistsException;
 use DemigrantSoft\ClockInBot\Domain\Model\User\User;
 use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserEmail;
+use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserPassword;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 
@@ -20,7 +20,7 @@ final class UserCreator
         $this->repository = $repository;
     }
 
-    public function execute(Uuid $id, UserReference $reference, UserEmail $email, UserPassword $password, UserSettings $settings): void
+    public function execute(UserId $id, UserReference $reference, UserUsername $username, UserPassword $password, UserSettings $settings): void
     {
         $user = $this->repository->byReference($reference);
 
@@ -29,7 +29,7 @@ final class UserCreator
         }
 
         $this->repository->save(
-            User::create($id, $reference, $email, $password, $settings)
+            User::create($id, $reference, $username, $password, $settings)
         );
     }
 }

@@ -19,7 +19,10 @@ install: ## make composer install
 	docker-compose -f ${FILE} exec --user=${UID} ${CONTAINER} sh -c "php bin/composer.phar install"
 
 init: ## init environment
-	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console demigrantsoft:clock-in-bot:environment:init
+	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console clock-in-bot:environment:init
+
+fixtures: ## load fixtures
+	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console clock-in-bot:environment:fixtures
 
 checkin: ## new checkin
 	docker-compose -f ${FILE} run --rm -u ${UID}:${GID} php php bin/console ocib:checkin:add

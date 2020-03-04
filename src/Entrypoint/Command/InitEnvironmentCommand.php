@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class InitEnvironmentCommand extends Command
 {
-    /** @var Migration[] */
+    /** @var array<Migration> */
     private array $migrations;
 
     public function __construct(Migration ...$migration)

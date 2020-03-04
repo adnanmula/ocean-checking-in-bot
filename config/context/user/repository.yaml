@@ -1,0 +1,4 @@
+services:
+  repository.dbal.user:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\User\UserDbalRepository
+    parent: 'repository.dbal.base'

@@ -2,37 +2,31 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\Shared\ValueObject\Uuid;
+use DemigrantSoft\ClockInBot\Domain\Model\Shared\SimpleAggregateRoot;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\UserSettings;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserEmail;
+use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserPassword;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 
-final class User
+final class User extends SimpleAggregateRoot
 {
-    private Uuid $id;
+    private const MODEL_NAME = 'user';
+
     private UserReference $reference;
-    private UserEmail $email;
+    private UserUsername $username;
     private UserPassword $password;
     private UserSettings $settings;
 
-    private function __construct(Uuid $id, UserReference $reference, UserEmail $email, UserPassword $password, UserSettings $settings)
+    public static function create(UserId $id, UserReference $reference, UserUsername $username, UserPassword $password, UserSettings $settings): self
     {
-        $this->id = $id;
-        $this->email = $email;
-        $this->password = $password;
-        $this->settings = $settings;
-        $this->reference = $reference;
-    }
+        $self = new self($id);
+        $self->reference = $reference;
+        $self->username = $username;
+        $self->password = $password;
+        $self->settings = $settings;
 
-    public static function create(Uuid $id, UserReference $reference, UserEmail $email, UserPassword $password, UserSettings $settings): self
-    {
-        return new self($id, $reference, $email, $password, $settings);
-    }
-
-    public function id(): Uuid
-    {
-        return $this->id;
+        return $self;
     }
 
     public function reference(): UserReference
@@ -40,9 +34,9 @@ final class User
         return $this->reference;
     }
 
-    public function email(): UserEmail
+    public function username(): UserUsername
     {
-        return $this->email;
+        return $this->username;
     }
 
     public function password(): UserPassword
@@ -53,5 +47,10 @@ final class User
     public function settings(): UserSettings
     {
         return $this->settings;
+    }
+
+    public static function modelName(): string
+    {
+        return self::MODEL_NAME;
     }
 }

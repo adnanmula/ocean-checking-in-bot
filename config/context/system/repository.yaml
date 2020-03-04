@@ -1,0 +1,42 @@
+services:
+  repository.dbal.connection:
+    class: Doctrine\DBAL\Connection
+    factory: 'Doctrine\DBAL\DriverManager::getConnection'
+    arguments:
+      - url: '%db_url%'
+        driver: 'pdo_pgsql'
+
+  repository.dbal.migration:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalMigration
+    arguments:
+      - '@repository.dbal.connection'
+
+  repository.dbal.base:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository
+    arguments:
+      - '@repository.dbal.connection'
+
+  repository.dbal.fixture.base:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository
+    arguments:
+      - '@repository.dbal.connection'
+
+  repository.dbal.fixture.user:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Fixtures\User\UserFixtures
+    parent: 'repository.dbal.fixture.base'
+    arguments:
+      - '@repository.dbal.connection'
+
+  repository.dbal.fixture.user-settings:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Fixtures\User\UserSettingsFixtures
+    parent: 'repository.dbal.fixture.base'
+    arguments:
+      - '@repository.dbal.connection'
+
+  repository.dbal.fixture.registry:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Fixtures\FixturesRegistry
+    arguments:
+      - '@repository.dbal.fixture.user'
+      - '@repository.dbal.fixture.user-settings'
+
+

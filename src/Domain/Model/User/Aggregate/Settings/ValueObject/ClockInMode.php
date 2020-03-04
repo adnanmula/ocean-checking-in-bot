@@ -2,7 +2,7 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject;
 
-use DemigrantSoft\ClockInBot\Domain\Model\Shared\ValueObject\EnumValueObject;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\EnumValueObject;
 
 final class ClockInMode extends EnumValueObject
 {
