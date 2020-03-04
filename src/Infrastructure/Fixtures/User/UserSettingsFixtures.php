@@ -18,10 +18,6 @@ final class UserSettingsFixtures extends DbalFixture implements Fixture
 
     public function load(): void
     {
-        if ($this->isLoaded()) {
-            return;
-        }
-
         $this->save(
             UserId::from(UserFixtures::FIXTURE_USER_1_ID),
             UserSettings::from(

@@ -31,6 +31,8 @@ final class FixturesRegistry
             fn (string $fixture) => $this->load($this->registry[$fixture])
         );
 
-        $fixture->load();
+        if (false === $fixture->isLoaded()) {
+            $fixture->load();
+        }
     }
 }
