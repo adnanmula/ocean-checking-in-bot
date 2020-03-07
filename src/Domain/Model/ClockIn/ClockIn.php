@@ -1,32 +1,32 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Model\ClockIn;
+namespace DemigrantSoft\ClockInBot\Domain\Model\ClockIn;
 
 use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ValueObject\ClockInDate;
-use DemigrantSoft\ClockInBot\Model\ClockIn\ValueObject\ClockInRandomness;
+use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ValueObject\ClockInRandomness;
 
 final class ClockIn
 {
-    private \DateTimeInterface $checkInDate;
+    private \DateTimeInterface $clockInDate;
     private ClockInRandomness $randomness;
 
-    private function __construct(ClockInDate $checkInDate, ClockInRandomness $randomness)
+    private function __construct(ClockInDate $clockInDate, ?ClockInRandomness $randomness)
     {
-        $this->checkInDate = $checkInDate;
+        $this->clockInDate = $clockInDate;
         $this->randomness = $randomness;
     }
 
-    public static function from(ClockInDate $checkInDate, ClockInRandomness $randomness): self
+    public static function from(ClockInDate $clockInDate, ?ClockInRandomness $randomness): self
     {
-        return new self($checkInDate, $randomness);
+        return new self($clockInDate, $randomness);
     }
 
-    public function checkInDate(): \DateTimeInterface
+    public function clockInDate(): \DateTimeInterface
     {
-        return $this->checkInDate;
+        return $this->clockInDate;
     }
 
-    public function randomness(): ClockInRandomness
+    public function randomness(): ?ClockInRandomness
     {
         return $this->randomness;
     }

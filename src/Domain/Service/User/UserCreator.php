@@ -20,7 +20,7 @@ final class UserCreator
         $this->repository = $repository;
     }
 
-    public function execute(UserId $id, UserReference $reference, UserUsername $username, UserPassword $password, UserSettings $settings): void
+    public function execute(UserId $id, UserReference $reference, UserUsername $username, UserSettings $settings): void
     {
         $user = $this->repository->byReference($reference);
 
@@ -29,7 +29,7 @@ final class UserCreator
         }
 
         $this->repository->save(
-            User::create($id, $reference, $username, $password, $settings)
+            User::create($id, $reference, $username, $settings)
         );
     }
 }

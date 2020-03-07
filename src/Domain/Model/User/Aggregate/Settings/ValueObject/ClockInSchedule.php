@@ -2,12 +2,18 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject;
 
-use DemigrantSoft\ClockInBot\Model\CheckIn\ClockIn;
+use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ClockIn;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\ValueObject;
 
-final class ClockInSchedule
+final class ClockInSchedule implements ValueObject
 {
     public static function from(ClockIn ...$checkIn)
     {
         return new self();
+    }
+
+    public function jsonSerialize()
+    {
+        // TODO: Implement jsonSerialize() method.
     }
 }

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\User\Register;
+namespace DemigrantSoft\ClockInBot\Application\Command\User\Register;
 
 use Assert\Assert;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInPlatform;
@@ -18,7 +18,6 @@ final class UserRegisterCommand extends Command
     private UserId $id;
     private UserReference $reference;
     private UserUsername $username;
-    private UserPassword $password;
     private ClockInPlatform $platform;
 
     public static function messageName(): string
@@ -49,14 +48,12 @@ final class UserRegisterCommand extends Command
             ->that($payload['id'], 'id')->uuid()
             ->that($payload['reference'], 'reference')->string()->notBlank()
             ->that($payload['username'], 'username')->string()->notBlank()
-            ->that($payload['password'], 'password')->string()->notBlank()
             ->that($payload['platform'], 'platform')->string()->notBlank()
             ->verifyNow();
 
         $this->id = UserId::from($payload['id']);
         $this->reference = UserReference::from($payload['reference']);
         $this->username = UserUsername::from($payload['username']);
-        $this->password = UserPassword::from($payload['password']);
         $this->platform = ClockInPlatform::from($payload['platform']);
     }
 
@@ -73,11 +70,6 @@ final class UserRegisterCommand extends Command
     public function username(): UserUsername
     {
         return $this->username;
-    }
-
-    public function password(): UserPassword
-    {
-        return $this->password;
     }
 
     public function platform(): ClockInPlatform

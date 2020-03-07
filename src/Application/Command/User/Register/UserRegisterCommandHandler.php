@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\User\Register;
+namespace DemigrantSoft\ClockInBot\Application\Command\User\Register;
 
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\UserSettings;
+use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInData;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInSchedule;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
@@ -23,11 +24,11 @@ final class UserRegisterCommandHandler
             UserId::v4(),
             $command->reference(),
             $command->username(),
-            $command->password(),
             UserSettings::from(
                 $command->platform(),
                 ClockInMode::from(ClockInMode::MODE_MANUAL),
-                ClockInSchedule::from()
+                ClockInSchedule::from(),
+                ClockInData::from(),
             )
         );
     }

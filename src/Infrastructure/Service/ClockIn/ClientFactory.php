@@ -1,9 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Service\CheckIn;
+namespace DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn;
 
 use DemigrantSoft\ClockInBot\Domain\Model\Client\Client;
-use DemigrantSoft\ClockInBot\Model\User\Aggregate\Settings\ValueObject\UserClient;
+use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInData;
+use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInPlatform;
+use DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\Ocean\OceanClientFactory;
 
 final class ClientFactory
 {
@@ -14,7 +16,7 @@ final class ClientFactory
         $this->oceanFactory = $oceanFactory;
     }
 
-    public function build(UserClient $client, ClientData $data): Client
+    public function build(ClockInPlatform $client, ClockInData $data): Client
     {
         if ($client->isOcean()) {
             $this->oceanFactory->build(

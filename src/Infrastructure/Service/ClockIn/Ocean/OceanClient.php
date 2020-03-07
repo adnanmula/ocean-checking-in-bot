@@ -1,8 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Service\CheckIn\Ocean;
+namespace DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\Ocean;
 
 use DemigrantSoft\ClockInBot\Domain\Model\Client\Client;
+use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ClockIn;
+use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ClockIns;
+use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ValueObject\ClockInDate;
 use GuzzleHttp\RequestOptions;
 
 final class OceanClient extends \GuzzleHttp\Client implements Client
@@ -38,7 +41,7 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
         return json_decode($login->getBody()->getContents());
     }
 
-    public function checkIn(): void
+    public function clockIn(): void
     {
         $this->post(
             '/data/marcajes/realizar-manual', [
@@ -54,8 +57,7 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
         );
     }
 
-    /** @return array[] */
-    public function checkIns(\DateTimeInterface $from, \DateTimeInterface $to): array
+    public function clockIns(\DateTimeInterface $from, \DateTimeInterface $to): ClockIns
     {
         $data = $this->forceLogin();
 
@@ -71,7 +73,22 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
             ]
         );
 
-        return json_decode($response->getBody()->getContents(), true);
+        $clockIns = [];
+        foreach (\json_decode($response->getBody()->getContents(), true) as $day) {
+            foreach ($day['Marcajes'] as $marcaje) {
+                $clockIns[] = ClockIn::from(
+                    ClockInDate::from($marcaje['MarcajeEntrada']['Hora']),
+                    null
+                );
+
+                $clockIns[] = ClockIn::from(
+                    ClockInDate::from($marcaje['MarcajeSalida']['Hora']),
+                    null
+                );
+            }
+        }
+
+        return ClockIns::from($clockIns);
     }
 
     public function platform(): string

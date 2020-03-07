@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Service\CheckIn;
+namespace DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject;
 
-final class ClientData
+use Pccomponentes\Ddd\Domain\Model\ValueObject\ValueObject;
+
+final class ClockInData implements ValueObject
 {
     private array $data;
 
@@ -23,5 +25,10 @@ final class ClientData
         }
 
         //throw algo
+    }
+
+    public function jsonSerialize()
+    {
+        // TODO: Implement jsonSerialize() method.
     }
 }

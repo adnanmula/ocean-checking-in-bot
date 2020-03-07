@@ -3,12 +3,12 @@
 namespace DemigrantSoft\ClockInBot\Infrastructure\Fixtures\User;
 
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\UserSettings;
+use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInData;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInPlatform;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInSchedule;
 use DemigrantSoft\ClockInBot\Domain\Model\User\User;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserPassword;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use DemigrantSoft\ClockInBot\Domain\Service\Persistence\Fixture;
@@ -29,12 +29,12 @@ final class UserFixtures extends DbalFixture implements Fixture
             User::create(
                 UserId::from(self::FIXTURE_USER_1_ID),
                 UserReference::from('123456'),
-                UserUsername::from('asdf@ghj.kl'),
-                UserPassword::from('password'),
+                UserUsername::from('username'),
                 UserSettings::from(
                     ClockInPlatform::from(ClockInPlatform::PLATFORM_OCEAN),
                     ClockInMode::from(ClockInMode::MODE_MANUAL),
-                    ClockInSchedule::from()
+                    ClockInSchedule::from(),
+                    ClockInData::from(),
                 )
             )
         );
@@ -43,12 +43,12 @@ final class UserFixtures extends DbalFixture implements Fixture
             User::create(
                 UserId::from(self::FIXTURE_USER_2_ID),
                 UserReference::from('100000'),
-                UserUsername::from('fdsa@ewq.vbn'),
-                UserPassword::from('drowassp'),
+                UserUsername::from('username2'),
                 UserSettings::from(
                     ClockInPlatform::from(ClockInPlatform::PLATFORM_OCEAN),
                     ClockInMode::from(ClockInMode::MODE_MANUAL),
-                    ClockInSchedule::from()
+                    ClockInSchedule::from(),
+                    ClockInData::from(),
                 )
             )
         );

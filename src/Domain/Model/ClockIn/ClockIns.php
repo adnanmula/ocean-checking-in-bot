@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Model\ClockIn;
+namespace DemigrantSoft\ClockInBot\Domain\Model\ClockIn;
 
 use Pccomponentes\Ddd\Domain\Model\ValueObject\CollectionValueObject;
 

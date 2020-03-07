@@ -3,6 +3,7 @@
 namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\User;
 
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\UserSettings;
+use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInData;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInPlatform;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInSchedule;
@@ -22,7 +23,7 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
     {
         $result = $this->connection
             ->createQueryBuilder()
-            ->select('a.id, a.reference, a.username, a.password')
+            ->select('a.id, a.reference, a.username')
             ->from(self::TABLE_USER, 'a')
             ->where('a.reference = :reference')
             ->setParameter('id', $id->value())
@@ -41,7 +42,7 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
     {
         $result = $this->connection
             ->createQueryBuilder()
-            ->select('a.id, a.reference, a.username, a.password')
+            ->select('a.id, a.reference, a.username')
             ->from(self::TABLE_USER, 'a')
             ->where('a.reference = :reference')
             ->setParameter('reference', $reference->value())
@@ -61,10 +62,10 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
         $stmt = $this->connection->prepare(
             \sprintf(
                 '
-                INSERT INTO %s (id, reference, username, password) VALUES (
-                    :id, :reference, :username, :password
+                INSERT INTO %s (id, reference, username) VALUES (
+                    :id, :reference, :username
                 ) ON CONFLICT (id) DO UPDATE SET
-                    id = :id, reference = :reference, username = :username, password = :password',
+                    id = :id, reference = :reference, username = :username',
                 self::TABLE_USER
             )
         );
@@ -72,7 +73,6 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
         $stmt->bindValue(':id', $user->aggregateId()->value());
         $stmt->bindValue(':reference', $user->reference()->value());
         $stmt->bindValue(':username', $user->username()->value());
-        $stmt->bindValue(':password', $user->password()->value());
 
         $stmt->execute();
     }
@@ -83,11 +83,11 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
             UserId::from($result['id']),
             UserReference::from($result['reference']),
             UserUsername::from($result['username']),
-            UserPassword::from($result['password']),
             UserSettings::from(
                 ClockInPlatform::from(ClockInPlatform::PLATFORM_OCEAN),
                 ClockInMode::from(ClockInMode::MODE_MANUAL),
-                ClockInSchedule::from()
+                ClockInSchedule::from(),
+                ClockInData::from(),
             )
         );
     }

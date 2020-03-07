@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Service\CheckIn\Ocean;
+namespace DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\Ocean;
 
 use GuzzleHttp\RequestOptions;
 

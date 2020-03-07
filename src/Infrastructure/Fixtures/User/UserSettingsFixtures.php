@@ -3,6 +3,7 @@
 namespace DemigrantSoft\ClockInBot\Infrastructure\Fixtures\User;
 
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\UserSettings;
+use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInData;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInPlatform;
 use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInSchedule;
@@ -23,7 +24,8 @@ final class UserSettingsFixtures extends DbalFixture implements Fixture
             UserSettings::from(
                 ClockInPlatform::from(ClockInPlatform::PLATFORM_OCEAN),
                 ClockInMode::from(ClockInMode::MODE_MANUAL),
-                ClockInSchedule::from()
+                ClockInSchedule::from(),
+                ClockInData::from(),
             )
         );
 
@@ -32,7 +34,8 @@ final class UserSettingsFixtures extends DbalFixture implements Fixture
             UserSettings::from(
                 ClockInPlatform::from(ClockInPlatform::PLATFORM_OCEAN),
                 ClockInMode::from(ClockInMode::MODE_AUTO),
-                ClockInSchedule::from()
+                ClockInSchedule::from(),
+                ClockInData::from(),
             )
         );
 
