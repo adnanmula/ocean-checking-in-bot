@@ -2,11 +2,6 @@
 
 namespace DemigrantSoft\ClockInBot\Infrastructure\Fixtures\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\UserSettings;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInData;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInMode;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInPlatform;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInSchedule;
 use DemigrantSoft\ClockInBot\Domain\Model\User\User;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
@@ -30,12 +25,6 @@ final class UserFixtures extends DbalFixture implements Fixture
                 UserId::from(self::FIXTURE_USER_1_ID),
                 UserReference::from('123456'),
                 UserUsername::from('username'),
-                UserSettings::from(
-                    ClockInPlatform::from(ClockInPlatform::PLATFORM_OCEAN),
-                    ClockInMode::from(ClockInMode::MODE_MANUAL),
-                    ClockInSchedule::from(),
-                    ClockInData::from(),
-                )
             )
         );
 
@@ -44,12 +33,6 @@ final class UserFixtures extends DbalFixture implements Fixture
                 UserId::from(self::FIXTURE_USER_2_ID),
                 UserReference::from('100000'),
                 UserUsername::from('username2'),
-                UserSettings::from(
-                    ClockInPlatform::from(ClockInPlatform::PLATFORM_OCEAN),
-                    ClockInMode::from(ClockInMode::MODE_MANUAL),
-                    ClockInSchedule::from(),
-                    ClockInData::from(),
-                )
             )
         );
 
@@ -61,10 +44,10 @@ final class UserFixtures extends DbalFixture implements Fixture
         $stmt = $this->connection->prepare(
             \sprintf(
                 '
-                INSERT INTO %s (id, reference, username, password) VALUES (
-                    :id, :reference, :username, :password
+                INSERT INTO %s (id, reference, username) VALUES (
+                    :id, :reference, :username
                 ) ON CONFLICT (id) DO UPDATE SET
-                    id = :id, reference = :reference, username = :username, password = :password',
+                    id = :id, reference = :reference, username = :username',
                 self::TABLE_USER
             )
         );
@@ -72,7 +55,6 @@ final class UserFixtures extends DbalFixture implements Fixture
         $stmt->bindValue(':id', $user->aggregateId()->value());
         $stmt->bindValue(':reference', $user->reference()->value());
         $stmt->bindValue(':username', $user->username()->value());
-        $stmt->bindValue(':password', $user->password()->value());
 
         $stmt->execute();
     }

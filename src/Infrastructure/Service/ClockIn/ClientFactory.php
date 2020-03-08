@@ -3,8 +3,8 @@
 namespace DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn;
 
 use DemigrantSoft\ClockInBot\Domain\Model\Client\Client;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInData;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInPlatform;
+use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData;
+use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
 use DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\Ocean\OceanClientFactory;
 
 final class ClientFactory
@@ -16,7 +16,7 @@ final class ClientFactory
         $this->oceanFactory = $oceanFactory;
     }
 
-    public function build(ClockInPlatform $client, ClockInData $data): Client
+    public function build(ClockInPlatform $client, UserClientData $data): Client
     {
         if ($client->isOcean()) {
             $this->oceanFactory->build(

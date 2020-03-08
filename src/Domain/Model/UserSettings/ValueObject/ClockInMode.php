@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject;
+namespace DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject;
 
 use Pccomponentes\Ddd\Domain\Model\ValueObject\EnumValueObject;
 

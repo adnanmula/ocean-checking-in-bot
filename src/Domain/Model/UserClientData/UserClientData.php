@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject;
+namespace DemigrantSoft\ClockInBot\Domain\Model\UserClientData;
 
 use Pccomponentes\Ddd\Domain\Model\ValueObject\ValueObject;
 
-final class ClockInData implements ValueObject
+final class UserClientData
 {
     private array $data;
 
-    public function __construct(array $data)
+    private function __construct(array $data)
     {
         $this->data = $data;
     }
@@ -18,17 +18,17 @@ final class ClockInData implements ValueObject
         return new self(\array_merge(...$data));
     }
 
-    public function __call(string $key, array $arguments): string
+    public function all(): array
+    {
+        return $this->data;
+    }
+
+    public function __call(string $key, array $arguments): ?string
     {
         if (\array_key_exists($key, $this->data)) {
             return $this->data[$key];
         }
 
-        //throw algo
-    }
-
-    public function jsonSerialize()
-    {
-        // TODO: Implement jsonSerialize() method.
+        return null;
     }
 }

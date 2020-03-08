@@ -3,9 +3,9 @@
 namespace DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\Ocean;
 
 use DemigrantSoft\ClockInBot\Domain\Model\Client\Client;
-use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ClockIn;
-use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ClockIns;
-use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ValueObject\ClockInDate;
+use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIn;
+use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockInDate;
+use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIns;
 use GuzzleHttp\RequestOptions;
 
 final class OceanClient extends \GuzzleHttp\Client implements Client

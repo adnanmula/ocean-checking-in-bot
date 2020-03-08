@@ -3,15 +3,15 @@
 namespace DemigrantSoft\ClockInBot\Domain\Service\User;
 
 use DemigrantSoft\ClockInBot\Domain\Model\User\Exception\UserNotExistsException;
-use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
+use DemigrantSoft\ClockInBot\Domain\Model\User\UserScheduleRepository;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use DemigrantSoft\ClockInBot\Model\Shared\ValueObject\Uuid;
 
 final class UserFinder
 {
-    private UserRepository $repository;
+    private UserScheduleRepository $repository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserScheduleRepository $repository)
     {
         $this->repository = $repository;
     }

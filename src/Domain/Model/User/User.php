@@ -3,10 +3,8 @@
 namespace DemigrantSoft\ClockInBot\Domain\Model\User;
 
 use DemigrantSoft\ClockInBot\Domain\Model\Shared\SimpleAggregateRoot;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\UserSettings;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserPassword;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 
 final class User extends SimpleAggregateRoot
@@ -15,14 +13,12 @@ final class User extends SimpleAggregateRoot
 
     private UserReference $reference;
     private UserUsername $username;
-    private UserSettings $settings;
 
-    public static function create(UserId $id, UserReference $reference, UserUsername $username, UserSettings $settings): self
+    public static function create(UserId $id, UserReference $reference, UserUsername $username): self
     {
         $self = new self($id);
         $self->reference = $reference;
         $self->username = $username;
-        $self->settings = $settings;
 
         return $self;
     }
@@ -35,11 +31,6 @@ final class User extends SimpleAggregateRoot
     public function username(): UserUsername
     {
         return $this->username;
-    }
-
-    public function settings(): UserSettings
-    {
-        return $this->settings;
     }
 
     public static function modelName(): string

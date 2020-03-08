@@ -3,11 +3,10 @@
 namespace DemigrantSoft\ClockInBot\Application\Command\User\Register;
 
 use Assert\Assert;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInPlatform;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserPassword;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
+use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
 use Pccomponentes\Ddd\Application\Command;
 
 final class UserRegisterCommand extends Command
@@ -40,21 +39,17 @@ final class UserRegisterCommand extends Command
             ->keyExists('id')
             ->keyExists('reference')
             ->keyExists('username')
-            ->keyExists('pass')
-            ->keyExists('platform')
             ->verifyNow();
 
         Assert::lazy()
             ->that($payload['id'], 'id')->uuid()
             ->that($payload['reference'], 'reference')->string()->notBlank()
             ->that($payload['username'], 'username')->string()->notBlank()
-            ->that($payload['platform'], 'platform')->string()->notBlank()
             ->verifyNow();
 
         $this->id = UserId::from($payload['id']);
         $this->reference = UserReference::from($payload['reference']);
         $this->username = UserUsername::from($payload['username']);
-        $this->platform = ClockInPlatform::from($payload['platform']);
     }
 
     public function id(): UserId
@@ -70,10 +65,5 @@ final class UserRegisterCommand extends Command
     public function username(): UserUsername
     {
         return $this->username;
-    }
-
-    public function platform(): ClockInPlatform
-    {
-        return $this->platform;
     }
 }

@@ -1,9 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\ClockIn;
-
-use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ValueObject\ClockInDate;
-use DemigrantSoft\ClockInBot\Domain\Model\ClockIn\ValueObject\ClockInRandomness;
+namespace DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject;
 
 final class ClockIn
 {

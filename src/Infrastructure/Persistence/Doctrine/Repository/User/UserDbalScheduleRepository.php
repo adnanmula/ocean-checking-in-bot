@@ -2,20 +2,15 @@
 
 namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\UserSettings;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInData;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInMode;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInPlatform;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Aggregate\Settings\ValueObject\ClockInSchedule;
 use DemigrantSoft\ClockInBot\Domain\Model\User\User;
-use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
+use DemigrantSoft\ClockInBot\Domain\Model\User\UserScheduleRepository;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserPassword;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
-final class UserDbalRepository extends DbalRepository implements UserRepository
+final class UserDbalScheduleRepository extends DbalRepository implements UserScheduleRepository
 {
     private const TABLE_USER = 'users';
 
@@ -77,18 +72,12 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
         $stmt->execute();
     }
 
-    private function map($result): User
+    private function map($user): User
     {
         return User::create(
-            UserId::from($result['id']),
-            UserReference::from($result['reference']),
-            UserUsername::from($result['username']),
-            UserSettings::from(
-                ClockInPlatform::from(ClockInPlatform::PLATFORM_OCEAN),
-                ClockInMode::from(ClockInMode::MODE_MANUAL),
-                ClockInSchedule::from(),
-                ClockInData::from(),
-            )
+            UserId::from($user['id']),
+            UserReference::from($user['reference']),
+            UserUsername::from($user['username']),
         );
     }
 }
