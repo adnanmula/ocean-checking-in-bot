@@ -6,18 +6,20 @@ use Assert\Assert;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
 use Pccomponentes\Ddd\Application\Command;
 
 final class UserRegisterCommand extends Command
 {
-    public const NAME = 'user_create';
+    public const PAYLOAD_ID = 'id';
+    public const PAYLOAD_REFERENCE = 'reference';
+    public const PAYLOAD_USERNAME = 'username';
+
+    public const NAME = 'user_register';
     public const VERSION = '1';
 
     private UserId $id;
     private UserReference $reference;
     private UserUsername $username;
-    private ClockInPlatform $platform;
 
     public static function messageName(): string
     {
@@ -36,20 +38,20 @@ final class UserRegisterCommand extends Command
         Assert::lazy()
             ->that($payload, 'payload')
             ->isArray()
-            ->keyExists('id')
-            ->keyExists('reference')
-            ->keyExists('username')
+            ->keyExists(self::PAYLOAD_ID)
+            ->keyExists(self::PAYLOAD_REFERENCE)
+            ->keyExists(self::PAYLOAD_USERNAME)
             ->verifyNow();
 
         Assert::lazy()
-            ->that($payload['id'], 'id')->uuid()
-            ->that($payload['reference'], 'reference')->string()->notBlank()
-            ->that($payload['username'], 'username')->string()->notBlank()
+            ->that($payload[self::PAYLOAD_ID], self::PAYLOAD_ID)->uuid()
+            ->that($payload[self::PAYLOAD_REFERENCE], self::PAYLOAD_REFERENCE)->string()->notBlank()
+            ->that($payload[self::PAYLOAD_USERNAME], self::PAYLOAD_USERNAME)->string()->notBlank()
             ->verifyNow();
 
-        $this->id = UserId::from($payload['id']);
-        $this->reference = UserReference::from($payload['reference']);
-        $this->username = UserUsername::from($payload['username']);
+        $this->id = UserId::from(self::PAYLOAD_ID);
+        $this->reference = UserReference::from(self::PAYLOAD_REFERENCE);
+        $this->username = UserUsername::from(self::PAYLOAD_USERNAME);
     }
 
     public function id(): UserId

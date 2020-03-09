@@ -8,8 +8,9 @@ final class ClockInMode extends EnumValueObject
 {
     public const MODE_AUTO = 'auto';
     public const MODE_MANUAL = 'manual';
+    public const MODE_NOTIFICATION = 'notification';
 
-    protected static $allowedValues = [self::MODE_AUTO, self::MODE_MANUAL];
+    protected static $allowedValues = [self::MODE_AUTO, self::MODE_MANUAL, self::MODE_NOTIFICATION];
 
     public function isAuto(): bool
     {
@@ -19,5 +20,10 @@ final class ClockInMode extends EnumValueObject
     public function isManual(): bool
     {
         return $this->value() === self::MODE_MANUAL;
+    }
+
+    public function isNotification(): bool
+    {
+        return $this->value() === self::MODE_NOTIFICATION;
     }
 }

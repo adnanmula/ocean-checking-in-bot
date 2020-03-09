@@ -10,12 +10,12 @@ use Pccomponentes\Ddd\Domain\Model\ValueObject\DateTimeValueObject;
 
 final class GetClockInsQuery extends Query
 {
-    private const VERSION = '1';
-    private const NAME = 'get_clock_ins';
-
     public const PAYLOAD_USER_ID = 'user_id';
     public const PAYLOAD_FROM = 'from';
     public const PAYLOAD_TO = 'to';
+
+    private const VERSION = '1';
+    private const NAME = 'get_clock_ins';
 
     private UserId $userId;
     private ?DateTimeValueObject $from;

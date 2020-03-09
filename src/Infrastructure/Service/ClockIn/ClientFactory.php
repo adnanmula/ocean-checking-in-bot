@@ -16,9 +16,9 @@ final class ClientFactory
         $this->oceanFactory = $oceanFactory;
     }
 
-    public function build(ClockInPlatform $client, UserClientData $data): Client
+    public function build(ClockInPlatform $platform, UserClientData $data): Client
     {
-        if ($client->isOcean()) {
+        if ($platform->isOcean()) {
             $this->oceanFactory->build(
                 $data->baseUrl(),
                 $data->user(),
