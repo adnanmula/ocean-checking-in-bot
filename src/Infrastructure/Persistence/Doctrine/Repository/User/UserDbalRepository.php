@@ -3,14 +3,13 @@
 namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\User;
 
 use DemigrantSoft\ClockInBot\Domain\Model\User\User;
-use DemigrantSoft\ClockInBot\Domain\Model\User\UserScheduleRepository;
+use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
-final class UserDbalScheduleRepository extends DbalRepository implements UserScheduleRepository
+final class UserDbalRepository extends DbalRepository implements UserRepository
 {
     private const TABLE_USER = 'users';
 

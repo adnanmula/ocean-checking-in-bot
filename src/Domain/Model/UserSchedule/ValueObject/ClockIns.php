@@ -19,7 +19,7 @@ final class ClockIns extends CollectionValueObject
     {
         \array_walk($checkIns, function ($checkIn): void {
             if (false === $checkIn instanceof ClockIn) {
-//                TODO: throw exception
+                throw new \InvalidArgumentException('Invalid element type.');
             }
         });
     }

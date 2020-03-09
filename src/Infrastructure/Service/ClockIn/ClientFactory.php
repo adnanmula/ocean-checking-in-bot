@@ -28,6 +28,6 @@ final class ClientFactory
             );
         }
 
-        throw new ClientNotFoundException();
+        throw new ClientNotFoundException($platform->value());
     }
 }

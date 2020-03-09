@@ -2,8 +2,6 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\UserClientData;
 
-use Pccomponentes\Ddd\Domain\Model\ValueObject\ValueObject;
-
 final class UserClientData
 {
     private array $data;

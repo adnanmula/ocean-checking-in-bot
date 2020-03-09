@@ -6,8 +6,8 @@ use DemigrantSoft\ClockInBot\Domain\Model\Shared\Exception\NotFoundException;
 
 final class ClientNotFoundException extends NotFoundException
 {
-    public function __construct()
+    public function __construct(string $platform)
     {
-        parent::__construct('Clock in client not found.');
+        parent::__construct('Clock in platform ' . $platform . ' is not supported yet.');
     }
 }

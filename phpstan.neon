@@ -4,8 +4,4 @@ parameters:
     paths:
         - src
     universalObjectCratesClasses:
-        - DemigrantSoft\Infrastructure\Service\CheckIn\ClientData
-    ignoreErrors:
-        -
-          message: '#Cannot call method [a-zA-Z\\]+\(\) on (SQLite3Stmt|SQLite3Result)\|false#'
-          path: %currentWorkingDirectory%/src/Infrastructure/*
+        - DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData

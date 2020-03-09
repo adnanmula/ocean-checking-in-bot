@@ -20,4 +20,9 @@ final class UserClientDataDbalRepository extends DbalRepository implements UserC
     {
         // TODO: Implement save() method.
     }
+
+    private function map($user): UserClientData
+    {
+        //TODO
+    }
 }
