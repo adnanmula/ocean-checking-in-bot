@@ -27,7 +27,8 @@
     },
     "autoload": {
         "psr-4": {
-            "DemigrantSoft\\ClockInBot\\": "src/"
+            "DemigrantSoft\\ClockInBot\\": "src/",
+            "DemigrantSoft\\ClockInBot\\Migrations\\": "migrations/"
         }
     },
     "autoload-dev": {

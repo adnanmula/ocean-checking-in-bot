@@ -2,7 +2,7 @@ services:
   command.environment.init:
     class: DemigrantSoft\ClockInBot\Entrypoint\Command\InitEnvironmentCommand
     arguments:
-      - '@repository.dbal.migration'
+      - '@repository.dbal.migration.v001'
     tags:
       - { name: console.command, command: 'clock-in-bot:environment:init' }
 

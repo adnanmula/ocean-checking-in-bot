@@ -19,10 +19,8 @@ final class UserRegisterCommandHandler
 
     public function __invoke(UserRegisterCommand $command): void
     {
-        $userId = UserId::v4();
-
         $this->creator->execute(
-            $userId,
+            UserId::v4(),
             $command->reference(),
             $command->username(),
         );

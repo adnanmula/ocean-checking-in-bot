@@ -32,10 +32,18 @@ final class InitEnvironmentCommand extends Command
                 $migration->down();
                 $migration->up();
 
-                $output->writeln(\get_class($migration) . ' executed');
+                $output->writeln($this->migrationName($migration) . ' executed');
             }
         );
 
         return 0;
+    }
+
+    private function migrationName(Migration $migration): string
+    {
+        $migrationName = \explode('\\', \get_class($migration));
+
+        return $migrationName[\array_key_last($migrationName) - 1] . ' '
+            . $migrationName[\array_key_last($migrationName)];
     }
 }

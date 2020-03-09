@@ -11,6 +11,10 @@ services:
     arguments:
       - '@repository.dbal.connection'
 
+  repository.dbal.migration.v001:
+    class: DemigrantSoft\ClockInBot\Migrations\Postgresql\V001
+    parent: 'repository.dbal.migration'
+
   repository.dbal.base:
     class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository
     arguments:
