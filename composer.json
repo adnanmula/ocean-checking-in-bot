@@ -67,6 +67,7 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12.11",
+        "phpunit/phpunit": "^9.0",
         "symfony/var-dumper": "5.*"
     }
 }

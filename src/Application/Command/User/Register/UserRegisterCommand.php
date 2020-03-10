@@ -49,9 +49,9 @@ final class UserRegisterCommand extends Command
             ->that($payload[self::PAYLOAD_USERNAME], self::PAYLOAD_USERNAME)->string()->notBlank()
             ->verifyNow();
 
-        $this->id = UserId::from(self::PAYLOAD_ID);
-        $this->reference = UserReference::from(self::PAYLOAD_REFERENCE);
-        $this->username = UserUsername::from(self::PAYLOAD_USERNAME);
+        $this->id = UserId::from($payload[self::PAYLOAD_ID]);
+        $this->reference = UserReference::from($payload[self::PAYLOAD_REFERENCE]);
+        $this->username = UserUsername::from($payload[self::PAYLOAD_USERNAME]);
     }
 
     public function id(): UserId

@@ -5,6 +5,7 @@ namespace DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\Ocean;
 use DemigrantSoft\ClockInBot\Domain\Model\Client\Client;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIn;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockInDate;
+use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockInRandomness;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIns;
 use GuzzleHttp\RequestOptions;
 
@@ -27,7 +28,7 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
         parent::__construct($config);
     }
 
-    public function forceLogin(): \stdClass
+    private function forceLogin(): \stdClass
     {
         $login = $this->get(
             '/data/auth/actual',
@@ -76,15 +77,19 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
         $clockIns = [];
         foreach (\json_decode($response->getBody()->getContents(), true) as $day) {
             foreach ($day['Marcajes'] as $marcaje) {
-                $clockIns[] = ClockIn::from(
-                    ClockInDate::from($marcaje['MarcajeEntrada']['Hora']),
-                    null
-                );
+                if (\array_key_exists('MarcajeEntrada', $marcaje)) {
+                    $clockIns[] = ClockIn::from(
+                        ClockInDate::from($marcaje['MarcajeEntrada']['Hora']),
+                        ClockInRandomness::from(0)
+                    );
+                }
 
-                $clockIns[] = ClockIn::from(
-                    ClockInDate::from($marcaje['MarcajeSalida']['Hora']),
-                    null
-                );
+                if (\array_key_exists('MarcajeSalida', $marcaje)) {
+                    $clockIns[] = ClockIn::from(
+                        ClockInDate::from($marcaje['MarcajeSalida']['Hora']),
+                        ClockInRandomness::from(0)
+                    );
+                }
             }
         }
 
