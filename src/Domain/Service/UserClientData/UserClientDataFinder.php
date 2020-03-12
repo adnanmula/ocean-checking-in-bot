@@ -2,9 +2,10 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Service\UserClientData;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\Exception\UserHasNotClientData;
+use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData;
 use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserClientDataFinder
 {
@@ -15,7 +16,7 @@ final class UserClientDataFinder
         $this->repository = $repository;
     }
 
-    public function execute(UserId $id)
+    public function execute(Uuid $id): UserClientData
     {
         $data = $this->repository->byUserId($id);
 

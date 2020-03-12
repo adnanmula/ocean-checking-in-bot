@@ -8,6 +8,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class TelegramGetUpdatesCommand extends Command
 {
+    private const COMMANDS = [
+        '/register',
+        '/setup',
+    ];
+
     private string $botToken;
 
     public function __construct(string $botToken)
@@ -29,5 +34,18 @@ final class TelegramGetUpdatesCommand extends Command
 //        $telegram = new \Telegram($this->botToken);
 
         return 0;
+    }
+
+    private function parseCommand(string $msg): array
+    {
+        $arguments = \explode(' ', $msg);
+
+        if (\in_array($arguments[0], self::COMMANDS)) {
+//            throw new
+        }
+
+        return [
+            $arguments[0] => \array_shift($arguments),
+        ];
     }
 }

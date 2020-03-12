@@ -4,7 +4,9 @@ namespace DemigrantSoft\ClockInBot\Domain\Service\UserSettings;
 
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\Exception\UserHasNotSettings;
+use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettings;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserSettingsFinder
 {
@@ -15,7 +17,7 @@ final class UserSettingsFinder
         $this->repository = $repository;
     }
 
-    public function execute(UserId $id)
+    public function execute(Uuid $id): UserSettings
     {
         $user = $this->repository->byUserId($id);
 

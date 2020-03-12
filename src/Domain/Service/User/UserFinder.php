@@ -3,8 +3,9 @@
 namespace DemigrantSoft\ClockInBot\Domain\Service\User;
 
 use DemigrantSoft\ClockInBot\Domain\Model\User\Exception\UserNotExistsException;
+use DemigrantSoft\ClockInBot\Domain\Model\User\User;
 use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserFinder
 {
@@ -15,7 +16,7 @@ final class UserFinder
         $this->repository = $repository;
     }
 
-    public function execute(UserId $id)
+    public function execute(Uuid $id): User
     {
         $user = $this->repository->byId($id);
 

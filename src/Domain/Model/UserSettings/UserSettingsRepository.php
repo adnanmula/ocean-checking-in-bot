@@ -2,10 +2,10 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\UserSettings;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 interface UserSettingsRepository
 {
-    public function byUserId(UserId $userId): ?UserSettings;
+    public function byUserId(Uuid $userId): ?UserSettings;
     public function save(UserSettings $settings): void;
 }

@@ -8,6 +8,7 @@ use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserCreator
 {
@@ -18,7 +19,7 @@ final class UserCreator
         $this->repository = $repository;
     }
 
-    public function execute(UserId $id, UserReference $reference, UserUsername $username): void
+    public function execute(Uuid $id, UserReference $reference, UserUsername $username): void
     {
         $user = $this->repository->byReference($reference);
 

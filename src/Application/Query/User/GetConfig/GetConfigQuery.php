@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Query\User\GetClockIns;
+namespace DemigrantSoft\ClockInBot\Application\Query\User\GetConfig;
 
 use Assert\Assert;
 use DemigrantSoft\ClockInBot\Domain\Model\User\User;
@@ -9,18 +9,14 @@ use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use Pccomponentes\Ddd\Application\Query;
 use Pccomponentes\Ddd\Domain\Model\ValueObject\DateTimeValueObject;
 
-final class GetClockInsQuery extends Query
+final class GetConfigQuery extends Query
 {
     public const PAYLOAD_REFERENCE = 'reference';
-    public const PAYLOAD_FROM = 'from';
-    public const PAYLOAD_TO = 'to';
 
     private const VERSION = '1';
-    private const NAME = 'get_clock_ins';
+    private const NAME = 'get_config';
 
     private UserReference $userReference;
-    private ?DateTimeValueObject $from;
-    private ?DateTimeValueObject $to;
 
     public static function messageName(): string
     {
@@ -43,33 +39,17 @@ final class GetClockInsQuery extends Query
 
         Assert::lazy()
             ->that($payload, 'payload')->isArray()->keyExists(self::PAYLOAD_REFERENCE)
-            ->that($payload, 'payload')->isArray()->keyExists(self::PAYLOAD_FROM)
-            ->that($payload, 'payload')->isArray()->keyExists(self::PAYLOAD_TO)
             ->verifyNow();
 
         Assert::lazy()
-            ->that($payload[self::PAYLOAD_REFERENCE], self::PAYLOAD_REFERENCE)->uuid()
-            ->that($payload[self::PAYLOAD_FROM], self::PAYLOAD_FROM)->nullOr()->date('Y-m-d H:i:s')
-            ->that($payload[self::PAYLOAD_TO], self::PAYLOAD_TO)->nullOr()->date('Y-m-d H:i:s')
+            ->that($payload[self::PAYLOAD_REFERENCE], self::PAYLOAD_REFERENCE)->string()->notBlank()
             ->verifyNow();
 
         $this->userReference = UserReference::from($payload[self::PAYLOAD_REFERENCE]);
-        $this->from = null !== $payload[self::PAYLOAD_FROM] ? DateTimeValueObject::from($payload[self::PAYLOAD_FROM]) : null;
-        $this->to = null !== $payload[self::PAYLOAD_TO] ? DateTimeValueObject::from($payload[self::PAYLOAD_TO]) : null;
     }
 
     public function userReference(): UserReference
     {
         return $this->userReference;
-    }
-
-    public function from(): ?DateTimeValueObject
-    {
-        return $this->from;
-    }
-
-    public function to(): ?DateTimeValueObject
-    {
-        return $this->to;
     }
 }

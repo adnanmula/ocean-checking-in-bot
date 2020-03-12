@@ -2,10 +2,10 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\UserSchedule;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 interface UserScheduleRepository
 {
-    public function byUserId(UserId $id): ?UserSchedule;
+    public function byUserId(Uuid $id): ?UserSchedule;
     public function save(UserSchedule $schedule): void;
 }

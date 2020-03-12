@@ -12,4 +12,19 @@ abstract class DbalRepository
     {
         $this->connection = $connection;
     }
+
+    final public function beginTransaction(): void
+    {
+        $this->connection->beginTransaction();
+    }
+
+    final public function commit(): void
+    {
+        $this->connection->commit();
+    }
+
+    final public function rollback(): void
+    {
+        $this->connection->rollBack();
+    }
 }

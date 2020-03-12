@@ -6,6 +6,7 @@ use DemigrantSoft\ClockInBot\Domain\Model\Shared\SimpleAggregateRoot;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class User extends SimpleAggregateRoot
 {
@@ -14,7 +15,7 @@ final class User extends SimpleAggregateRoot
     private UserReference $reference;
     private UserUsername $username;
 
-    public static function create(UserId $id, UserReference $reference, UserUsername $username): self
+    public static function create(Uuid $id, UserReference $reference, UserUsername $username): self
     {
         $self = new self($id);
         $self->reference = $reference;

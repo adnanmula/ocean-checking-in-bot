@@ -2,10 +2,10 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\UserClientData;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 interface UserClientDataRepository
 {
-    public function byUserId(UserId $id): ?UserClientData;
+    public function byUserId(Uuid $id): ?UserClientData;
     public function save(UserClientData $clientData): void;
 }

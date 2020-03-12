@@ -8,12 +8,13 @@ use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
 use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserSettingsDbalRepository extends DbalRepository implements UserSettingsRepository
 {
     private const TABLE_USER_SETTINGS = 'user_settings';
 
-    public function byUserId(UserId $userId): ?UserSettings
+    public function byUserId(Uuid $userId): ?UserSettings
     {
         $result = $this->connection
             ->createQueryBuilder()
@@ -55,7 +56,7 @@ final class UserSettingsDbalRepository extends DbalRepository implements UserSet
     private function map($settings): UserSettings
     {
         return UserSettings::create(
-            UserId::from($settings['user_id']),
+            Uuid::from($settings['user_id']),
             ClockInPlatform::from($settings['platform']),
             ClockInMode::from($settings['mode']),
         );
