@@ -53,6 +53,15 @@ final class UserSettingsDbalRepository extends DbalRepository implements UserSet
         $stmt->execute();
     }
 
+    public function removeByUserId(Uuid $user_id): void
+    {
+        $this->connection->createQueryBuilder()
+            ->delete(self::TABLE_USER_SETTINGS, 'a')
+            ->where('user_id = :user_id')
+            ->setParameter(':user_id', $user_id->value())
+            ->execute();
+    }
+
     private function map($settings): UserSettings
     {
         return UserSettings::create(

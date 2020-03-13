@@ -4,8 +4,6 @@ namespace DemigrantSoft\ClockInBot\Application\Command\User\SetUp;
 
 use Assert\Assert;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
 use Pccomponentes\Ddd\Application\Command;
 
@@ -20,7 +18,7 @@ final class UserSetUpCommand extends Command
 
     private UserReference $reference;
     private ClockInPlatform $platform;
-    private UserClientData $data;
+    private array $data;
 
     public static function messageName(): string
     {
@@ -45,7 +43,7 @@ final class UserSetUpCommand extends Command
 
         Assert::lazy()
             ->that($payload[self::PAYLOAD_REFERENCE], self::PAYLOAD_REFERENCE)->string()->notBlank()
-            ->that($payload[self::PAYLOAD_PLATFORM], self::PAYLOAD_PLATFORM)->inArray(ClockInMode::allowedValues())
+            ->that($payload[self::PAYLOAD_PLATFORM], self::PAYLOAD_PLATFORM)->inArray(ClockInPlatform::allowedValues())
             ->that($payload[self::PAYLOAD_DATA], self::PAYLOAD_DATA)->isArray()
             ->verifyNow();
 
@@ -56,10 +54,9 @@ final class UserSetUpCommand extends Command
                 ->verifyNow();
         }
 
-
         $this->reference = UserReference::from($payload['reference']);
         $this->platform = ClockInPlatform::from($payload['platform']);
-        $this->data = UserClientData::from(...$payload['platform']);
+        $this->data = $payload['data'];
     }
 
     public function reference(): UserReference
@@ -72,7 +69,7 @@ final class UserSetUpCommand extends Command
         return $this->platform;
     }
 
-    public function data(): UserClientData
+    public function data(): array
     {
         return $this->data;
     }

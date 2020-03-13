@@ -3,6 +3,7 @@
 namespace DemigrantSoft\ClockInBot\Domain\Service\UserClientData;
 
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData;
 use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
 
 final class UserClientDataCreator
@@ -14,13 +15,12 @@ final class UserClientDataCreator
         $this->repository = $repository;
     }
 
-    public function execute(UserId $userId, array ...$data): void
+    public function execute(UserId $userId, array $newData): void
     {
-        $data = $this->repository->byUserId($userId);
+        $oldData = $this->repository->byUserId($userId);
 
-        //TODO
-        foreach ($data->all() as $item) {
-
-        }
+        $this->repository->save(
+            UserClientData::from($userId, \array_merge($oldData->all(), $newData))
+        );
     }
 }

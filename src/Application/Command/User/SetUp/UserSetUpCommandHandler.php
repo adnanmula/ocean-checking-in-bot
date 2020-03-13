@@ -7,19 +7,27 @@ use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
 use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator;
 use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsCreator;
+use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsRemover;
 use Doctrine\DBAL\Connection;
 
 final class UserSetUpCommandHandler
 {
     private Connection $connection;
     private UserFinderByReference $userFinder;
+    private UserSettingsRemover $settingsRemover;
     private UserSettingsCreator $settingsCreator;
     private UserClientDataCreator $dataCreator;
 
-    public function __construct(Connection $connection, UserFinderByReference $userFinder, UserSettingsCreator $settingsCreator, UserClientDataCreator $dataCreator)
-    {
+    public function __construct(
+        Connection $connection,
+        UserFinderByReference $userFinder,
+        UserSettingsRemover $settingsRemover,
+        UserSettingsCreator $settingsCreator,
+        UserClientDataCreator $dataCreator
+    ) {
         $this->connection = $connection;
         $this->userFinder = $userFinder;
+        $this->settingsRemover = $settingsRemover;
         $this->settingsCreator = $settingsCreator;
         $this->dataCreator = $dataCreator;
     }
@@ -30,15 +38,17 @@ final class UserSetUpCommandHandler
 
         $this->connection->beginTransaction();
 
+        $this->settingsRemover->execute($user->aggregateId());
+
         $this->settingsCreator->execute(
-            UserId::from($user->aggregateId()->value()),
+            $user->aggregateId(),
             $command->platform(),
             ClockInMode::from(ClockInMode::MODE_MANUAL)
         );
 
         $this->dataCreator->execute(
             UserId::from($user->aggregateId()->value()),
-            $command->data()->all()
+            $command->data()
         );
 
         $this->connection->commit();

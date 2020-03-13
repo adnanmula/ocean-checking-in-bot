@@ -8,4 +8,5 @@ interface UserSettingsRepository
 {
     public function byUserId(Uuid $userId): ?UserSettings;
     public function save(UserSettings $settings): void;
+    public function removeByUserId(Uuid $userId): void;
 }

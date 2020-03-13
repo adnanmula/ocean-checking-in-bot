@@ -8,6 +8,7 @@ use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettings;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserSettingsCreator
 {
@@ -18,7 +19,7 @@ final class UserSettingsCreator
         $this->repository = $repository;
     }
 
-    public function execute(UserId $userId, ClockInPlatform $platform, ClockInMode $mode): void
+    public function execute(Uuid $userId, ClockInPlatform $platform, ClockInMode $mode): void
     {
         $settings = $this->repository->byUserId($userId);
 

@@ -37,21 +37,13 @@ final class V001 extends DbalMigration
                 user_id uuid NOT NULL,
                 key character varying(16) NOT NULL,
                 value character varying(32) NOT NULL,
-                PRIMARY KEY(user_id)
+                PRIMARY KEY(user_id, key)
             )'
         );
-
-        $this->connection->exec('
-            ALTER TABLE ONLY user_client_data
-                ADD CONSTRAINT user_client_data_users_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE CASCADE;
-        ');
-
-//        $this->connection->exec('CREATE TABLE "not-working-days" (date TEXT NOT NULL)');
     }
 
     public function down(): void
     {
-//        $this->connection->exec('DROP TABLE IF EXISTS "not-working-days"');
         $this->connection->exec('DROP TABLE IF EXISTS "user_client_data"');
         $this->connection->exec('DROP TABLE IF EXISTS "user_settings"');
         $this->connection->exec('DROP TABLE IF EXISTS "users"');
