@@ -53,7 +53,6 @@ final class UserClientDataDbalRepository extends DbalRepository implements UserC
         }
 
         $this->connection->commit();
-
     }
 
     private function map(Uuid $id, array $data): UserClientData

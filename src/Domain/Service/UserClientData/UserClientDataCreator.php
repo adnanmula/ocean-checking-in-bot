@@ -5,6 +5,7 @@ namespace DemigrantSoft\ClockInBot\Domain\Service\UserClientData;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData;
 use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserClientDataCreator
 {
@@ -15,7 +16,7 @@ final class UserClientDataCreator
         $this->repository = $repository;
     }
 
-    public function execute(UserId $userId, array $newData): void
+    public function execute(Uuid $userId, array $newData): void
     {
         $oldData = $this->repository->byUserId($userId);
 

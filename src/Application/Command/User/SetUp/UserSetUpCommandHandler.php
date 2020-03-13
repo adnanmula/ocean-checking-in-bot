@@ -9,6 +9,7 @@ use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator
 use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsCreator;
 use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsRemover;
 use Doctrine\DBAL\Connection;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserSetUpCommandHandler
 {
@@ -47,7 +48,7 @@ final class UserSetUpCommandHandler
         );
 
         $this->dataCreator->execute(
-            UserId::from($user->aggregateId()->value()),
+            Uuid::from($user->aggregateId()->value()),
             $command->data()
         );
 

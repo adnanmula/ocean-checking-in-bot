@@ -6,16 +6,17 @@ use DemigrantSoft\ClockInBot\Domain\Model\User\User;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserMockProvider
 {
-    private UserId $id;
+    private Uuid $id;
     private UserReference $reference;
     private UserUsername $username;
 
     public function __construct()
     {
-        $this->id = UserId::v4();
+        $this->id = Uuid::v4();
         $this->reference = UserReference::from('reference');
         $this->username = UserUsername::from('username');
     }
@@ -29,7 +30,7 @@ final class UserMockProvider
         );
     }
 
-    public function setId(UserId $id): self
+    public function setId(Uuid $id): self
     {
         $this->id = $id;
 
