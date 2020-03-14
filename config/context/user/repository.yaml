@@ -2,3 +2,15 @@ services:
   repository.dbal.user:
     class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\User\UserDbalRepository
     parent: 'repository.dbal.base'
+
+  repository.dbal.user-settings:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserSettings\UserSettingsDbalRepository
+    parent: 'repository.dbal.base'
+
+  repository.dbal.user-data:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserClientData\UserClientDataDbalRepository
+    parent: 'repository.dbal.base'
+
+  repository.dbal.user-schedule:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserSchedule\UserScheduleDbalRepository
+    parent: 'repository.dbal.base'

@@ -2,10 +2,15 @@ parameters:
     db_url: '%env(resolve:DATABASE_URL)%'
 
 services:
-
+    _defaults:
+        autowire: false
+        autoconfigure: false
+        public: false
 
 imports:
     - { resource: context/system/repository.yaml }
     - { resource: context/system/command.yaml }
+    - { resource: context/client/service.yml }
     - { resource: context/user/repository.yaml }
     - { resource: context/user/service.yaml }
+    - { resource: context/user/command.yaml }

@@ -18,6 +18,7 @@ services:
     class: DemigrantSoft\ClockInBot\Entrypoint\Command\TelegramGetUpdatesCommand
     arguments:
       - '%env(TELEGRAM_TOKEN)%'
+      - '@service_container'
     tags:
       - { name: console.command, command: 'clock-in-bot:telegram:update' }
 

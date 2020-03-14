@@ -8,7 +8,7 @@ use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettings;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
 use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
-final class UserSettingsFinder
+final class UserSettingsFinderByUserId
 {
     private UserSettingsRepository $repository;
 

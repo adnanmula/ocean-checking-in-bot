@@ -5,7 +5,7 @@ namespace DemigrantSoft\ClockInBot\Domain\Service\UserSettings;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
 use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
-final class UserSettingsRemover
+final class UserSettingsRemoverByUserId
 {
     private UserSettingsRepository $repository;
 

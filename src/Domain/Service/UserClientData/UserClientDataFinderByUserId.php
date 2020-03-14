@@ -7,7 +7,7 @@ use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData;
 use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
 use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
-final class UserClientDataFinder
+final class UserClientDataFinderByUserId
 {
     private UserClientDataRepository $repository;
 

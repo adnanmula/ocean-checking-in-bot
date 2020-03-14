@@ -46,7 +46,7 @@ final class UserSetUpCommandHandlerTest extends TestCase
     }
 
     /** @test */
-    public function given_then()
+    public function given_valid_data_then_set_up()
     {
         $userId = Uuid::from('b99ca941-89b4-4ecc-9ecc-c48f46f15db2');
         $reference = UserReference::from('123456');
@@ -69,8 +69,6 @@ final class UserSetUpCommandHandlerTest extends TestCase
         $provider->setId($id);
         $provider->setReference($reference);
         $user = $provider->build();
-
-
 
         $this->userRepository->expects($this->once())
             ->method('byReference')

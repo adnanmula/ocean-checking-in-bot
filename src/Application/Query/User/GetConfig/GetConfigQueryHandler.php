@@ -3,23 +3,23 @@
 namespace DemigrantSoft\ClockInBot\Application\Query\User\GetConfig;
 
 use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
-use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataFinder;
+use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
 use DemigrantSoft\ClockInBot\Domain\Service\UserSchedule\UserScheduleFinderByUserId;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsFinder;
+use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
 use DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory;
 
 final class GetConfigQueryHandler
 {
     private UserFinderByReference $userFinder;
-    private UserSettingsFinder $settingsFinder;
-    private UserClientDataFinder $clientDataFinder;
+    private UserSettingsFinderByUserId $settingsFinder;
+    private UserClientDataFinderByUserId $clientDataFinder;
     private UserScheduleFinderByUserId $scheduleFinder;
     private ClientFactory $factory;
 
     public function __construct(
         UserFinderByReference $userFinder,
-        UserSettingsFinder $settingsFinder,
-        UserClientDataFinder $clientDataFinder,
+        UserSettingsFinderByUserId $settingsFinder,
+        UserClientDataFinderByUserId $clientDataFinder,
         UserScheduleFinderByUserId $scheduleFinder,
         ClientFactory $factory
     ) {
