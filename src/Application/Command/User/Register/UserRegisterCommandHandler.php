@@ -3,8 +3,9 @@
 namespace DemigrantSoft\ClockInBot\Application\Command\User\Register;
 
 use DemigrantSoft\ClockInBot\Domain\Service\User\UserCreator;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-final class UserRegisterCommandHandler
+final class UserRegisterCommandHandler implements MessageHandlerInterface
 {
     private UserCreator $creator;
 

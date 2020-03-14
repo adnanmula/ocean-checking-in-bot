@@ -1,16 +1,16 @@
 services:
-  repository.dbal.user:
+  DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository:
     class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\User\UserDbalRepository
     parent: 'repository.dbal.base'
 
-  repository.dbal.user-settings:
+  DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository:
     class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserSettings\UserSettingsDbalRepository
     parent: 'repository.dbal.base'
 
-  repository.dbal.user-data:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserClientData\UserClientDataDbalRepository
+  DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\UserScheduleRepository:
+    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserSchedule\UserScheduleDbalRepository
     parent: 'repository.dbal.base'
 
-  repository.dbal.user-schedule:
+  DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository:
     class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserSchedule\UserScheduleDbalRepository
     parent: 'repository.dbal.base'

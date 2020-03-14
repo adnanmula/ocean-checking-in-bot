@@ -2,27 +2,27 @@
 
 namespace DemigrantSoft\ClockInBot\Application\Command\User\SetUp;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
 use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator;
 use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsCreator;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsRemover;
+use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsRemoverByUserId;
 use Doctrine\DBAL\Connection;
 use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-final class UserSetUpCommandHandler
+final class UserSetUpCommandHandler implements MessageHandlerInterface
 {
     private Connection $connection;
     private UserFinderByReference $userFinder;
-    private UserSettingsRemover $settingsRemover;
+    private UserSettingsRemoverByUserId $settingsRemover;
     private UserSettingsCreator $settingsCreator;
     private UserClientDataCreator $dataCreator;
 
     public function __construct(
         Connection $connection,
         UserFinderByReference $userFinder,
-        UserSettingsRemover $settingsRemover,
+        UserSettingsRemoverByUserId $settingsRemover,
         UserSettingsCreator $settingsCreator,
         UserClientDataCreator $dataCreator
     ) {

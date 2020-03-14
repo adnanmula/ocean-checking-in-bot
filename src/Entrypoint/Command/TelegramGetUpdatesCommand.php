@@ -2,25 +2,26 @@
 
 namespace DemigrantSoft\ClockInBot\Entrypoint\Command;
 
-use Psr\Container\ContainerInterface as PsrContainerInterface;
+use DemigrantSoft\ClockInBot\Application\Command\User\Register\UserRegisterCommand;
+use DemigrantSoft\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
+use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Pccomponentes\Ddd\Application\Command as LeCommand;
 
 final class TelegramGetUpdatesCommand extends Command
 {
-    private const COMMANDS = [
-        '/register' => 'command.user.register',
-        '/setup' => 'command.user.setup',
-    ];
-
     private string $botToken;
-    private PsrContainerInterface $container;
+    private MessageBusInterface $bus;
 
-    public function __construct(string $botToken, PsrContainerInterface $container)
-    {
+    public function __construct(
+        string $botToken,
+        MessageBusInterface $bus
+    ) {
         $this->botToken = $botToken;
-        $this->container = $container;
+        $this->bus = $bus;
 
         parent::__construct(null);
     }
@@ -32,34 +33,64 @@ final class TelegramGetUpdatesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        dd('hi');
+        //Todo telegram stuff
+        $msg = [
+            'text' => '/register test tsts',
+            'id' => '',
+        ];
 
-//        $telegram = new \Telegram($this->botToken);
-        $msg = '/register test tsts';
-
-        $this->handle($this->parseCommand($msg));
+        $this->bus->dispatch(
+            $this->getCommand($msg)
+        );
 
         return 0;
     }
 
-    private function parseCommand(string $msg): array
+    private function getCommand(array $msg): LeCommand
     {
-        $arguments = \explode(' ', $msg);
+        $reference = $msg['reference'];
+        $arguments = \explode(' ', $msg['text']);
 
-        if (false === \in_array($arguments[0], \array_keys(self::COMMANDS))) {
-            throw new \InvalidArgumentException('Invalid command ' . $arguments[0]);
-        }
+//        if (false === \in_array($arguments[0], \array_keys(self::COMMANDS))) {
+//            throw new \InvalidArgumentException('Invalid command ' . $arguments[0]);
+//        }
 
         $command = \array_shift($arguments);
 
-        return [$command => $arguments];
+        switch ($command) {
+            case '/register':
+                return $this->registerCommand($reference, $arguments);
+            case '/setup':
+                return $this->setUpCommand($reference, $arguments);
+        }
+
+        throw new \InvalidArgumentException('Invalid command');
     }
 
-    private function handle(array $args): void
+    private function registerCommand(string $reference, array $arguments): LeCommand
     {
-        $command = self::COMMANDS[\key($args)];
-        $arguments = $args[$command];
+        return UserRegisterCommand::fromPayload(
+            Uuid::v4(),
+            [
+                UserRegisterCommand::PAYLOAD_ID => $reference,
+                UserRegisterCommand::PAYLOAD_USERNAME => $arguments[0],
+                UserRegisterCommand::PAYLOAD_REFERENCE => $arguments[1],
+            ]
+        );
+    }
 
-        $handler = $this->container->get($command);
+    private function setUpCommand(string $reference, array $arguments): LeCommand
+    {
+        return UserSetUpCommand::fromPayload(
+            Uuid::v4(),
+            [
+                UserSetUpCommand::PAYLOAD_REFERENCE => $reference,
+                UserSetUpCommand::PAYLOAD_PLATFORM => $arguments[0],
+                UserSetUpCommand::PAYLOAD_DATA => [
+                    'key' => $arguments[1],
+                    'key2' => $arguments[2],
+                ],
+            ]
+        );
     }
 }

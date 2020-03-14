@@ -18,13 +18,6 @@ services:
     class: DemigrantSoft\ClockInBot\Entrypoint\Command\TelegramGetUpdatesCommand
     arguments:
       - '%env(TELEGRAM_TOKEN)%'
-      - '@service_container'
+      - '@messenger.bus.command'
     tags:
       - { name: console.command, command: 'clock-in-bot:telegram:update' }
-
-  command.test.test:
-    class: DemigrantSoft\ClockInBot\Entrypoint\Command\TestCommand
-    arguments:
-      - '@repository.dbal.connection'
-    tags:
-      - { name: console.command, command: 'clock-in-bot:test' }

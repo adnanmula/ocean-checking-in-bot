@@ -7,8 +7,9 @@ use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderB
 use DemigrantSoft\ClockInBot\Domain\Service\UserSchedule\UserScheduleFinderByUserId;
 use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
 use DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-final class GetConfigQueryHandler
+final class GetConfigQueryHandler implements MessageHandlerInterface
 {
     private UserFinderByReference $userFinder;
     private UserSettingsFinderByUserId $settingsFinder;

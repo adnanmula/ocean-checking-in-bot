@@ -4,18 +4,19 @@ namespace DemigrantSoft\ClockInBot\Application\Command\User\ManualClockIn;
 
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
-use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataFinder;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsFinder;
+use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
+use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
 use DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-final class UserManualClockInCommandHandler
+final class UserManualClockInCommandHandler implements MessageHandlerInterface
 {
     private UserFinderByReference $userFinder;
-    private UserSettingsFinder $settingsFinder;
-    private UserClientDataFinder $clientDataFinder;
+    private UserSettingsFinderByUserId $settingsFinder;
+    private UserClientDataFinderByUserId $clientDataFinder;
     private ClientFactory $factory;
 
-    public function __construct(UserFinderByReference $userFinder, UserSettingsFinder $settingsFinder, UserClientDataFinder $clientDataFinder, ClientFactory $factory)
+    public function __construct(UserFinderByReference $userFinder, UserSettingsFinderByUserId $settingsFinder, UserClientDataFinderByUserId $clientDataFinder, ClientFactory $factory)
     {
         $this->userFinder = $userFinder;
         $this->settingsFinder = $settingsFinder;

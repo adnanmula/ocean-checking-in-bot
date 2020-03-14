@@ -7,10 +7,30 @@ services:
         autoconfigure: false
         public: false
 
+    DemigrantSoft\ClockInBot\Application\:
+        autowire: true
+        autoconfigure: true
+        resource: '../src/Application/{Command,Query}/*/*/*Handler.php'
+        tags: [{ name: messenger.message_handler, bus: messenger.bus.command }]
+
+    DemigrantSoft\ClockInBot\Domain\Service\:
+        autowire: true
+        autoconfigure: true
+        resource: '../src/Domain/Service'
+
+    DemigrantSoft\ClockInBot\Infrastructure\Service\:
+        autowire: true
+        autoconfigure: true
+        resource: '../src/Infrastructure/Service'
+
+    DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\:
+        autowire: true
+        autoconfigure: true
+        resource: '../src/Infrastructure/Persistence/Doctrine/Repository'
+
 imports:
+    - { resource: context/system/buses.yaml }
     - { resource: context/system/repository.yaml }
     - { resource: context/system/command.yaml }
-    - { resource: context/client/service.yml }
+#    - { resource: context/client/service.yml }
     - { resource: context/user/repository.yaml }
-    - { resource: context/user/service.yaml }
-    - { resource: context/user/command.yaml }
