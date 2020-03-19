@@ -14,16 +14,16 @@ final class ClockInMode extends EnumValueObject
 
     public function isAuto(): bool
     {
-        return $this->value() === self::MODE_AUTO;
+        return self::MODE_AUTO === $this->value();
     }
 
     public function isManual(): bool
     {
-        return $this->value() === self::MODE_MANUAL;
+        return self::MODE_MANUAL === $this->value();
     }
 
     public function isNotification(): bool
     {
-        return $this->value() === self::MODE_NOTIFICATION;
+        return self::MODE_NOTIFICATION === $this->value();
     }
 }

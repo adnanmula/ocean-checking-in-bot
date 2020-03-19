@@ -3,7 +3,6 @@
 namespace DemigrantSoft\ClockInBot\Domain\Model\UserSchedule;
 
 use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIn;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\ValueObject;
 
 final class UserSchedule
 {
@@ -18,5 +17,10 @@ final class UserSchedule
     public static function from(ClockIn ...$checkIn)
     {
         return new self($checkIn);
+    }
+
+    public function clockIns(): array
+    {
+        return $this->clockIns;
     }
 }

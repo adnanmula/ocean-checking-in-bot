@@ -28,6 +28,9 @@ fixtures: ## load fixtures
 tests: ## execute project unit tests
 	docker-compose -f ${FILE} exec --user=${UID} php sh -c "phpunit --order=random"
 
+cs: ## run phpcs checker
+	docker-compose -f ${FILE} exec --user=${UID} php sh -c "phpcs --standard=phpcs.xml.dist"
+
 stan: ## pass phpstan
 	docker-compose -f ${FILE} exec --user=${UID} php sh -c "php -d memory_limit=256M vendor/bin/phpstan analyse -c phpstan.neon"
 

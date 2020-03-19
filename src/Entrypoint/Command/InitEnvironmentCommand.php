@@ -33,7 +33,7 @@ final class InitEnvironmentCommand extends Command
                 $migration->up();
 
                 $output->writeln($this->migrationName($migration) . ' executed');
-            }
+            },
         );
 
         return 0;

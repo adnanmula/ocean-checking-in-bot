@@ -24,7 +24,7 @@ final class ClientFactory
                 $data->user(),
                 $data->password(),
                 $data->latitude(),
-                $data->longitude()
+                $data->longitude(),
             );
         }
 

@@ -6,7 +6,6 @@ use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
 use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
 use DemigrantSoft\ClockInBot\Domain\Service\UserSchedule\UserScheduleFinderByUserId;
 use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
-use DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class GetConfigQueryHandler implements MessageHandlerInterface
@@ -15,20 +14,17 @@ final class GetConfigQueryHandler implements MessageHandlerInterface
     private UserSettingsFinderByUserId $settingsFinder;
     private UserClientDataFinderByUserId $clientDataFinder;
     private UserScheduleFinderByUserId $scheduleFinder;
-    private ClientFactory $factory;
 
     public function __construct(
         UserFinderByReference $userFinder,
         UserSettingsFinderByUserId $settingsFinder,
         UserClientDataFinderByUserId $clientDataFinder,
-        UserScheduleFinderByUserId $scheduleFinder,
-        ClientFactory $factory
+        UserScheduleFinderByUserId $scheduleFinder
     ) {
         $this->userFinder = $userFinder;
         $this->settingsFinder = $settingsFinder;
         $this->clientDataFinder = $clientDataFinder;
         $this->scheduleFinder = $scheduleFinder;
-        $this->factory = $factory;
     }
 
     public function __invoke(GetConfigQuery $query): array

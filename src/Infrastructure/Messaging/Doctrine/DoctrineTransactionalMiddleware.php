@@ -23,6 +23,7 @@ final class DoctrineTransactionalMiddleware implements MiddlewareInterface
         try {
             $envelope = $stack->next()->handle($envelope, $stack);
             $this->connection->commit();
+
             return $envelope;
         } catch (\Throwable $exception) {
             $this->connection->rollback();

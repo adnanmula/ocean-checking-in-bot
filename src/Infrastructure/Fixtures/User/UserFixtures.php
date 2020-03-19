@@ -25,7 +25,7 @@ final class UserFixtures extends DbalFixture implements Fixture
                 UserId::from(self::FIXTURE_USER_1_ID),
                 UserReference::from('123456'),
                 UserUsername::from('username'),
-            )
+            ),
         );
 
         $this->save(
@@ -33,7 +33,7 @@ final class UserFixtures extends DbalFixture implements Fixture
                 UserId::from(self::FIXTURE_USER_2_ID),
                 UserReference::from('100000'),
                 UserUsername::from('username2'),
-            )
+            ),
         );
 
         $this->loaded = true;
@@ -48,8 +48,8 @@ final class UserFixtures extends DbalFixture implements Fixture
                     :id, :reference, :username
                 ) ON CONFLICT (id) DO UPDATE SET
                     id = :id, reference = :reference, username = :username',
-                self::TABLE_USER
-            )
+                self::TABLE_USER,
+            ),
         );
 
         $stmt->bindValue(':id', $user->aggregateId()->value());

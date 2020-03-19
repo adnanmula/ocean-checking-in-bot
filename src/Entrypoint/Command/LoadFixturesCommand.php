@@ -31,7 +31,7 @@ final class LoadFixturesCommand extends Command
     {
         \array_walk(
             $this->connection->getSchemaManager()->listTables(),
-            fn(Table $table) => $this->connection->executeQuery('TRUNCATE "' . $table->getName() . '" CASCADE')
+            fn(Table $table) => $this->connection->executeQuery('TRUNCATE "' . $table->getName() . '" CASCADE'),
         );
 
         $this->registry->execute();

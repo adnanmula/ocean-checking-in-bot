@@ -16,8 +16,12 @@ final class GetClockInsQueryHandler implements MessageHandlerInterface
     private UserClientDataFinderByUserId $clientDataFinder;
     private ClientFactory $factory;
 
-    public function __construct(UserFinderByReference $userFinder, UserSettingsFinderByUserId $settingsFinder, UserClientDataFinderByUserId $clientDataFinder, ClientFactory $factory)
-    {
+    public function __construct(
+        UserFinderByReference $userFinder,
+        UserSettingsFinderByUserId $settingsFinder,
+        UserClientDataFinderByUserId $clientDataFinder,
+        ClientFactory $factory
+    ) {
         $this->userFinder = $userFinder;
         $this->settingsFinder = $settingsFinder;
         $this->clientDataFinder = $clientDataFinder;

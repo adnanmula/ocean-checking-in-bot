@@ -61,8 +61,8 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
                     :id, :reference, :username
                 ) ON CONFLICT (id) DO UPDATE SET
                     id = :id, reference = :reference, username = :username',
-                self::TABLE_USER
-            )
+                self::TABLE_USER,
+            ),
         );
 
         $stmt->bindValue(':id', $user->aggregateId()->value());

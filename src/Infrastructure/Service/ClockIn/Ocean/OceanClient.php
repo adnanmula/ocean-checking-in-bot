@@ -17,11 +17,8 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
     private float $latitude;
     private float $longitude;
 
-    public function __construct(
-        array $config,
-        float $latitude,
-        float $longitude
-    ) {
+    public function __construct(array $config, float $latitude, float $longitude)
+    {
         $this->latitude = $latitude;
         $this->longitude = $longitude;
 
@@ -36,7 +33,7 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
                 RequestOptions::QUERY => [
                     'force' => true,
                 ],
-            ]
+            ],
         );
 
         return json_decode($login->getBody()->getContents());
@@ -45,7 +42,8 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
     public function clockIn(): void
     {
         $this->post(
-            '/data/marcajes/realizar-manual', [
+            '/data/marcajes/realizar-manual',
+            [
                 RequestOptions::JSON => [
                     'GeoLat' => $this->latitude,
                     'GeoLong' => $this->longitude,
@@ -53,8 +51,8 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
                     'Nota' => null,
                     'Tipo' => 'P',
                     'TipoProd' => 1,
-                ]
-            ]
+                ],
+            ],
         );
     }
 
@@ -71,23 +69,24 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
                     'Hasta' => $to->format('Y-m-d'),
                     'Tipo' => 'P',
                 ],
-            ]
+            ],
         );
 
         $clockIns = [];
+
         foreach (\json_decode($response->getBody()->getContents(), true) as $day) {
             foreach ($day['Marcajes'] as $marcaje) {
                 if (\array_key_exists('MarcajeEntrada', $marcaje)) {
                     $clockIns[] = ClockIn::from(
                         ClockInDate::from($marcaje['MarcajeEntrada']['Hora']),
-                        ClockInRandomness::from(0)
+                        ClockInRandomness::from(0),
                     );
                 }
 
                 if (\array_key_exists('MarcajeSalida', $marcaje)) {
                     $clockIns[] = ClockIn::from(
                         ClockInDate::from($marcaje['MarcajeSalida']['Hora']),
-                        ClockInRandomness::from(0)
+                        ClockInRandomness::from(0),
                     );
                 }
             }

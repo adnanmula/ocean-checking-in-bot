@@ -8,13 +8,18 @@ final class OceanClientFactory
 {
     private string $baseUrl;
 
-    public function build(string $baseUrl, string $user, string $password, float $latitude, float $longitude): OceanClient
-    {
+    public function build(
+        string $baseUrl,
+        string $user,
+        string $password,
+        float $latitude,
+        float $longitude
+    ): OceanClient {
         $this->baseUrl = $baseUrl;
 
         $data = $this->login($user, $password);
 
-        if ($data->Token === null && $data->TokenDesbloqueo !== null) {
+        if (null === $data->Token && null !== $data->TokenDesbloqueo) {
             $this->unlock($data->Usuario->Id, $data->TokenDesbloqueo, $data->Usuario->EmpresaId);
             $data = $this->login($user, $password);
         }
@@ -22,10 +27,10 @@ final class OceanClientFactory
         return new OceanClient(
             [
                 'base_uri' => $baseUrl,
-                'headers' => ['Authorization' => 'Bearer ' . $data->Token]
+                'headers' => ['Authorization' => 'Bearer ' . $data->Token],
             ],
             $latitude,
-            $longitude
+            $longitude,
         );
     }
 
@@ -40,7 +45,7 @@ final class OceanClientFactory
                 'ConnId' => null,
                 'SSOId' => null,
                 'Ldap' => false,
-            ]
+            ],
         ]);
 
         return json_decode($login->getBody()->getContents());
@@ -55,7 +60,7 @@ final class OceanClientFactory
                 'usuarioId' => $userId,
                 'tokenDesbloqueo' => $unlockToken,
                 'empresaId' => $corporationId,
-            ]
+            ],
         ]);
     }
 }

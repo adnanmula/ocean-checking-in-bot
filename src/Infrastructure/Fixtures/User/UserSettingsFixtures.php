@@ -22,7 +22,7 @@ final class UserSettingsFixtures extends DbalFixture implements Fixture
                 UserId::from(UserFixtures::FIXTURE_USER_1_ID),
                 ClockInPlatform::from(ClockInPlatform::PLATFORM_OCEAN),
                 ClockInMode::from(ClockInMode::MODE_MANUAL),
-            )
+            ),
         );
 
         $this->save(
@@ -30,7 +30,7 @@ final class UserSettingsFixtures extends DbalFixture implements Fixture
                 UserId::from(UserFixtures::FIXTURE_USER_2_ID),
                 ClockInPlatform::from(ClockInPlatform::PLATFORM_OCEAN),
                 ClockInMode::from(ClockInMode::MODE_AUTO),
-            )
+            ),
         );
 
         $this->loaded = true;
@@ -45,8 +45,8 @@ final class UserSettingsFixtures extends DbalFixture implements Fixture
                     :user_id, :platform, :mode
                 ) ON CONFLICT (user_id) DO UPDATE SET
                     user_id = :user_id, platform = :platform, mode = :mode',
-                self::TABLE_USER_SETTINGS
-            )
+                self::TABLE_USER_SETTINGS,
+            ),
         );
 
         $stmt->bindValue(':user_id', $settings->userId()->value());
@@ -64,7 +64,7 @@ final class UserSettingsFixtures extends DbalFixture implements Fixture
     public function dependants(): array
     {
         return [
-            UserFixtures::class
+            UserFixtures::class,
         ];
     }
 }

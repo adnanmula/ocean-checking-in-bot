@@ -16,10 +16,8 @@ final class TelegramGetUpdatesCommand extends Command
     private string $botToken;
     private MessageBusInterface $bus;
 
-    public function __construct(
-        string $botToken,
-        MessageBusInterface $bus
-    ) {
+    public function __construct(string $botToken, MessageBusInterface $bus)
+    {
         $this->botToken = $botToken;
         $this->bus = $bus;
 
@@ -34,14 +32,14 @@ final class TelegramGetUpdatesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //Todo telegram stuff
+        new \Telegram($this->botToken);
+
         $msg = [
             'text' => '/register test tsts',
             'id' => '',
         ];
 
-        $this->bus->dispatch(
-            $this->getCommand($msg)
-        );
+        $this->bus->dispatch($this->getCommand($msg));
 
         return 0;
     }
@@ -50,10 +48,6 @@ final class TelegramGetUpdatesCommand extends Command
     {
         $reference = $msg['reference'];
         $arguments = \explode(' ', $msg['text']);
-
-//        if (false === \in_array($arguments[0], \array_keys(self::COMMANDS))) {
-//            throw new \InvalidArgumentException('Invalid command ' . $arguments[0]);
-//        }
 
         $command = \array_shift($arguments);
 
@@ -75,7 +69,7 @@ final class TelegramGetUpdatesCommand extends Command
                 UserRegisterCommand::PAYLOAD_ID => $reference,
                 UserRegisterCommand::PAYLOAD_USERNAME => $arguments[0],
                 UserRegisterCommand::PAYLOAD_REFERENCE => $arguments[1],
-            ]
+            ],
         );
     }
 
@@ -90,7 +84,7 @@ final class TelegramGetUpdatesCommand extends Command
                     'key' => $arguments[1],
                     'key2' => $arguments[2],
                 ],
-            ]
+            ],
         );
     }
 }

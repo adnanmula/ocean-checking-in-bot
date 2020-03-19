@@ -44,12 +44,12 @@ final class UserSetUpCommandHandler implements MessageHandlerInterface
         $this->settingsCreator->execute(
             $user->aggregateId(),
             $command->platform(),
-            ClockInMode::from(ClockInMode::MODE_MANUAL)
+            ClockInMode::from(ClockInMode::MODE_MANUAL),
         );
 
         $this->dataCreator->execute(
             Uuid::from($user->aggregateId()->value()),
-            $command->data()
+            $command->data(),
         );
 
         $this->connection->commit();

@@ -2,7 +2,6 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Service\UserSettings;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\Exception\UserAlreadyHasSettings;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettings;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
@@ -28,7 +27,7 @@ final class UserSettingsCreator
         }
 
         $this->repository->save(
-            UserSettings::create($userId, $platform, $mode)
+            UserSettings::create($userId, $platform, $mode),
         );
     }
 }

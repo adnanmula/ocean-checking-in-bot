@@ -11,7 +11,7 @@ use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
 use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
 use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator;
 use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsCreator;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsRemover;
+use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsRemoverByUserId;
 use DemigrantSoft\ClockInBot\Tests\Mock\Domain\Model\User\UserMockProvider;
 use DemigrantSoft\ClockInBot\Tests\Mock\Domain\Model\UserClientData\UserClientDataMockProvider;
 use DemigrantSoft\ClockInBot\Tests\Mock\Domain\Model\UserSettings\UserSettingsMockProvider;
@@ -39,7 +39,7 @@ final class UserSetUpCommandHandlerTest extends TestCase
         $this->handler = new UserSetUpCommandHandler(
             $this->connection,
             new UserFinderByReference($this->userRepository),
-            new UserSettingsRemover($this->userSettingsRepository),
+            new UserSettingsRemoverByUserId($this->userSettingsRepository),
             new UserSettingsCreator($this->userSettingsRepository),
             new UserClientDataCreator($this->userClientDataRepository)
         );

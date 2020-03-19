@@ -13,6 +13,6 @@ final class ClockInPlatform extends EnumValueObject
 
     public function isOcean(): bool
     {
-        return $this->value() === self::PLATFORM_OCEAN;
+        return self::PLATFORM_OCEAN === $this->value();
     }
 }

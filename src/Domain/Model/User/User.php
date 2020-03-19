@@ -3,7 +3,6 @@
 namespace DemigrantSoft\ClockInBot\Domain\Model\User;
 
 use DemigrantSoft\ClockInBot\Domain\Model\Shared\SimpleAggregateRoot;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;

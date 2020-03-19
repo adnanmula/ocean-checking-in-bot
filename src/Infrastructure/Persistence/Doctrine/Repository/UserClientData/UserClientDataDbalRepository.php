@@ -41,8 +41,8 @@ final class UserClientDataDbalRepository extends DbalRepository implements UserC
                     :user_id, :key, :value
                 ) ON CONFLICT (user_id, key) DO UPDATE SET
                     user_id = :user_id, key = :key, value = :value',
-                    self::TABLE_USER_CLIENT_DATA
-                )
+                    self::TABLE_USER_CLIENT_DATA,
+                ),
             );
 
             $stmt->bindValue(':user_id', $clientData->userId()->value());
@@ -57,9 +57,7 @@ final class UserClientDataDbalRepository extends DbalRepository implements UserC
 
     private function map(Uuid $id, array $data): UserClientData
     {
-        $data = \array_map(function ($item) {
-            return [$item['key'] => $item['value']];
-        }, $data);
+        $data = \array_map(static fn ($item) => [$item['key'] => $item['value']], $data);
 
         return UserClientData::from($id, \array_merge(...$data));
     }

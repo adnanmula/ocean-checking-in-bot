@@ -53,6 +53,9 @@
     "phpspec/prophecy": {
         "version": "v1.10.3"
     },
+    "phpstan/phpdoc-parser": {
+        "version": "0.4.3"
+    },
     "phpstan/phpstan": {
         "version": "0.12.11"
     },
@@ -144,6 +147,18 @@
     },
     "sebastian/version": {
         "version": "3.0.0"
+    },
+    "slevomat/coding-standard": {
+        "version": "6.1.5"
+    },
+    "squizlabs/php_codesniffer": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "0dc9cceda799fd3a08b96987e176a261028a3709"
+        }
     },
     "symfony/cache": {
         "version": "v4.3.1"

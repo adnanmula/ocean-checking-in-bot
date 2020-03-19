@@ -17,7 +17,7 @@ final class ClockIns extends CollectionValueObject
     /** @param array<ClockIn> $checkIns */
     private static function assert(array $checkIns): void
     {
-        \array_walk($checkIns, function ($checkIn): void {
+        \array_walk($checkIns, static function ($checkIn): void {
             if (false === $checkIn instanceof ClockIn) {
                 throw new \InvalidArgumentException('Invalid element type.');
             }

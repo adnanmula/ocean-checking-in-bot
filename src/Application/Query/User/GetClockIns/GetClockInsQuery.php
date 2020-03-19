@@ -4,7 +4,6 @@ namespace DemigrantSoft\ClockInBot\Application\Query\User\GetClockIns;
 
 use Assert\Assert;
 use DemigrantSoft\ClockInBot\Domain\Model\User\User;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use Pccomponentes\Ddd\Application\Query;
 use Pccomponentes\Ddd\Domain\Model\ValueObject\DateTimeValueObject;
@@ -54,8 +53,14 @@ final class GetClockInsQuery extends Query
             ->verifyNow();
 
         $this->userReference = UserReference::from($payload[self::PAYLOAD_REFERENCE]);
-        $this->from = null !== $payload[self::PAYLOAD_FROM] ? DateTimeValueObject::from($payload[self::PAYLOAD_FROM]) : null;
-        $this->to = null !== $payload[self::PAYLOAD_TO] ? DateTimeValueObject::from($payload[self::PAYLOAD_TO]) : null;
+
+        $this->from = null !== $payload[self::PAYLOAD_FROM]
+            ? DateTimeValueObject::from($payload[self::PAYLOAD_FROM])
+            : null;
+
+        $this->to = null !== $payload[self::PAYLOAD_TO]
+            ? DateTimeValueObject::from($payload[self::PAYLOAD_TO])
+            : null;
     }
 
     public function userReference(): UserReference

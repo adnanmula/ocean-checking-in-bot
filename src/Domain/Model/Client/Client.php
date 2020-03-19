@@ -2,7 +2,6 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\Client;
 
-
 use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIns;
 
 interface Client

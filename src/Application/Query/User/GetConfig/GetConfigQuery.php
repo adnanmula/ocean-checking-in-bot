@@ -4,10 +4,8 @@ namespace DemigrantSoft\ClockInBot\Application\Query\User\GetConfig;
 
 use Assert\Assert;
 use DemigrantSoft\ClockInBot\Domain\Model\User\User;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use Pccomponentes\Ddd\Application\Query;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\DateTimeValueObject;
 
 final class GetConfigQuery extends Query
 {

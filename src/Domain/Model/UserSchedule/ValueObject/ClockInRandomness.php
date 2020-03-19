@@ -12,7 +12,10 @@ final class ClockInRandomness extends IntValueObject
     public static function from(int $value): self
     {
         if ($value < 0 || $value > self::MAX_RANDOMNESS) {
-            throw new \InvalidArgumentException($value.' exceeds max randomness allowed('.self::MAX_RANDOMNESS.')', Response::HTTP_CONFLICT);
+            throw new \InvalidArgumentException(
+                $value.' exceeds max randomness allowed('.self::MAX_RANDOMNESS.')',
+                Response::HTTP_CONFLICT,
+            );
         }
 
         return new self($value);

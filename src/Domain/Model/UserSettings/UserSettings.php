@@ -2,7 +2,6 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\UserSettings;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
 use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;

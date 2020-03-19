@@ -2,7 +2,6 @@
 
 namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserSettings;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettings;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
@@ -42,8 +41,8 @@ final class UserSettingsDbalRepository extends DbalRepository implements UserSet
                     :user_id, :platform, :mode
                 ) ON CONFLICT (user_id) DO UPDATE SET
                     user_id = :user_id, platform = :platform, mode = :mode',
-                self::TABLE_USER_SETTINGS
-            )
+                self::TABLE_USER_SETTINGS,
+            ),
         );
 
         $stmt->bindValue(':user_id', $settings->userId()->value());
