@@ -19,5 +19,6 @@ services:
     arguments:
       - '%env(TELEGRAM_TOKEN)%'
       - '@messenger.bus.command'
+      - '%telegram_commands%'
     tags:
       - { name: console.command, command: 'clock-in-bot:telegram:update' }

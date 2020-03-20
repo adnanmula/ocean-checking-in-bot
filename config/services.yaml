@@ -32,5 +32,5 @@ imports:
     - { resource: context/system/buses.yaml }
     - { resource: context/system/repository.yaml }
     - { resource: context/system/command.yaml }
-#    - { resource: context/client/service.yml }
+    - { resource: context/system/telegram_commands.yaml }
     - { resource: context/user/repository.yaml }
