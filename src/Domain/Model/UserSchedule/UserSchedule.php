@@ -6,7 +6,7 @@ use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIn;
 
 final class UserSchedule
 {
-    /** @var array<ClockIn>  */
+    /** @var array<ClockIn> */
     private array $clockIns;
 
     private function __construct(array $clockIns)
@@ -14,13 +14,13 @@ final class UserSchedule
         $this->clockIns = $clockIns;
     }
 
-    public static function from(ClockIn ...$checkIn)
-    {
-        return new self($checkIn);
-    }
-
     public function clockIns(): array
     {
         return $this->clockIns;
+    }
+
+    public static function from(ClockIn ...$checkIn)
+    {
+        return new self($checkIn);
     }
 }

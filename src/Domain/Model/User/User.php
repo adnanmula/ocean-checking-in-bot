@@ -2,25 +2,33 @@
 
 namespace DemigrantSoft\ClockInBot\Domain\Model\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\Shared\SimpleAggregateRoot;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
+use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 
-final class User extends SimpleAggregateRoot
+final class User
 {
     private const MODEL_NAME = 'user';
 
+    private UserId $id;
     private UserReference $reference;
     private UserUsername $username;
 
-    public static function create(Uuid $id, UserReference $reference, UserUsername $username): self
+    private function __construct(UserId $id, UserReference $reference, UserUsername $username)
     {
-        $self = new self($id);
-        $self->reference = $reference;
-        $self->username = $username;
+        $this->id = $id;
+        $this->reference = $reference;
+        $this->username = $username;
+    }
 
-        return $self;
+    public static function create(UserId $id, UserReference $reference, UserUsername $username): self
+    {
+        return new self($id, $reference, $username);
+    }
+
+    public function id(): UserId
+    {
+        return $this->id;
     }
 
     public function reference(): UserReference

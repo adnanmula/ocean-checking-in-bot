@@ -5,6 +5,7 @@ namespace DemigrantSoft\ClockInBot\Tests\Application\Command\User\SetUp;
 use DemigrantSoft\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
 use DemigrantSoft\ClockInBot\Application\Command\User\SetUp\UserSetUpCommandHandler;
 use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
+use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
@@ -29,26 +30,10 @@ final class UserSetUpCommandHandlerTest extends TestCase
 
     private UserSetUpCommandHandler $handler;
 
-    protected function setUp(): void
-    {
-        $this->connection = $this->createMock(Connection::class);
-        $this->userRepository = $this->createMock(UserRepository::class);
-        $this->userSettingsRepository = $this->createMock(UserSettingsRepository::class);
-        $this->userClientDataRepository = $this->createMock(UserClientDataRepository::class);
-
-        $this->handler = new UserSetUpCommandHandler(
-            $this->connection,
-            new UserFinderByReference($this->userRepository),
-            new UserSettingsRemoverByUserId($this->userSettingsRepository),
-            new UserSettingsCreator($this->userSettingsRepository),
-            new UserClientDataCreator($this->userClientDataRepository)
-        );
-    }
-
     /** @test */
     public function given_valid_data_then_set_up()
     {
-        $userId = Uuid::from('b99ca941-89b4-4ecc-9ecc-c48f46f15db2');
+        $userId = UserId::from('b99ca941-89b4-4ecc-9ecc-c48f46f15db2');
         $reference = UserReference::from('123456');
         $data = [
             'key1' => 'value1',
@@ -61,6 +46,22 @@ final class UserSetUpCommandHandlerTest extends TestCase
         $this->prepareDataRepository($userId, $data);
 
         ($this->handler)($this->command($reference, $data));
+    }
+
+    protected function setUp(): void
+    {
+        $this->connection = $this->createMock(Connection::class);
+        $this->userRepository = $this->createMock(UserRepository::class);
+        $this->userSettingsRepository = $this->createMock(UserSettingsRepository::class);
+        $this->userClientDataRepository = $this->createMock(UserClientDataRepository::class);
+
+        $this->handler = new UserSetUpCommandHandler(
+            $this->connection,
+            new UserFinderByReference($this->userRepository),
+            new UserSettingsRemoverByUserId($this->userSettingsRepository),
+            new UserSettingsCreator($this->userSettingsRepository),
+            new UserClientDataCreator($this->userClientDataRepository),
+        );
     }
 
     private function prepareUserRepository(Uuid $id, UserReference $reference)
@@ -121,7 +122,7 @@ final class UserSetUpCommandHandlerTest extends TestCase
                 UserSetUpCommand::PAYLOAD_PLATFORM => 'ocean',
                 UserSetUpCommand::PAYLOAD_REFERENCE => $reference->value(),
                 UserSetUpCommand::PAYLOAD_DATA => $data,
-            ]
+            ],
         );
     }
 }

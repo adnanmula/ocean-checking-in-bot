@@ -2,6 +2,7 @@
 
 namespace DemigrantSoft\ClockInBot\Application\Command\User\SetUp;
 
+use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
 use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
 use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator;
@@ -39,16 +40,16 @@ final class UserSetUpCommandHandler implements MessageHandlerInterface
 
         $this->connection->beginTransaction();
 
-        $this->settingsRemover->execute($user->aggregateId());
+        $this->settingsRemover->execute($user->id());
 
         $this->settingsCreator->execute(
-            $user->aggregateId(),
+            $user->id(),
             $command->platform(),
             ClockInMode::from(ClockInMode::MODE_MANUAL),
         );
 
         $this->dataCreator->execute(
-            Uuid::from($user->aggregateId()->value()),
+            UserId::from($user->id()->value()),
             $command->data(),
         );
 

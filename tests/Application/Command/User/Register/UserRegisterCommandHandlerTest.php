@@ -18,15 +18,6 @@ final class UserRegisterCommandHandlerTest extends TestCase
     private MockObject $repository;
     private UserRegisterCommandHandler $handler;
 
-    protected function setUp(): void
-    {
-        $this->repository = $this->createMock(UserRepository::class);
-
-        $this->handler = new UserRegisterCommandHandler(
-            new UserCreator($this->repository)
-        );
-    }
-
     /** @test */
     public function given_not_existing_user_then_create(): void
     {
@@ -42,7 +33,7 @@ final class UserRegisterCommandHandlerTest extends TestCase
             ->method('save')
             ->with();
 
-        ($this->handler)($this->command($user->aggregateId(), $user->reference()));
+        ($this->handler)($this->command($user->id(), $user->reference()));
     }
 
     /** @test */
@@ -60,7 +51,16 @@ final class UserRegisterCommandHandlerTest extends TestCase
 
         $this->repository->expects($this->never())->method('save');
 
-        ($this->handler)($this->command($user->aggregateId(), $user->reference()));
+        ($this->handler)($this->command($user->id(), $user->reference()));
+    }
+
+    protected function setUp(): void
+    {
+        $this->repository = $this->createMock(UserRepository::class);
+
+        $this->handler = new UserRegisterCommandHandler(
+            new UserCreator($this->repository),
+        );
     }
 
     private function command(Uuid $userId, UserReference $userReference): UserRegisterCommand
@@ -71,7 +71,7 @@ final class UserRegisterCommandHandlerTest extends TestCase
                 UserRegisterCommand::PAYLOAD_ID => $userId->value(),
                 UserRegisterCommand::PAYLOAD_REFERENCE => $userReference->value(),
                 UserRegisterCommand::PAYLOAD_USERNAME => 'username',
-            ]
+            ],
         );
     }
 }

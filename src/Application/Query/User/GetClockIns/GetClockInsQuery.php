@@ -36,6 +36,21 @@ final class GetClockInsQuery extends Query
         return self::VERSION;
     }
 
+    public function userReference(): UserReference
+    {
+        return $this->userReference;
+    }
+
+    public function from(): ?DateTimeValueObject
+    {
+        return $this->from;
+    }
+
+    public function to(): ?DateTimeValueObject
+    {
+        return $this->to;
+    }
+
     protected function assertPayload(): void
     {
         $payload = $this->messagePayload();
@@ -61,20 +76,5 @@ final class GetClockInsQuery extends Query
         $this->to = null !== $payload[self::PAYLOAD_TO]
             ? DateTimeValueObject::from($payload[self::PAYLOAD_TO])
             : null;
-    }
-
-    public function userReference(): UserReference
-    {
-        return $this->userReference;
-    }
-
-    public function from(): ?DateTimeValueObject
-    {
-        return $this->from;
-    }
-
-    public function to(): ?DateTimeValueObject
-    {
-        return $this->to;
     }
 }

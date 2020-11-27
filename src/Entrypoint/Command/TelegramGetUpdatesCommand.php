@@ -53,11 +53,12 @@ final class TelegramGetUpdatesCommand extends Command
         $command = \array_shift($arguments);
 
         switch (true) {
-            case \in_array($command, $this->telegramCommands[UserRegisterCommand::class]):
+            case \in_array($command, $this->telegramCommands[UserRegisterCommand::class], true):
                 return $this->registerCommand($reference, $arguments);
-            case \in_array($command, $this->telegramCommands[UserSetUpCommand::class]) && 0 !== \count($arguments):
+            case \in_array($command, $this->telegramCommands[UserSetUpCommand::class], true)
+                && 0 !== \count($arguments):
                 return $this->setUpCommand($reference, $arguments);
-            case \in_array($command, $this->telegramCommands[GetClockInsQuery::class]):
+            case \in_array($command, $this->telegramCommands[GetClockInsQuery::class], true):
                 return $this->getClockInsCommand($reference, $arguments);
         }
 

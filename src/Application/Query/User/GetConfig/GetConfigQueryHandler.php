@@ -31,9 +31,9 @@ final class GetConfigQueryHandler implements MessageHandlerInterface
     {
         $user = $this->userFinder->execute($query->userReference());
 
-        $settings = $this->settingsFinder->execute($user->aggregateId());
-        $data = $this->clientDataFinder->execute($user->aggregateId());
-        $schedule = $this->scheduleFinder->execute($user->aggregateId());
+        $settings = $this->settingsFinder->execute($user->id());
+        $data = $this->clientDataFinder->execute($user->id());
+        $schedule = $this->scheduleFinder->execute($user->id());
 
         return [
             'config' => $settings->jsonSerialize(),

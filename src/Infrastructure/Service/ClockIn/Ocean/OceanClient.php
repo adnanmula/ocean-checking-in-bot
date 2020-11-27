@@ -25,20 +25,6 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
         parent::__construct($config);
     }
 
-    private function forceLogin(): \stdClass
-    {
-        $login = $this->get(
-            '/data/auth/actual',
-            [
-                RequestOptions::QUERY => [
-                    'force' => true,
-                ],
-            ],
-        );
-
-        return json_decode($login->getBody()->getContents());
-    }
-
     public function clockIn(): void
     {
         $this->post(
@@ -103,5 +89,19 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
     public function version(): string
     {
         return self::VERSION;
+    }
+
+    private function forceLogin(): \stdClass
+    {
+        $login = $this->get(
+            '/data/auth/actual',
+            [
+                RequestOptions::QUERY => [
+                    'force' => true,
+                ],
+            ],
+        );
+
+        return json_decode($login->getBody()->getContents());
     }
 }

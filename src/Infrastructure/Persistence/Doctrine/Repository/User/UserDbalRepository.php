@@ -65,7 +65,7 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
             ),
         );
 
-        $stmt->bindValue(':id', $user->aggregateId()->value());
+        $stmt->bindValue(':id', $user->id()->value());
         $stmt->bindValue(':reference', $user->reference()->value());
         $stmt->bindValue(':username', $user->username()->value());
 

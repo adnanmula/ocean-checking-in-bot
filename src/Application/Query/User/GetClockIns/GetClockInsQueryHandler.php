@@ -32,8 +32,8 @@ final class GetClockInsQueryHandler implements MessageHandlerInterface
     {
         $user = $this->userFinder->execute($query->userReference());
 
-        $settings = $this->settingsFinder->execute($user->aggregateId());
-        $data = $this->clientDataFinder->execute($user->aggregateId());
+        $settings = $this->settingsFinder->execute($user->id());
+        $data = $this->clientDataFinder->execute($user->id());
 
         $client = $this->factory->build($settings->platform(), $data);
 

@@ -36,6 +36,18 @@ final class UserSettingsFixtures extends DbalFixture implements Fixture
         $this->loaded = true;
     }
 
+    public function isLoaded(): bool
+    {
+        return $this->loaded;
+    }
+
+    public function dependants(): array
+    {
+        return [
+            UserFixtures::class,
+        ];
+    }
+
     private function save(UserSettings $settings): void
     {
         $stmt = $this->connection->prepare(
@@ -54,17 +66,5 @@ final class UserSettingsFixtures extends DbalFixture implements Fixture
         $stmt->bindValue(':mode', $settings->mode()->value());
 
         $stmt->execute();
-    }
-
-    public function isLoaded(): bool
-    {
-        return $this->loaded;
-    }
-
-    public function dependants(): array
-    {
-        return [
-            UserFixtures::class,
-        ];
     }
 }

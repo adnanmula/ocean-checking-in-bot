@@ -18,10 +18,7 @@ final class UserClientDataMockProvider
 
     public function build(): UserClientData
     {
-        return UserClientData::from(
-            $this->userId,
-            $this->data
-        );
+        return UserClientData::from($this->userId, $this->data);
     }
 
     public function addData(array $data)

@@ -22,11 +22,7 @@ final class UserSettingsMockProvider
 
     public function build(): UserSettings
     {
-        return UserSettings::create(
-            $this->userId,
-            $this->platform,
-            $this->mode,
-        );
+        return UserSettings::create($this->userId, $this->platform, $this->mode);
     }
 
     public function setUserId(Uuid $id): self

@@ -16,21 +16,17 @@ final class UserMockProvider
 
     public function __construct()
     {
-        $this->id = Uuid::v4();
+        $this->id = UserId::v4();
         $this->reference = UserReference::from('reference');
         $this->username = UserUsername::from('username');
     }
 
     public function build(): User
     {
-        return User::create(
-            $this->id,
-            $this->reference,
-            $this->username
-        );
+        return User::create($this->id, $this->reference, $this->username);
     }
 
-    public function setId(Uuid $id): self
+    public function setId(UserId $id): self
     {
         $this->id = $id;
 
