@@ -2,11 +2,11 @@
 
 namespace AdnanMula\ClockInBot\Domain\Service\UserSettings;
 
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInMode;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInPlatform;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserSettings;
 use AdnanMula\ClockInBot\Domain\Model\UserSettings\Exception\UserAlreadyHasSettings;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettings;
 use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserSettingsCreator

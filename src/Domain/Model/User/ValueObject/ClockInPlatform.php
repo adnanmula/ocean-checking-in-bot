@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject;
+namespace AdnanMula\ClockInBot\Domain\Model\User\ValueObject;
 
 use AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\Ocean\OceanClient;
 use PcComponentes\Ddd\Domain\Model\ValueObject\EnumValueObject;

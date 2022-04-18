@@ -1,8 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AdnanMula\ClockInBot\Domain\Model\UserSchedule;
-
-use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIn;
+namespace AdnanMula\ClockInBot\Domain\Model\User\ValueObject;
 
 final class UserSchedule
 {

@@ -2,10 +2,10 @@
 
 namespace AdnanMula\ClockInBot\Infrastructure\Fixtures\User;
 
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInMode;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInPlatform;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettings;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserSettings;
 use AdnanMula\ClockInBot\Domain\Service\Persistence\Fixture;
 use AdnanMula\ClockInBot\Infrastructure\Fixtures\DbalFixture;
 

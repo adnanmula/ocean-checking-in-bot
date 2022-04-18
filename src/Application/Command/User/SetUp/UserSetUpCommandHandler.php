@@ -2,8 +2,8 @@
 
 namespace AdnanMula\ClockInBot\Application\Command\User\SetUp;
 
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInMode;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
 use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
 use AdnanMula\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator;
 use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsCreator;
@@ -49,7 +49,7 @@ final class UserSetUpCommandHandler implements MessageHandlerInterface
         );
 
         $this->dataCreator->execute(
-            UserId::from($user->id()->value()),
+            Uuid::from($user->id()->value()),
             $command->data(),
         );
 

@@ -2,7 +2,6 @@
 
 namespace AdnanMula\ClockInBot\Application\Command\User\ManualClockIn;
 
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
 use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
 use AdnanMula\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
 use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
@@ -12,8 +11,6 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 final class UserManualClockInCommandHandler implements MessageHandlerInterface
 {
     private UserFinderByReference $userFinder;
-    private UserSettingsFinderByUserId $settingsFinder;
-    private UserClientDataFinderByUserId $clientDataFinder;
     private ClientFactory $factory;
 
     public function __construct(
@@ -31,10 +28,8 @@ final class UserManualClockInCommandHandler implements MessageHandlerInterface
     public function __invoke(UserManualClockInCommand $command): void
     {
         $user = $this->userFinder->execute($command->reference());
-        $settings = $this->settingsFinder->execute(UserId::from($user->id()->value()));
-        $data = $this->clientDataFinder->execute(UserId::from($user->id()->value()));
 
-        $client = $this->factory->build($settings->platform(), $data);
+        $client = $this->factory->build($user->settings()->platform(), $user->clientData());
 
         $client->clockIn();
     }

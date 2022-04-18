@@ -4,7 +4,6 @@ namespace AdnanMula\ClockInBot\Domain\Service\User;
 
 use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserNotExistsException;
 use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 
 final class UserFinderByReference
 {
@@ -15,7 +14,7 @@ final class UserFinderByReference
         $this->repository = $repository;
     }
 
-    public function execute(UserReference $reference)
+    public function execute(string $reference)
     {
         $user = $this->repository->byReference($reference);
 

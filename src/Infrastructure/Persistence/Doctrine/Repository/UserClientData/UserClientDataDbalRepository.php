@@ -2,7 +2,7 @@
 
 namespace AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserClientData;
 
-use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientData;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserClientData;
 use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
 use AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;

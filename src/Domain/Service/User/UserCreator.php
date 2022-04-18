@@ -5,9 +5,6 @@ namespace AdnanMula\ClockInBot\Domain\Service\User;
 use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserAlreadyExistsException;
 use AdnanMula\ClockInBot\Domain\Model\User\User;
 use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserCreator
@@ -19,7 +16,7 @@ final class UserCreator
         $this->repository = $repository;
     }
 
-    public function execute(UserId $id, UserReference $reference, UserUsername $username): void
+    public function execute(Uuid $id, string $reference, string $username): void
     {
         $user = $this->repository->byReference($reference);
 
@@ -28,7 +25,7 @@ final class UserCreator
         }
 
         $this->repository->save(
-            User::create($id, $reference, $username),
+            User::create($id, $reference, $username, null, null, null),
         );
     }
 }

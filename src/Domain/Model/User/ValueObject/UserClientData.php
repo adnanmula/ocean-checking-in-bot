@@ -1,26 +1,23 @@
 <?php declare(strict_types=1);
 
-namespace AdnanMula\ClockInBot\Domain\Model\UserClientData;
+namespace AdnanMula\ClockInBot\Domain\Model\User\ValueObject;
 
-use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 use Symfony\Component\HttpFoundation\Response;
 
 final class UserClientData
 {
-    private Uuid $userId;
     private array $data;
 
-    private function __construct(Uuid $userId, array $data)
+    private function __construct(array $data)
     {
         $this->data = $data;
-        $this->userId = $userId;
     }
 
-    public static function from(Uuid $userId, array $data): self
+    public static function from(array $data): self
     {
         self::assert($data);
 
-        return new self($userId, $data);
+        return new self($data);
     }
 
     private static function assert(array $data): void
@@ -30,11 +27,6 @@ final class UserClientData
                 throw new \InvalidArgumentException('Invalid client data.', Response::HTTP_BAD_REQUEST);
             }
         }
-    }
-
-    public function userId(): Uuid
-    {
-        return $this->userId;
     }
 
     public function all(): array

@@ -2,7 +2,7 @@
 
 namespace AdnanMula\ClockInBot\Domain\Model\Client;
 
-use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIns;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIns;
 
 interface Client
 {

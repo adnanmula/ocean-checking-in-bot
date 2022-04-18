@@ -3,10 +3,10 @@
 namespace AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\Ocean;
 
 use AdnanMula\ClockInBot\Domain\Model\Client\Client;
-use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIn;
-use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockInDate;
-use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockInRandomness;
-use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIns;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIn;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInDate;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInRandomness;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIns;
 use GuzzleHttp\RequestOptions;
 
 final class OceanClient extends \GuzzleHttp\Client implements Client

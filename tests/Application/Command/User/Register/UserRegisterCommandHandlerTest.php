@@ -6,9 +6,8 @@ use AdnanMula\ClockInBot\Application\Command\User\Register\UserRegisterCommand;
 use AdnanMula\ClockInBot\Application\Command\User\Register\UserRegisterCommandHandler;
 use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserAlreadyExistsException;
 use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use AdnanMula\ClockInBot\Domain\Service\User\UserCreator;
-use AdnanMula\ClockInBot\Tests\Mock\Domain\Model\User\UserMockProvider;
+use AdnanMula\ClockInBot\Tests\Mock\Domain\Model\User\UserObjectMother;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +20,7 @@ final class UserRegisterCommandHandlerTest extends TestCase
     /** @test */
     public function given_not_existing_user_then_create(): void
     {
-        $provider = new UserMockProvider();
+        $provider = new UserObjectMother();
         $user = $provider->build();
 
         $this->repository->expects($this->once())
@@ -41,7 +40,7 @@ final class UserRegisterCommandHandlerTest extends TestCase
     {
         $this->expectException(UserAlreadyExistsException::class);
 
-        $provider = new UserMockProvider();
+        $provider = new UserObjectMother();
         $user = $provider->build();
 
         $this->repository->expects($this->once())
@@ -63,13 +62,13 @@ final class UserRegisterCommandHandlerTest extends TestCase
         );
     }
 
-    private function command(Uuid $userId, UserReference $userReference): UserRegisterCommand
+    private function command(Uuid $userId, string $userReference): UserRegisterCommand
     {
         return UserRegisterCommand::fromPayload(
             Uuid::v4(),
             [
                 UserRegisterCommand::PAYLOAD_ID => $userId->value(),
-                UserRegisterCommand::PAYLOAD_REFERENCE => $userReference->value(),
+                UserRegisterCommand::PAYLOAD_REFERENCE => $userReference,
                 UserRegisterCommand::PAYLOAD_USERNAME => 'username',
             ],
         );

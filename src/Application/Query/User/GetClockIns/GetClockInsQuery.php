@@ -4,7 +4,6 @@ namespace AdnanMula\ClockInBot\Application\Query\User\GetClockIns;
 
 use Assert\Assert;
 use AdnanMula\ClockInBot\Domain\Model\User\User;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use PcComponentes\Ddd\Application\Query;
 use PcComponentes\Ddd\Domain\Model\ValueObject\DateTimeValueObject;
 
@@ -17,14 +16,14 @@ final class GetClockInsQuery extends Query
     private const VERSION = '1';
     private const NAME = 'get_clock_ins';
 
-    private UserReference $userReference;
+    private string $userReference;
     private ?DateTimeValueObject $from;
     private ?DateTimeValueObject $to;
 
     public static function messageName(): string
     {
-        return 'pccomponentes.'
-            . 'offer.'
+        return 'adnanmula.'
+            . 'clock-in-bot.'
             . self::messageVersion() . '.'
             . self::messageType() . '.'
             . User::modelName() . '.'
@@ -36,7 +35,7 @@ final class GetClockInsQuery extends Query
         return self::VERSION;
     }
 
-    public function userReference(): UserReference
+    public function userReference(): string
     {
         return $this->userReference;
     }
@@ -67,7 +66,7 @@ final class GetClockInsQuery extends Query
             ->that($payload[self::PAYLOAD_TO], self::PAYLOAD_TO)->nullOr()->date('Y-m-d H:i:s')
             ->verifyNow();
 
-        $this->userReference = UserReference::from($payload[self::PAYLOAD_REFERENCE]);
+        $this->userReference = $payload[self::PAYLOAD_REFERENCE];
 
         $this->from = null !== $payload[self::PAYLOAD_FROM]
             ? DateTimeValueObject::from($payload[self::PAYLOAD_FROM])

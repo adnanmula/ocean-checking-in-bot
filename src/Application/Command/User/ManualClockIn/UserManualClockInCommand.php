@@ -2,8 +2,8 @@
 
 namespace AdnanMula\ClockInBot\Application\Command\User\ManualClockIn;
 
+use AdnanMula\ClockInBot\Domain\Model\User\User;
 use Assert\Assert;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use PcComponentes\Ddd\Application\Command;
 
 final class UserManualClockInCommand extends Command
@@ -13,11 +13,15 @@ final class UserManualClockInCommand extends Command
     public const NAME = 'user_manual_clock_in';
     public const VERSION = '1';
 
-    private UserReference $reference;
+    private string $reference;
 
     public static function messageName(): string
     {
-        return self::NAME;
+        return 'adnanmula.clock-in-bot.'
+            . self::messageVersion() . '.'
+            . self::messageType() . '.'
+            . User::modelName() . '.'
+            . self::NAME;
     }
 
     public static function messageVersion(): string
@@ -38,10 +42,10 @@ final class UserManualClockInCommand extends Command
             ->that($payload[self::PAYLOAD_REFERENCE], self::PAYLOAD_REFERENCE)->string()->notBlank()
             ->verifyNow();
 
-        $this->reference = UserReference::from(self::PAYLOAD_REFERENCE);
+        $this->reference = self::PAYLOAD_REFERENCE;
     }
 
-    public function reference(): UserReference
+    public function reference(): string
     {
         return $this->reference;
     }

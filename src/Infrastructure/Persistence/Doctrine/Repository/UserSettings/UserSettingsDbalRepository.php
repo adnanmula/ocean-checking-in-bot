@@ -2,10 +2,10 @@
 
 namespace AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserSettings;
 
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettings;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInMode;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInPlatform;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserSettings;
 use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
 use AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 

@@ -2,8 +2,8 @@
 
 namespace AdnanMula\ClockInBot\Domain\Service\UserClientData;
 
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserClientData;
 use AdnanMula\ClockInBot\Domain\Model\UserClientData\Exception\UserHasNotClientData;
-use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientData;
 use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 

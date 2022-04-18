@@ -2,7 +2,7 @@
 
 namespace AdnanMula\ClockInBot\Application\Query\User\GetClockIns;
 
-use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIns;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIns;
 use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
 use AdnanMula\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
 use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;

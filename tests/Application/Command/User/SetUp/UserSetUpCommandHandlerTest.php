@@ -5,17 +5,11 @@ namespace AdnanMula\ClockInBot\Tests\Application\Command\User\SetUp;
 use AdnanMula\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
 use AdnanMula\ClockInBot\Application\Command\User\SetUp\UserSetUpCommandHandler;
 use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
 use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
 use AdnanMula\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator;
 use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsCreator;
 use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsRemoverByUserId;
-use AdnanMula\ClockInBot\Tests\Mock\Domain\Model\User\UserMockProvider;
-use AdnanMula\ClockInBot\Tests\Mock\Domain\Model\UserClientData\UserClientDataMockProvider;
-use AdnanMula\ClockInBot\Tests\Mock\Domain\Model\UserSettings\UserSettingsMockProvider;
+use AdnanMula\ClockInBot\Tests\Mock\Domain\Model\User\UserObjectMother;
 use Doctrine\DBAL\Connection;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -33,8 +27,8 @@ final class UserSetUpCommandHandlerTest extends TestCase
     /** @test */
     public function given_valid_data_then_set_up()
     {
-        $userId = UserId::from('b99ca941-89b4-4ecc-9ecc-c48f46f15db2');
-        $reference = UserReference::from('123456');
+        $userId = Uuid::from('b99ca941-89b4-4ecc-9ecc-c48f46f15db2');
+        $reference = '123456';
         $data = [
             'key1' => 'value1',
             'key2' => 'value2',
@@ -64,9 +58,9 @@ final class UserSetUpCommandHandlerTest extends TestCase
         );
     }
 
-    private function prepareUserRepository(Uuid $id, UserReference $reference)
+    private function prepareUserRepository(Uuid $id, string $reference)
     {
-        $provider = new UserMockProvider();
+        $provider = new UserObjectMother();
         $provider->setId($id);
         $provider->setReference($reference);
         $user = $provider->build();

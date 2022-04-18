@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject;
+namespace AdnanMula\ClockInBot\Domain\Model\User\ValueObject;
 
 use PcComponentes\Ddd\Domain\Model\ValueObject\IntValueObject;
 use Symfony\Component\HttpFoundation\Response;

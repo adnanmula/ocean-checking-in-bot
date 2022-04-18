@@ -3,8 +3,8 @@
 namespace AdnanMula\ClockInBot\Infrastructure\Service\ClockIn;
 
 use AdnanMula\ClockInBot\Domain\Model\Client\Client;
-use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientData;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInPlatform;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserClientData;
 use AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\Ocean\OceanClientFactory;
 
 final class ClientFactory

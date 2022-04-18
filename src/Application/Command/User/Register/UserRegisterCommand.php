@@ -2,11 +2,10 @@
 
 namespace AdnanMula\ClockInBot\Application\Command\User\Register;
 
+use AdnanMula\ClockInBot\Domain\Model\User\User;
 use Assert\Assert;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use PcComponentes\Ddd\Application\Command;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserRegisterCommand extends Command
 {
@@ -17,13 +16,17 @@ final class UserRegisterCommand extends Command
     public const NAME = 'user_register';
     public const VERSION = '1';
 
-    private UserId $id;
-    private UserReference $reference;
-    private UserUsername $username;
+    private Uuid $id;
+    private string $reference;
+    private string $username;
 
     public static function messageName(): string
     {
-        return self::NAME;
+        return 'adnanmula.clock-in-bot.'
+            . self::messageVersion() . '.'
+            . self::messageType() . '.'
+            . User::modelName() . '.'
+            . self::NAME;
     }
 
     public static function messageVersion(): string
@@ -36,8 +39,7 @@ final class UserRegisterCommand extends Command
         $payload = $this->messagePayload();
 
         Assert::lazy()
-            ->that($payload, 'payload')
-            ->isArray()
+            ->that($payload, 'payload')->isArray()
             ->keyExists(self::PAYLOAD_ID)
             ->keyExists(self::PAYLOAD_REFERENCE)
             ->keyExists(self::PAYLOAD_USERNAME)
@@ -49,22 +51,22 @@ final class UserRegisterCommand extends Command
             ->that($payload[self::PAYLOAD_USERNAME], self::PAYLOAD_USERNAME)->string()->notBlank()
             ->verifyNow();
 
-        $this->id = UserId::from($payload[self::PAYLOAD_ID]);
-        $this->reference = UserReference::from($payload[self::PAYLOAD_REFERENCE]);
-        $this->username = UserUsername::from($payload[self::PAYLOAD_USERNAME]);
+        $this->id = Uuid::from($payload[self::PAYLOAD_ID]);
+        $this->reference = $payload[self::PAYLOAD_REFERENCE];
+        $this->username = $payload[self::PAYLOAD_USERNAME];
     }
 
-    public function id(): UserId
+    public function id(): Uuid
     {
         return $this->id;
     }
 
-    public function reference(): UserReference
+    public function reference(): string
     {
         return $this->reference;
     }
 
-    public function username(): UserUsername
+    public function username(): string
     {
         return $this->username;
     }

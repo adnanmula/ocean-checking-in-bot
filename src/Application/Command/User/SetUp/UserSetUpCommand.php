@@ -2,9 +2,9 @@
 
 namespace AdnanMula\ClockInBot\Application\Command\User\SetUp;
 
+use AdnanMula\ClockInBot\Domain\Model\User\User;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInPlatform;
 use Assert\Assert;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
 use PcComponentes\Ddd\Application\Command;
 
 final class UserSetUpCommand extends Command
@@ -16,13 +16,17 @@ final class UserSetUpCommand extends Command
     public const NAME = 'user_set_up';
     public const VERSION = '1';
 
-    private UserReference $reference;
+    private string $reference;
     private ClockInPlatform $platform;
     private array $data;
 
     public static function messageName(): string
     {
-        return self::NAME;
+        return 'adnanmula.clock-in-bot.'
+            . self::messageVersion() . '.'
+            . self::messageType() . '.'
+            . User::modelName() . '.'
+            . self::NAME;
     }
 
     public static function messageVersion(): string
@@ -54,12 +58,12 @@ final class UserSetUpCommand extends Command
                 ->verifyNow();
         }
 
-        $this->reference = UserReference::from($payload['reference']);
+        $this->reference = $payload['reference'];
         $this->platform = ClockInPlatform::from($payload['platform']);
         $this->data = $payload['data'];
     }
 
-    public function reference(): UserReference
+    public function reference(): string
     {
         return $this->reference;
     }

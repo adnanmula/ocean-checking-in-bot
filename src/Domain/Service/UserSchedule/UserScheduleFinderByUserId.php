@@ -2,7 +2,7 @@
 
 namespace AdnanMula\ClockInBot\Domain\Service\UserSchedule;
 
-use AdnanMula\ClockInBot\Domain\Model\UserSchedule\UserSchedule;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserSchedule;
 use AdnanMula\ClockInBot\Domain\Model\UserSchedule\UserScheduleRepository;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
