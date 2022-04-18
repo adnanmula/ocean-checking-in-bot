@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\User;
+namespace AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\User;
-use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\User\User;
+use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserDbalRepository extends DbalRepository implements UserRepository
 {

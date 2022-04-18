@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject;
+namespace AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject;
 
-use DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\Ocean\OceanClient;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\EnumValueObject;
+use AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\Ocean\OceanClient;
+use PcComponentes\Ddd\Domain\Model\ValueObject\EnumValueObject;
 
 final class ClockInPlatform extends EnumValueObject
 {

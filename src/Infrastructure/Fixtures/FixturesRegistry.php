@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Fixtures;
+namespace AdnanMula\ClockInBot\Infrastructure\Fixtures;
 
-use DemigrantSoft\ClockInBot\Domain\Service\Persistence\Fixture;
+use AdnanMula\ClockInBot\Domain\Service\Persistence\Fixture;
 
 final class FixturesRegistry
 {
@@ -26,8 +26,10 @@ final class FixturesRegistry
 
     private function load(Fixture $fixture): void
     {
+        $dependants = $fixture->dependants();
+
         \array_walk(
-            $fixture->dependants(),
+            $dependants,
             fn (string $fixture) => $this->load($this->registry[$fixture]),
         );
 

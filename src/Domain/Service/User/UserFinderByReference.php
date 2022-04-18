@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Service\User;
+namespace AdnanMula\ClockInBot\Domain\Service\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\Exception\UserNotExistsException;
-use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserNotExistsException;
+use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 
 final class UserFinderByReference
 {

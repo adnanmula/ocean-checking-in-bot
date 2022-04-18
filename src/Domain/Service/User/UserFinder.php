@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Service\User;
+namespace AdnanMula\ClockInBot\Domain\Service\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\Exception\UserNotExistsException;
-use DemigrantSoft\ClockInBot\Domain\Model\User\User;
-use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserNotExistsException;
+use AdnanMula\ClockInBot\Domain\Model\User\User;
+use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserFinder
 {

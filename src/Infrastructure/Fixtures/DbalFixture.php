@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Fixtures;
+namespace AdnanMula\ClockInBot\Infrastructure\Fixtures;
 
 use Doctrine\DBAL\Driver\Connection;
 

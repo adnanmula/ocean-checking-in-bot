@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Command\User\SetUp;
+namespace AdnanMula\ClockInBot\Application\Command\User\SetUp;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
-use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
-use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsCreator;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsRemoverByUserId;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
+use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
+use AdnanMula\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator;
+use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsCreator;
+use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsRemoverByUserId;
 use Doctrine\DBAL\Connection;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class UserSetUpCommandHandler implements MessageHandlerInterface

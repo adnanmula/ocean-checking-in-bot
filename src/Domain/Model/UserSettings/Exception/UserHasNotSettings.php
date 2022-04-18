@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\UserSettings\Exception;
+namespace AdnanMula\ClockInBot\Domain\Model\UserSettings\Exception;
 
-use DemigrantSoft\ClockInBot\Domain\Model\Shared\Exception\NotFoundException;
+use AdnanMula\ClockInBot\Domain\Model\Shared\Exception\NotFoundException;
 
 final class UserHasNotSettings extends NotFoundException
 {

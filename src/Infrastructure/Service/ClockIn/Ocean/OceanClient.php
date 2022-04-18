@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\Ocean;
+namespace AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\Ocean;
 
-use DemigrantSoft\ClockInBot\Domain\Model\Client\Client;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIn;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockInDate;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockInRandomness;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIns;
+use AdnanMula\ClockInBot\Domain\Model\Client\Client;
+use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIn;
+use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockInDate;
+use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockInRandomness;
+use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIns;
 use GuzzleHttp\RequestOptions;
 
 final class OceanClient extends \GuzzleHttp\Client implements Client

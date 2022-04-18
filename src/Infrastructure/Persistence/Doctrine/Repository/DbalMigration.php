@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository;
+namespace AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository;
 
-use DemigrantSoft\ClockInBot\Domain\Service\Persistence\Migration;
+use AdnanMula\ClockInBot\Domain\Service\Persistence\Migration;
 use Doctrine\DBAL\Connection;
 
 abstract class DbalMigration implements Migration

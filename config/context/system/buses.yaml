@@ -1,7 +1,7 @@
 services:
   middleware.doctrine.transactional:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Messaging\Doctrine\DoctrineTransactionalMiddleware
+    class: AdnanMula\ClockInBot\Infrastructure\Messaging\Doctrine\DoctrineTransactionalMiddleware
     arguments:
       - '@repository.dbal.connection'
   middleware.exception.catcher:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Messaging\Doctrine\HandlerExceptionCatcherMiddleware
+    class: AdnanMula\ClockInBot\Infrastructure\Messaging\Doctrine\HandlerExceptionCatcherMiddleware

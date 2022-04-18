@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Entrypoint\Command;
+namespace AdnanMula\ClockInBot\Entrypoint\Command;
 
-use DemigrantSoft\ClockInBot\Domain\Service\Persistence\Migration;
+use AdnanMula\ClockInBot\Domain\Service\Persistence\Migration;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,7 +36,7 @@ final class InitEnvironmentCommand extends Command
             },
         );
 
-        return 0;
+        return self::SUCCESS;
     }
 
     private function migrationName(Migration $migration): string

@@ -1,6 +1,6 @@
 <?php
 
-use DemigrantSoft\ClockInBot\Kernel;
+use AdnanMula\ClockInBot\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 

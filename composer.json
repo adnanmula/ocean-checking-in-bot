@@ -4,23 +4,31 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "php": "^7.4",
+        "php": "^8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-sqlite3": "*",
-        "beberlei/assert": "^3.2",
+        "beberlei/assert": "^3.3",
         "doctrine/dbal": "^2.10",
         "eleirbag89/telegrambotphp": "^1.3",
-        "guzzlehttp/guzzle": "^6.3",
-        "pccomponentes/ddd": "^1.2",
-        "ramsey/uuid": "^3.9",
-        "symfony/console": "5.*",
-        "symfony/dotenv": "5.*",
+        "guzzlehttp/guzzle": "^6.5",
+        "pccomponentes/ddd": "^2.3",
+        "ramsey/uuid": "^4.0",
+        "symfony/console": "6.*",
+        "symfony/dotenv": "6.*",
         "symfony/flex": "^1.1",
-        "symfony/framework-bundle": "5.*",
-        "symfony/messenger": "5.*",
-        "symfony/yaml": "5.*"
+        "symfony/framework-bundle": "6.*",
+        "symfony/messenger": "6.*",
+        "symfony/yaml": "6.*"
+    },
+    "require-dev": {
+        "adnanmula/coding-standard": "^0.0.5",
+        "phpro/grumphp": "^1.2",
+        "phpstan/phpstan": "^0.12.11",
+        "phpunit/phpunit": "^9.0",
+        "squizlabs/php_codesniffer": "^3.5",
+        "symfony/var-dumper": "6.*"
     },
     "config": {
         "preferred-install": {
@@ -30,13 +38,13 @@
     },
     "autoload": {
         "psr-4": {
-            "DemigrantSoft\\ClockInBot\\": "src/",
-            "DemigrantSoft\\ClockInBot\\Migrations\\": "migrations/"
+            "AdnanMula\\ClockInBot\\": "src/",
+            "AdnanMula\\ClockInBot\\Migrations\\": "migrations/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DemigrantSoft\\ClockInBot\\Tests\\": "tests/"
+            "AdnanMula\\ClockInBot\\Tests\\": "tests/"
         }
     },
     "replace": {
@@ -69,13 +77,5 @@
             "allow-contrib": false,
             "require": "5.*"
         }
-    },
-    "require-dev": {
-        "adnanmula/coding-standard": "^0.0.4",
-        "phpro/grumphp": "^1.2",
-        "phpstan/phpstan": "^0.12.11",
-        "phpunit/phpunit": "^9.0",
-        "squizlabs/php_codesniffer": "^3.5",
-        "symfony/var-dumper": "5.*"
     }
 }

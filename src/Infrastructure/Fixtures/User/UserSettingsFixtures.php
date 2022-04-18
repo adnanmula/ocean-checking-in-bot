@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Fixtures\User;
+namespace AdnanMula\ClockInBot\Infrastructure\Fixtures\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettings;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
-use DemigrantSoft\ClockInBot\Domain\Service\Persistence\Fixture;
-use DemigrantSoft\ClockInBot\Infrastructure\Fixtures\DbalFixture;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettings;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
+use AdnanMula\ClockInBot\Domain\Service\Persistence\Fixture;
+use AdnanMula\ClockInBot\Infrastructure\Fixtures\DbalFixture;
 
 final class UserSettingsFixtures extends DbalFixture implements Fixture
 {

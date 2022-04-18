@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Service\Persistence;
+namespace AdnanMula\ClockInBot\Domain\Service\Persistence;
 
 interface Fixture
 {

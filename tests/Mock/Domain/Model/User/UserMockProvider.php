@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Tests\Mock\Domain\Model\User;
+namespace AdnanMula\ClockInBot\Tests\Mock\Domain\Model\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\User;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\User\User;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserMockProvider
 {

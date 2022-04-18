@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Query\User\GetConfig;
+namespace AdnanMula\ClockInBot\Application\Query\User\GetConfig;
 
 use Assert\Assert;
-use DemigrantSoft\ClockInBot\Domain\Model\User\User;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use Pccomponentes\Ddd\Application\Query;
+use AdnanMula\ClockInBot\Domain\Model\User\User;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use PcComponentes\Ddd\Application\Query;
 
 final class GetConfigQuery extends Query
 {

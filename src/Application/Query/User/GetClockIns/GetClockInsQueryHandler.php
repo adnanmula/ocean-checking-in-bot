@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Query\User\GetClockIns;
+namespace AdnanMula\ClockInBot\Application\Query\User\GetClockIns;
 
-use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIns;
-use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
-use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
-use DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory;
+use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIns;
+use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
+use AdnanMula\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
+use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
+use AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class GetClockInsQueryHandler implements MessageHandlerInterface

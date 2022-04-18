@@ -10,38 +10,38 @@ services:
     alias: repository.dbal.connection
 
   repository.dbal.migration:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalMigration
+    class: AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalMigration
     arguments:
       - '@repository.dbal.connection'
 
   repository.dbal.migration.v001:
-    class: DemigrantSoft\ClockInBot\Migrations\Postgresql\V001
+    class: AdnanMula\ClockInBot\Migrations\Postgresql\V001
     parent: 'repository.dbal.migration'
 
   repository.dbal.base:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository
+    class: AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository
     arguments:
       - '@repository.dbal.connection'
 
   repository.dbal.fixture.base:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository
+    class: AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository
     arguments:
       - '@repository.dbal.connection'
 
   repository.dbal.fixture.user:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Fixtures\User\UserFixtures
+    class: AdnanMula\ClockInBot\Infrastructure\Fixtures\User\UserFixtures
     parent: 'repository.dbal.fixture.base'
     arguments:
       - '@repository.dbal.connection'
 
   repository.dbal.fixture.user-settings:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Fixtures\User\UserSettingsFixtures
+    class: AdnanMula\ClockInBot\Infrastructure\Fixtures\User\UserSettingsFixtures
     parent: 'repository.dbal.fixture.base'
     arguments:
       - '@repository.dbal.connection'
 
   repository.dbal.fixture.registry:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Fixtures\FixturesRegistry
+    class: AdnanMula\ClockInBot\Infrastructure\Fixtures\FixturesRegistry
     arguments:
       - '@repository.dbal.fixture.user'
       - '@repository.dbal.fixture.user-settings'

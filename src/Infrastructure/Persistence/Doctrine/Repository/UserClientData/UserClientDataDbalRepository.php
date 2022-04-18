@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserClientData;
+namespace AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserClientData;
 
-use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData;
-use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
-use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientData;
+use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
+use AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserClientDataDbalRepository extends DbalRepository implements UserClientDataRepository
 {

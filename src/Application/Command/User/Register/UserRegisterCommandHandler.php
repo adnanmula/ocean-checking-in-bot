@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Command\User\Register;
+namespace AdnanMula\ClockInBot\Application\Command\User\Register;
 
-use DemigrantSoft\ClockInBot\Domain\Service\User\UserCreator;
+use AdnanMula\ClockInBot\Domain\Service\User\UserCreator;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class UserRegisterCommandHandler implements MessageHandlerInterface

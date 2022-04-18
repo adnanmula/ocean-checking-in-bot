@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Service\UserClientData;
+namespace AdnanMula\ClockInBot\Domain\Service\UserClientData;
 
-use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\Exception\UserHasNotClientData;
-use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData;
-use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\UserClientData\Exception\UserHasNotClientData;
+use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientData;
+use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserClientDataFinderByUserId
 {

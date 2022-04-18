@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\User;
+namespace AdnanMula\ClockInBot\Domain\Model\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 
 final class User
 {

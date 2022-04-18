@@ -1,19 +1,19 @@
 parameters:
   telegram_commands:
 #   Commands
-    DemigrantSoft\ClockInBot\Application\Command\User\Register\UserRegisterCommand:
+    AdnanMula\ClockInBot\Application\Command\User\Register\UserRegisterCommand:
       - 'registrar'
       - 'register'
-    DemigrantSoft\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand:
+    AdnanMula\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand:
       - 'setup'
       - 'configuracion'
-    DemigrantSoft\ClockInBot\Application\Command\User\ManualClockIn\UserManualClockInCommand:
+    AdnanMula\ClockInBot\Application\Command\User\ManualClockIn\UserManualClockInCommand:
       - 'picar'
       - 'fichar'
 #   Query
-    DemigrantSoft\ClockInBot\Application\Query\User\GetClockIns\GetClockInsQuery:
+    AdnanMula\ClockInBot\Application\Query\User\GetClockIns\GetClockInsQuery:
       - 'fichajes'
       - 'picajes'
-    DemigrantSoft\ClockInBot\Application\Query\User\GetConfig\GetConfigQuery:
+    AdnanMula\ClockInBot\Application\Query\User\GetConfig\GetConfigQuery:
       - 'setup'
       - 'configuracion'

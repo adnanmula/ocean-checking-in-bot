@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Messaging\Doctrine;
+namespace AdnanMula\ClockInBot\Infrastructure\Messaging\Doctrine;
 
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Messenger\Envelope;

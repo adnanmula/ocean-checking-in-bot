@@ -1,23 +1,23 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Tests\Application\Command\User\SetUp;
+namespace AdnanMula\ClockInBot\Tests\Application\Command\User\SetUp;
 
-use DemigrantSoft\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
-use DemigrantSoft\ClockInBot\Application\Command\User\SetUp\UserSetUpCommandHandler;
-use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
-use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
-use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsCreator;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsRemoverByUserId;
-use DemigrantSoft\ClockInBot\Tests\Mock\Domain\Model\User\UserMockProvider;
-use DemigrantSoft\ClockInBot\Tests\Mock\Domain\Model\UserClientData\UserClientDataMockProvider;
-use DemigrantSoft\ClockInBot\Tests\Mock\Domain\Model\UserSettings\UserSettingsMockProvider;
+use AdnanMula\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
+use AdnanMula\ClockInBot\Application\Command\User\SetUp\UserSetUpCommandHandler;
+use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientDataRepository;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
+use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
+use AdnanMula\ClockInBot\Domain\Service\UserClientData\UserClientDataCreator;
+use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsCreator;
+use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsRemoverByUserId;
+use AdnanMula\ClockInBot\Tests\Mock\Domain\Model\User\UserMockProvider;
+use AdnanMula\ClockInBot\Tests\Mock\Domain\Model\UserClientData\UserClientDataMockProvider;
+use AdnanMula\ClockInBot\Tests\Mock\Domain\Model\UserSettings\UserSettingsMockProvider;
 use Doctrine\DBAL\Connection;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

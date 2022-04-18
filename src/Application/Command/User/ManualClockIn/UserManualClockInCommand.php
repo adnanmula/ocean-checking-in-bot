@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Command\User\ManualClockIn;
+namespace AdnanMula\ClockInBot\Application\Command\User\ManualClockIn;
 
 use Assert\Assert;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use Pccomponentes\Ddd\Application\Command;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use PcComponentes\Ddd\Application\Command;
 
 final class UserManualClockInCommand extends Command
 {

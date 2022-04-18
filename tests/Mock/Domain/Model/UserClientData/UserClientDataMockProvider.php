@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Tests\Mock\Domain\Model\UserClientData;
+namespace AdnanMula\ClockInBot\Tests\Mock\Domain\Model\UserClientData;
 
-use DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientData;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserClientDataMockProvider
 {

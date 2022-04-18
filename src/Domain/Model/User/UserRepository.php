@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\User;
+namespace AdnanMula\ClockInBot\Domain\Model\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 interface UserRepository
 {

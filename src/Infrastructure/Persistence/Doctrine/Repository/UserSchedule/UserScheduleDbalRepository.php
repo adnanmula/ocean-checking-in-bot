@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserSchedule;
+namespace AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\UserSchedule;
 
-use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\UserSchedule;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\UserScheduleRepository;
-use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\UserSchedule\UserSchedule;
+use AdnanMula\ClockInBot\Domain\Model\UserSchedule\UserScheduleRepository;
+use AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserScheduleDbalRepository extends DbalRepository implements UserScheduleRepository
 {

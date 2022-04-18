@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\User\Exception;
+namespace AdnanMula\ClockInBot\Domain\Model\User\Exception;
 
-use DemigrantSoft\ClockInBot\Domain\Model\Shared\Exception\NotFoundException;
+use AdnanMula\ClockInBot\Domain\Model\Shared\Exception\NotFoundException;
 
 final class UserNotExistsException extends NotFoundException
 {

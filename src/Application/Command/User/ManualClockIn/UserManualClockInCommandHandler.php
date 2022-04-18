@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Command\User\ManualClockIn;
+namespace AdnanMula\ClockInBot\Application\Command\User\ManualClockIn;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
-use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
-use DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
+use AdnanMula\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
+use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
+use AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class UserManualClockInCommandHandler implements MessageHandlerInterface

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Entrypoint\Command;
+namespace AdnanMula\ClockInBot\Entrypoint\Command;
 
-use DemigrantSoft\ClockInBot\Infrastructure\Fixtures\FixturesRegistry;
+use AdnanMula\ClockInBot\Infrastructure\Fixtures\FixturesRegistry;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Table;
 use Symfony\Component\Console\Command\Command;
@@ -29,13 +29,15 @@ final class LoadFixturesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $tables = $this->connection->getSchemaManager()->listTables();
+
         \array_walk(
-            $this->connection->getSchemaManager()->listTables(),
+            $tables,
             fn (Table $table) => $this->connection->executeQuery('TRUNCATE "' . $table->getName() . '" CASCADE'),
         );
 
         $this->registry->execute();
 
-        return 0;
+        return self::SUCCESS;
     }
 }

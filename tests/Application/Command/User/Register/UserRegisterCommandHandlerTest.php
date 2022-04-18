@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Tests\Application\Command\User\Register;
+namespace AdnanMula\ClockInBot\Tests\Application\Command\User\Register;
 
-use DemigrantSoft\ClockInBot\Application\Command\User\Register\UserRegisterCommand;
-use DemigrantSoft\ClockInBot\Application\Command\User\Register\UserRegisterCommandHandler;
-use DemigrantSoft\ClockInBot\Domain\Model\User\Exception\UserAlreadyExistsException;
-use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use DemigrantSoft\ClockInBot\Domain\Service\User\UserCreator;
-use DemigrantSoft\ClockInBot\Tests\Mock\Domain\Model\User\UserMockProvider;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Application\Command\User\Register\UserRegisterCommand;
+use AdnanMula\ClockInBot\Application\Command\User\Register\UserRegisterCommandHandler;
+use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserAlreadyExistsException;
+use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use AdnanMula\ClockInBot\Domain\Service\User\UserCreator;
+use AdnanMula\ClockInBot\Tests\Mock\Domain\Model\User\UserMockProvider;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

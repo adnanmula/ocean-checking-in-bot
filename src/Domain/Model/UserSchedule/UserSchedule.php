@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\UserSchedule;
+namespace AdnanMula\ClockInBot\Domain\Model\UserSchedule;
 
-use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIn;
+use AdnanMula\ClockInBot\Domain\Model\UserSchedule\ValueObject\ClockIn;
 
 final class UserSchedule
 {

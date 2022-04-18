@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Service\UserSchedule;
+namespace AdnanMula\ClockInBot\Domain\Service\UserSchedule;
 
-use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\UserSchedule;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSchedule\UserScheduleRepository;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\UserSchedule\UserSchedule;
+use AdnanMula\ClockInBot\Domain\Model\UserSchedule\UserScheduleRepository;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserScheduleFinderByUserId
 {

@@ -1,8 +1,8 @@
 services:
   factory.client:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory
+    class: AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory
     arguments:
       - '@factory.client.ocean'
 
   factory.client.ocean:
-    class: DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn\Ocean\OceanClientFactory
+    class: AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\Ocean\OceanClientFactory

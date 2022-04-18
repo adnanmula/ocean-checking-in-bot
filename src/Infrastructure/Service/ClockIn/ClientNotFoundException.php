@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Infrastructure\Service\ClockIn;
+namespace AdnanMula\ClockInBot\Infrastructure\Service\ClockIn;
 
-use DemigrantSoft\ClockInBot\Domain\Model\Shared\Exception\NotFoundException;
+use AdnanMula\ClockInBot\Domain\Model\Shared\Exception\NotFoundException;
 
 final class ClientNotFoundException extends NotFoundException
 {

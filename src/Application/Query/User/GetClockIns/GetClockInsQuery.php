@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Query\User\GetClockIns;
+namespace AdnanMula\ClockInBot\Application\Query\User\GetClockIns;
 
 use Assert\Assert;
-use DemigrantSoft\ClockInBot\Domain\Model\User\User;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use Pccomponentes\Ddd\Application\Query;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\DateTimeValueObject;
+use AdnanMula\ClockInBot\Domain\Model\User\User;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use PcComponentes\Ddd\Application\Query;
+use PcComponentes\Ddd\Domain\Model\ValueObject\DateTimeValueObject;
 
 final class GetClockInsQuery extends Query
 {

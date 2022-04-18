@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Service\UserSettings;
+namespace AdnanMula\ClockInBot\Domain\Service\UserSettings;
 
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\Exception\UserAlreadyHasSettings;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettings;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\Exception\UserAlreadyHasSettings;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettings;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInMode;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserSettingsCreator
 {

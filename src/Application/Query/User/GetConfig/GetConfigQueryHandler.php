@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Query\User\GetConfig;
+namespace AdnanMula\ClockInBot\Application\Query\User\GetConfig;
 
-use DemigrantSoft\ClockInBot\Domain\Service\User\UserFinderByReference;
-use DemigrantSoft\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSchedule\UserScheduleFinderByUserId;
-use DemigrantSoft\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
+use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
+use AdnanMula\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
+use AdnanMula\ClockInBot\Domain\Service\UserSchedule\UserScheduleFinderByUserId;
+use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class GetConfigQueryHandler implements MessageHandlerInterface

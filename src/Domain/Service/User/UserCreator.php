@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Service\User;
+namespace AdnanMula\ClockInBot\Domain\Service\User;
 
-use DemigrantSoft\ClockInBot\Domain\Model\User\Exception\UserAlreadyExistsException;
-use DemigrantSoft\ClockInBot\Domain\Model\User\User;
-use DemigrantSoft\ClockInBot\Domain\Model\User\UserRepository;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserAlreadyExistsException;
+use AdnanMula\ClockInBot\Domain\Model\User\User;
+use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserCreator
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\Shared\Exception;
+namespace AdnanMula\ClockInBot\Domain\Model\Shared\Exception;
 
 use Symfony\Component\HttpFoundation\Response;
 

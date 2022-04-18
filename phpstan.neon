@@ -8,4 +8,4 @@ parameters:
         -   src/Kernel.php
         -   config/bootstrap.php
     universalObjectCratesClasses:
-            - DemigrantSoft\ClockInBot\Domain\Model\UserClientData\UserClientData
+            - AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientData

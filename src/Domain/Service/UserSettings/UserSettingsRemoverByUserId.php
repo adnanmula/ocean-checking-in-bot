@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Service\UserSettings;
+namespace AdnanMula\ClockInBot\Domain\Service\UserSettings;
 
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\UserSettingsRepository;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserSettingsRemoverByUserId
 {

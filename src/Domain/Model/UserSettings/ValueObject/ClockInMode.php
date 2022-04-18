@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject;
+namespace AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject;
 
-use Pccomponentes\Ddd\Domain\Model\ValueObject\EnumValueObject;
+use PcComponentes\Ddd\Domain\Model\ValueObject\EnumValueObject;
 
 final class ClockInMode extends EnumValueObject
 {

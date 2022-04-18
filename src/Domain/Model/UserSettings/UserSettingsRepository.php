@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Domain\Model\UserSettings;
+namespace AdnanMula\ClockInBot\Domain\Model\UserSettings;
 
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 interface UserSettingsRepository
 {

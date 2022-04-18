@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Command\User\SetUp;
+namespace AdnanMula\ClockInBot\Application\Command\User\SetUp;
 
 use Assert\Assert;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use DemigrantSoft\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
-use Pccomponentes\Ddd\Application\Command;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use AdnanMula\ClockInBot\Domain\Model\UserSettings\ValueObject\ClockInPlatform;
+use PcComponentes\Ddd\Application\Command;
 
 final class UserSetUpCommand extends Command
 {

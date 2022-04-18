@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Application\Command\User\Register;
+namespace AdnanMula\ClockInBot\Application\Command\User\Register;
 
 use Assert\Assert;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use DemigrantSoft\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
-use Pccomponentes\Ddd\Application\Command;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
+use PcComponentes\Ddd\Application\Command;
 
 final class UserRegisterCommand extends Command
 {

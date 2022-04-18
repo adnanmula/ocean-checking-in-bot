@@ -1,13 +1,13 @@
 services:
   command.environment.init:
-    class: DemigrantSoft\ClockInBot\Entrypoint\Command\InitEnvironmentCommand
+    class: AdnanMula\ClockInBot\Entrypoint\Command\InitEnvironmentCommand
     arguments:
       - '@repository.dbal.migration.v001'
     tags:
       - { name: console.command, command: 'clock-in-bot:environment:init' }
 
   command.environment.fixtures:
-    class: DemigrantSoft\ClockInBot\Entrypoint\Command\LoadFixturesCommand
+    class: AdnanMula\ClockInBot\Entrypoint\Command\LoadFixturesCommand
     arguments:
       - '@repository.dbal.fixture.registry'
       - '@repository.dbal.connection'
@@ -15,7 +15,7 @@ services:
       - { name: console.command, command: 'clock-in-bot:environment:fixtures' }
 
   command.telegram.update:
-    class: DemigrantSoft\ClockInBot\Entrypoint\Command\TelegramGetUpdatesCommand
+    class: AdnanMula\ClockInBot\Entrypoint\Command\TelegramGetUpdatesCommand
     arguments:
       - '%env(TELEGRAM_TOKEN)%'
       - '@messenger.bus.command'

@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Entrypoint\Command;
+namespace AdnanMula\ClockInBot\Entrypoint\Command;
 
-use DemigrantSoft\ClockInBot\Application\Command\User\Register\UserRegisterCommand;
-use DemigrantSoft\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
-use DemigrantSoft\ClockInBot\Application\Query\User\GetClockIns\GetClockInsQuery;
-use Pccomponentes\Ddd\Domain\Model\ValueObject\Uuid;
-use Pccomponentes\Ddd\Util\Message\SimpleMessage;
+use AdnanMula\ClockInBot\Application\Command\User\Register\UserRegisterCommand;
+use AdnanMula\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
+use AdnanMula\ClockInBot\Application\Query\User\GetClockIns\GetClockInsQuery;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
+use PcComponentes\Ddd\Util\Message\SimpleMessage;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -43,7 +43,7 @@ final class TelegramGetUpdatesCommand extends Command
             $this->bus->dispatch($this->getCommand($client->ChatID(), $client->Text()));
         }
 
-        return 0;
+        return self::SUCCESS;
     }
 
     private function getCommand(string $reference, array $text): SimpleMessage

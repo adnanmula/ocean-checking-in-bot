@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace DemigrantSoft\ClockInBot\Migrations\Postgresql;
+namespace AdnanMula\ClockInBot\Migrations\Postgresql;
 
-use DemigrantSoft\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalMigration;
+use AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalMigration;
 
 final class V001 extends DbalMigration
 {
