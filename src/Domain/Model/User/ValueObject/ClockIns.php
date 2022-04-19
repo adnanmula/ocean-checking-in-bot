@@ -9,13 +9,13 @@ final class ClockIns extends CollectionValueObject
     /** @param array<ClockIn> $clockIns */
     public static function from(...$clockIns): static
     {
-        self::assert($clockIns);
+        self::assert(...$clockIns);
 
-        return self::from($clockIns);
+        return parent::from($clockIns);
     }
 
     /** @param array<ClockIn> $clockIns */
-    private static function assert(array $clockIns): void
+    private static function assert(...$clockIns): void
     {
         \array_walk($clockIns, static function ($clockIn): void {
             if (false === $clockIn instanceof ClockIn) {

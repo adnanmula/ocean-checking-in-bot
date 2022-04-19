@@ -8,12 +8,12 @@ class CollectionValueObject implements \Iterator, \Countable, ValueObject
 {
     private array $items;
 
-    final protected function __construct(mixed ...$items)
+    final protected function __construct(array $items)
     {
         $this->items = $items;
     }
 
-    public static function from(mixed ...$items): static
+    public static function from(array $items): static
     {
         return new static($items);
     }

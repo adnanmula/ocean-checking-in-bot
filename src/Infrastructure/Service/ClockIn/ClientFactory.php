@@ -20,11 +20,11 @@ final class ClientFactory
     {
         if ($platform->isOcean()) {
             return $this->oceanFactory->build(
-                $data->baseUrl(),
-                $data->user(),
-                $data->password(),
-                $data->latitude(),
-                $data->longitude(),
+                $data->getBaseUrl(),
+                $data->getUser(),
+                $data->getPassword(),
+                (float) $data->getLatitude(),
+                (float) $data->getLongitude(),
             );
         }
 

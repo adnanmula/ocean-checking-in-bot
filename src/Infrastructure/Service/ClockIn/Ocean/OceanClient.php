@@ -25,6 +25,16 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
         parent::__construct($config);
     }
 
+    public function platform(): string
+    {
+        return self::PLATFORM;
+    }
+
+    public function version(): string
+    {
+        return self::VERSION;
+    }
+
     public function clockIn(): void
     {
         $this->post(
@@ -58,37 +68,36 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
             ],
         );
 
+        $responseClockIns = Json::decode($response->getBody()->getContents())['Detalles'];
         $clockIns = [];
 
-        foreach (Json::decode($response->getBody()->getContents()) as $day) {
-            foreach ($day['Marcajes'] as $marcaje) {
-                if (\array_key_exists('MarcajeEntrada', $marcaje)) {
+        foreach ($responseClockIns as $day) {
+            foreach ($day['Marcajes'] as $clockIn) {
+                if (\array_key_exists('MarcajeEntrada', $clockIn)) {
+                    if (null === $clockIn['MarcajeEntrada']) {
+                        continue;
+                    }
+
                     $clockIns[] = ClockIn::from(
-                        new \DateTimeImmutable($marcaje['MarcajeEntrada']['Hora']),
+                        new \DateTimeImmutable($clockIn['MarcajeEntrada']['Hora']),
                         ClockInRandomness::from(0),
                     );
                 }
 
-                if (\array_key_exists('MarcajeSalida', $marcaje)) {
+                if (\array_key_exists('MarcajeSalida', $clockIn)) {
+                    if (null === $clockIn['MarcajeSalida']) {
+                        continue;
+                    }
+
                     $clockIns[] = ClockIn::from(
-                        new \DateTimeImmutable($marcaje['MarcajeSalida']['Hora']),
+                        new \DateTimeImmutable($clockIn['MarcajeSalida']['Hora']),
                         ClockInRandomness::from(0),
                     );
                 }
             }
         }
 
-        return ClockIns::from($clockIns);
-    }
-
-    public function platform(): string
-    {
-        return self::PLATFORM;
-    }
-
-    public function version(): string
-    {
-        return self::VERSION;
+        return ClockIns::from(...$clockIns);
     }
 
     private function forceLogin(): \stdClass

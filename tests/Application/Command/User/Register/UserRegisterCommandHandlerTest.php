@@ -28,9 +28,7 @@ final class UserRegisterCommandHandlerTest extends TestCase
             ->with($user->reference())
             ->willReturn(null);
 
-        $this->repository->expects($this->once())
-            ->method('save')
-            ->with();
+        $this->repository->expects($this->once())->method('save');
 
         ($this->handler)($this->command($user->id(), $user->reference()));
     }

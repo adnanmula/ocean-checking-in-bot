@@ -22,7 +22,7 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
     {
         $result = $this->connection
             ->createQueryBuilder()
-            ->select('a.id, a.reference, a.username, a.settings, a.clientData, a.schedule')
+            ->select('a.id, a.reference, a.username, a.settings, a.client_data, a.schedule')
             ->from(self::TABLE_USER, 'a')
             ->where('a.reference = :reference')
             ->setParameter('id', $id->value())
@@ -40,7 +40,7 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
     public function byReference(string $reference): ?User
     {
         $result = $this->connection->createQueryBuilder()
-            ->select('a.id, a.reference, a.username, a.settings, a.clientData, a.schedule')
+            ->select('a.id, a.reference, a.username, a.settings, a.client_data, a.schedule')
             ->from(self::TABLE_USER, 'a')
             ->where('a.reference = :reference')
             ->setParameter('reference', $reference)
@@ -77,23 +77,38 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
 
     private function map($user): User
     {
-        $rawSettings = Json::decode($user['settings']);
-        $rawClientData = Json::decode($user['client_data']);
-        $rawSchedule = Json::decode($user['schedule']);
+        $rawSettings = null === $user['settings'] ? null : Json::decode($user['settings']);
+        $rawClientData = '[]' === $user['client_data'] ? null : Json::decode($user['client_data']);
+        $rawSchedule = null === $user['schedule'] ? null : Json::decode($user['schedule']);
+
+        $settings = null;
+        if (null !== $rawSettings) {
+            $settings = UserSettings::from(
+                ClockInPlatform::from($rawSettings['platform']),
+                ClockInMode::from($rawSettings['mode']),
+            );
+        }
+
+        $clientData = null;
+        if (null !== $rawClientData) {
+            $clientData = UserClientData::from($rawClientData);
+        }
+
+        $schedule = null;
+        if (null !== $rawSchedule) {
+            $schedule = UserSchedule::from(...array_map(
+                static fn (array $clockIn) => ClockIn::from($clockIn['time'], $clockIn['randomnes']),
+                $rawSchedule,
+            ));
+        }
 
         return User::create(
             Uuid::from($user['id']),
             $user['reference'],
             $user['username'],
-            UserSettings::from(
-                ClockInPlatform::from($rawSettings['platform']),
-                ClockInMode::from($rawSettings['mode']),
-            ),
-            UserClientData::from($rawClientData),
-            UserSchedule::from(...array_map(
-                static fn (array $clockIn) => ClockIn::from($clockIn['time'], $clockIn['randomnes']),
-                $rawSchedule,
-            )),
+            $settings,
+            $clientData,
+            $schedule,
         );
     }
 }
