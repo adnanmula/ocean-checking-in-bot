@@ -3,9 +3,9 @@ parameters:
     checkMissingIterableValueType: false
     paths:
         - src
-    excludes_analyse:
-        -   public/*
-        -   src/Kernel.php
-        -   config/bootstrap.php
+    excludePaths:
+        - public/*
+        - src/Kernel.php
+        - config/bootstrap.php
     universalObjectCratesClasses:
-            - AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientData
+        - AdnanMula\ClockInBot\Domain\Model\UserClientData\UserClientData

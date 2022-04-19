@@ -8,7 +8,7 @@ class CollectionValueObject implements \Iterator, \Countable, ValueObject
 {
     private array $items;
 
-    protected function __construct(mixed ...$items)
+    final protected function __construct(mixed ...$items)
     {
         $this->items = $items;
     }

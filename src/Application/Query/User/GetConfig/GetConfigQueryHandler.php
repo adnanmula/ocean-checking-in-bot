@@ -4,25 +4,15 @@ namespace AdnanMula\ClockInBot\Application\Query\User\GetConfig;
 
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIn;
 use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
-use AdnanMula\ClockInBot\Domain\Service\UserClientData\UserClientDataFinderByUserId;
-use AdnanMula\ClockInBot\Domain\Service\UserSchedule\UserScheduleFinderByUserId;
-use AdnanMula\ClockInBot\Domain\Service\UserSettings\UserSettingsFinderByUserId;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class GetConfigQueryHandler implements MessageHandlerInterface
 {
     private UserFinderByReference $userFinder;
 
-    public function __construct(
-        UserFinderByReference $userFinder,
-        UserSettingsFinderByUserId $settingsFinder,
-        UserClientDataFinderByUserId $clientDataFinder,
-        UserScheduleFinderByUserId $scheduleFinder
-    ) {
+    public function __construct(UserFinderByReference $userFinder)
+    {
         $this->userFinder = $userFinder;
-        $this->settingsFinder = $settingsFinder;
-        $this->clientDataFinder = $clientDataFinder;
-        $this->scheduleFinder = $scheduleFinder;
     }
 
     public function __invoke(GetConfigQuery $query): array

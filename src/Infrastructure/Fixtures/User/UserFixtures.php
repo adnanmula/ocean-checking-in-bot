@@ -8,6 +8,7 @@ use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use AdnanMula\ClockInBot\Domain\Service\Persistence\Fixture;
 use AdnanMula\ClockInBot\Infrastructure\Fixtures\DbalFixture;
+use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserFixtures extends DbalFixture implements Fixture
 {
@@ -22,17 +23,23 @@ final class UserFixtures extends DbalFixture implements Fixture
     {
         $this->save(
             User::create(
-                UserId::from(self::FIXTURE_USER_1_ID),
-                UserReference::from('123456'),
-                UserUsername::from('username'),
+                Uuid::from(self::FIXTURE_USER_1_ID),
+                '123456',
+                'username',
+                null,
+                null,
+                null,
             ),
         );
 
         $this->save(
             User::create(
-                UserId::from(self::FIXTURE_USER_2_ID),
-                UserReference::from('100000'),
-                UserUsername::from('username2'),
+                Uuid::from(self::FIXTURE_USER_2_ID),
+                '100000',
+                'username2',
+                null,
+                null,
+                null,
             ),
         );
 
@@ -63,8 +70,8 @@ final class UserFixtures extends DbalFixture implements Fixture
         );
 
         $stmt->bindValue(':id', $user->id()->value());
-        $stmt->bindValue(':reference', $user->reference()->value());
-        $stmt->bindValue(':username', $user->username()->value());
+        $stmt->bindValue(':reference', $user->reference());
+        $stmt->bindValue(':username', $user->username());
 
         $stmt->execute();
     }

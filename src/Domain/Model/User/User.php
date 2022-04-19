@@ -75,6 +75,21 @@ final class User
         return $this->schedule;
     }
 
+    public function updateSettings(?UserSettings $settings): void
+    {
+        $this->settings = $settings;
+    }
+
+    public function updateClientData(?UserClientData $clientData): void
+    {
+        $this->clientData = $clientData;
+    }
+
+    public function updateSchedule(?UserSchedule $schedule): void
+    {
+        $this->schedule = $schedule;
+    }
+
     public static function modelName(): string
     {
         return self::MODEL_NAME;

@@ -4,7 +4,6 @@ namespace AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\Ocean;
 
 use AdnanMula\ClockInBot\Domain\Model\Client\Client;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIn;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInDate;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInRandomness;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIns;
 use GuzzleHttp\RequestOptions;
@@ -64,14 +63,14 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
             foreach ($day['Marcajes'] as $marcaje) {
                 if (\array_key_exists('MarcajeEntrada', $marcaje)) {
                     $clockIns[] = ClockIn::from(
-                        ClockInDate::from($marcaje['MarcajeEntrada']['Hora']),
+                        new \DateTimeImmutable($marcaje['MarcajeEntrada']['Hora']),
                         ClockInRandomness::from(0),
                     );
                 }
 
                 if (\array_key_exists('MarcajeSalida', $marcaje)) {
                     $clockIns[] = ClockIn::from(
-                        ClockInDate::from($marcaje['MarcajeSalida']['Hora']),
+                        new \DateTimeImmutable($marcaje['MarcajeSalida']['Hora']),
                         ClockInRandomness::from(0),
                     );
                 }
