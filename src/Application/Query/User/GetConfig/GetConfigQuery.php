@@ -30,6 +30,11 @@ final class GetConfigQuery extends Query
         return self::VERSION;
     }
 
+    public function userReference(): string
+    {
+        return $this->userReference;
+    }
+
     protected function assertPayload(): void
     {
         $payload = $this->messagePayload();
@@ -43,10 +48,5 @@ final class GetConfigQuery extends Query
             ->verifyNow();
 
         $this->userReference = $payload[self::PAYLOAD_REFERENCE];
-    }
-
-    public function userReference(): string
-    {
-        return $this->userReference;
     }
 }

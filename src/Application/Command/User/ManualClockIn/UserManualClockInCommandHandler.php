@@ -20,7 +20,6 @@ final class UserManualClockInCommandHandler implements MessageHandlerInterface
     public function __invoke(UserManualClockInCommand $command): void
     {
         $user = $this->userFinder->execute($command->reference());
-
         $client = $this->factory->build($user->settings()->platform(), $user->clientData());
 
         $client->clockIn();

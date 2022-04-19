@@ -10,6 +10,7 @@ parameters:
     AdnanMula\ClockInBot\Application\Command\User\ManualClockIn\UserManualClockInCommand:
       - 'picar'
       - 'fichar'
+      - 'clockin'
 #   Query
     AdnanMula\ClockInBot\Application\Query\User\GetClockIns\GetClockInsQuery:
       - 'fichajes'

@@ -3,9 +3,6 @@
 namespace AdnanMula\ClockInBot\Infrastructure\Fixtures\User;
 
 use AdnanMula\ClockInBot\Domain\Model\User\User;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserId;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use AdnanMula\ClockInBot\Domain\Service\Persistence\Fixture;
 use AdnanMula\ClockInBot\Infrastructure\Fixtures\DbalFixture;
 use AdnanMula\ClockInBot\Util\Json;
@@ -62,15 +59,15 @@ final class UserFixtures extends DbalFixture implements Fixture
         $stmt = $this->connection->prepare(
             \sprintf(
                 '
-                INSERT INTO %s (id, reference, username, settings, client_data, schedule) VALUES (
-                    :id, :reference, :username, :settings, :client_data, :schedule
-                ) ON CONFLICT (id) DO UPDATE SET
+                    INSERT INTO %s (id, reference, username, settings, client_data, schedule)
+                    VALUES (:id, :reference, :username, :settings, :client_data, :schedule)
+                    ON CONFLICT (id) DO UPDATE SET
                     reference = :reference,
                     username = :username,
                     settings = :settings,
                     client_data = :client_data,
                     schedule = :schedule
-              ',
+                ',
                 self::TABLE_USER,
             ),
         );

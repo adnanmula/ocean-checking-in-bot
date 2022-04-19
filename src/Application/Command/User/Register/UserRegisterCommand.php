@@ -34,6 +34,21 @@ final class UserRegisterCommand extends Command
         return self::VERSION;
     }
 
+    public function id(): Uuid
+    {
+        return $this->id;
+    }
+
+    public function reference(): string
+    {
+        return $this->reference;
+    }
+
+    public function username(): string
+    {
+        return $this->username;
+    }
+
     protected function assertPayload(): void
     {
         $payload = $this->messagePayload();
@@ -54,20 +69,5 @@ final class UserRegisterCommand extends Command
         $this->id = Uuid::from($payload[self::PAYLOAD_ID]);
         $this->reference = $payload[self::PAYLOAD_REFERENCE];
         $this->username = $payload[self::PAYLOAD_USERNAME];
-    }
-
-    public function id(): Uuid
-    {
-        return $this->id;
-    }
-
-    public function reference(): string
-    {
-        return $this->reference;
-    }
-
-    public function username(): string
-    {
-        return $this->username;
     }
 }

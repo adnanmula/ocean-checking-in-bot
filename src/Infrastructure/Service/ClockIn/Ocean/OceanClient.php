@@ -6,6 +6,7 @@ use AdnanMula\ClockInBot\Domain\Model\Client\Client;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIn;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInRandomness;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIns;
+use AdnanMula\ClockInBot\Util\Json;
 use GuzzleHttp\RequestOptions;
 
 final class OceanClient extends \GuzzleHttp\Client implements Client
@@ -59,7 +60,7 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
 
         $clockIns = [];
 
-        foreach (\json_decode($response->getBody()->getContents(), true) as $day) {
+        foreach (Json::decode($response->getBody()->getContents()) as $day) {
             foreach ($day['Marcajes'] as $marcaje) {
                 if (\array_key_exists('MarcajeEntrada', $marcaje)) {
                     $clockIns[] = ClockIn::from(
@@ -101,6 +102,6 @@ final class OceanClient extends \GuzzleHttp\Client implements Client
             ],
         );
 
-        return json_decode($login->getBody()->getContents());
+        return \json_decode($login->getBody()->getContents());
     }
 }

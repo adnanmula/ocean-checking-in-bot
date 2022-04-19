@@ -13,6 +13,11 @@ class CollectionValueObject implements \Iterator, \Countable, ValueObject
         $this->items = $items;
     }
 
+    public static function from(mixed ...$items): static
+    {
+        return new static($items);
+    }
+
     public function current(): mixed
     {
         return \current($this->items);
@@ -76,6 +81,11 @@ class CollectionValueObject implements \Iterator, \Countable, ValueObject
         return 0 === $this->count();
     }
 
+    public function first(): mixed
+    {
+        return $this->items[array_key_first($this->items)] ?? null;
+    }
+
     public function equalTo(CollectionValueObject $other): bool
     {
         return static::class === \get_class($other) && $this->items == $other->items;
@@ -84,16 +94,6 @@ class CollectionValueObject implements \Iterator, \Countable, ValueObject
     final public function jsonSerialize(): array
     {
         return $this->items;
-    }
-
-    public static function from(mixed ...$items): static
-    {
-        return new static($items);
-    }
-
-    public function first(): mixed
-    {
-        return $this->items[array_key_first($this->items)] ?? null;
     }
 
     protected function addItem($item): self

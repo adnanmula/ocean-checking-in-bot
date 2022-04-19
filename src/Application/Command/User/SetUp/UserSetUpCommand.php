@@ -34,6 +34,21 @@ final class UserSetUpCommand extends Command
         return self::VERSION;
     }
 
+    public function reference(): string
+    {
+        return $this->reference;
+    }
+
+    public function platform(): ClockInPlatform
+    {
+        return $this->platform;
+    }
+
+    public function data(): array
+    {
+        return $this->data;
+    }
+
     protected function assertPayload(): void
     {
         $payload = $this->messagePayload();
@@ -61,20 +76,5 @@ final class UserSetUpCommand extends Command
         $this->reference = $payload['reference'];
         $this->platform = ClockInPlatform::from($payload['platform']);
         $this->data = $payload['data'];
-    }
-
-    public function reference(): string
-    {
-        return $this->reference;
-    }
-
-    public function platform(): ClockInPlatform
-    {
-        return $this->platform;
-    }
-
-    public function data(): array
-    {
-        return $this->data;
     }
 }

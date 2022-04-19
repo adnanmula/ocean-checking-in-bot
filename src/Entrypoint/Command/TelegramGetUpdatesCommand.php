@@ -37,9 +37,9 @@ final class TelegramGetUpdatesCommand extends Command
         $client = new \Telegram($this->botToken);
 
         $client->getUpdates();
+
         for ($i = 0; $i < $client->UpdateCount(); $i++) {
             $client->serveUpdate($i);
-
             $this->bus->dispatch($this->getCommand($client->ChatID(), $client->Text()));
         }
 

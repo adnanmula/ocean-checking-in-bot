@@ -6,11 +6,11 @@ final class Json
 {
     public static function encode(array $array): string
     {
-        return \json_encode($array, JSON_THROW_ON_ERROR, 512);
+        return \json_encode($array, \JSON_THROW_ON_ERROR, 512);
     }
 
     public static function decode(string $json): array
     {
-        return \json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        return \json_decode($json, true, 512, \JSON_THROW_ON_ERROR);
     }
 }

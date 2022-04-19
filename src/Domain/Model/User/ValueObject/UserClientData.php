@@ -20,15 +20,6 @@ final class UserClientData
         return new self($data);
     }
 
-    private static function assert(array $data): void
-    {
-        foreach ($data as $key => $datum) {
-            if (\is_numeric($key) || false === \is_string($datum)) {
-                throw new \InvalidArgumentException('Invalid client data.', Response::HTTP_BAD_REQUEST);
-            }
-        }
-    }
-
     public function all(): array
     {
         return $this->data;
@@ -43,5 +34,14 @@ final class UserClientData
         }
 
         return null;
+    }
+
+    private static function assert(array $data): void
+    {
+        foreach ($data as $key => $datum) {
+            if (\is_numeric($key) || false === \is_string($datum)) {
+                throw new \InvalidArgumentException('Invalid client data.', Response::HTTP_BAD_REQUEST);
+            }
+        }
     }
 }

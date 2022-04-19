@@ -29,6 +29,11 @@ final class UserManualClockInCommand extends Command
         return self::VERSION;
     }
 
+    public function reference(): string
+    {
+        return $this->reference;
+    }
+
     protected function assertPayload(): void
     {
         $payload = $this->messagePayload();
@@ -43,10 +48,5 @@ final class UserManualClockInCommand extends Command
             ->verifyNow();
 
         $this->reference = self::PAYLOAD_REFERENCE;
-    }
-
-    public function reference(): string
-    {
-        return $this->reference;
     }
 }

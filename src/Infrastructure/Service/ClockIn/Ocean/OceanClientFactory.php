@@ -2,6 +2,7 @@
 
 namespace AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\Ocean;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 
 final class OceanClientFactory
@@ -36,7 +37,7 @@ final class OceanClientFactory
 
     private function login(string $user, string $password): \stdClass
     {
-        $client = new \GuzzleHttp\Client(['base_uri' => $this->baseUrl]);
+        $client = new Client(['base_uri' => $this->baseUrl]);
 
         $login = $client->post('/data/auth', [
             RequestOptions::JSON => [
@@ -53,7 +54,7 @@ final class OceanClientFactory
 
     private function unlock(int $userId, string $unlockToken, int $corporationId): void
     {
-        $client = new \GuzzleHttp\Client(['base_uri' => $this->baseUrl]);
+        $client = new Client(['base_uri' => $this->baseUrl]);
 
         $client->post('/data/auth/unlock', [
             RequestOptions::JSON => [
