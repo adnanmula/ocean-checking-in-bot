@@ -18,7 +18,7 @@ down: ## down all containers
 	UID=${UID} GID=${GID} docker-compose -f ${FILE} down
 
 init: ## initialize environment
-	UID=${UID} GID=${GID} docker-compose -f ${FILE} run php php bin/console clock-in-bot:environment
+	UID=${UID} GID=${GID} docker-compose -f ${FILE} run php php bin/console clock-in-bot:environment:init
 
 install: ## install dependencies
 	docker-compose -f ${FILE} exec --user=${UID} php sh -c "php bin/composer.phar install"

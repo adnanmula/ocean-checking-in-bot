@@ -8,6 +8,7 @@ use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserReference;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserUsername;
 use AdnanMula\ClockInBot\Domain\Service\Persistence\Fixture;
 use AdnanMula\ClockInBot\Infrastructure\Fixtures\DbalFixture;
+use AdnanMula\ClockInBot\Util\Json;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 
 final class UserFixtures extends DbalFixture implements Fixture
@@ -61,10 +62,15 @@ final class UserFixtures extends DbalFixture implements Fixture
         $stmt = $this->connection->prepare(
             \sprintf(
                 '
-                INSERT INTO %s (id, reference, username) VALUES (
-                    :id, :reference, :username
+                INSERT INTO %s (id, reference, username, settings, client_data, schedule) VALUES (
+                    :id, :reference, :username, :settings, :client_data, :schedule
                 ) ON CONFLICT (id) DO UPDATE SET
-                    id = :id, reference = :reference, username = :username',
+                    reference = :reference,
+                    username = :username,
+                    settings = :settings,
+                    client_data = :client_data,
+                    schedule = :schedule
+              ',
                 self::TABLE_USER,
             ),
         );
@@ -72,6 +78,9 @@ final class UserFixtures extends DbalFixture implements Fixture
         $stmt->bindValue(':id', $user->id()->value());
         $stmt->bindValue(':reference', $user->reference());
         $stmt->bindValue(':username', $user->username());
+        $stmt->bindValue(':settings', null);
+        $stmt->bindValue(':client_data', Json::encode([]));
+        $stmt->bindValue(':schedule', null);
 
         $stmt->execute();
     }
