@@ -11,7 +11,7 @@ services:
         autowire: true
         autoconfigure: true
         resource: '../src/Application/{Command,Query}/*/*/*Handler.php'
-        tags: [{ name: messenger.message_handler, bus: messenger.bus.command }]
+        tags: [{ name: messenger.message_handler, bus: messenger.bus }]
 
     AdnanMula\ClockInBot\Domain\Service\:
         autowire: true

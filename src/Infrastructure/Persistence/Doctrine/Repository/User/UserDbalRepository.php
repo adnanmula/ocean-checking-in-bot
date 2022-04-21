@@ -87,7 +87,7 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
     private function map($user): User
     {
         $rawSettings = null === $user['settings'] ? null : Json::decode($user['settings']);
-        $rawClientData = '[]' === $user['client_data'] ? null : Json::decode($user['client_data']);
+        $rawClientData = null === $user['client_data'] ? null : Json::decode($user['client_data']);
         $rawSchedule = null === $user['schedule'] ? null : Json::decode($user['schedule']);
 
         $settings = null;

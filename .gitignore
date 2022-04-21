@@ -13,10 +13,6 @@
 .idea/
 ###< JetBrains
 
-###> Sqlite temp files
-*.db-journal
-###< Sqlite temp files
-
 ###> Telegram client
 logs/
 ###< Telegram client

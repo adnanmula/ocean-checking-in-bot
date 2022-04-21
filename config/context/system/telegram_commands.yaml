@@ -18,3 +18,5 @@ parameters:
     AdnanMula\ClockInBot\Application\Query\User\GetConfig\GetConfigQuery:
       - 'setup'
       - 'configuracion'
+    AdnanMula\ClockInBot\Application\Query\User\GetHelp\GetHelpQuery:
+      - 'help'

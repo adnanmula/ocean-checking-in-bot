@@ -6,15 +6,20 @@ use AdnanMula\ClockInBot\Application\Command\User\ManualClockIn\UserManualClockI
 use AdnanMula\ClockInBot\Application\Command\User\Register\UserRegisterCommand;
 use AdnanMula\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
 use AdnanMula\ClockInBot\Application\Query\User\GetClockIns\GetClockInsQuery;
+use AdnanMula\ClockInBot\Application\Query\User\GetHelp\GetHelpQuery;
+use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserSetupPendingException;
+use AdnanMula\ClockInBot\Infrastructure\Service\Telegram\InvalidTelegramCommand;
 use AdnanMula\ClockInBot\Infrastructure\Service\Telegram\TelegramClient;
 use AdnanMula\ClockInBot\Infrastructure\Service\Telegram\TelegramUpdate;
 use Assert\AssertionFailedException;
+use PcComponentes\Ddd\Application\Query;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 use PcComponentes\Ddd\Util\Message\SimpleMessage;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final class TelegramGetUpdatesCommand extends Command
 {
@@ -22,8 +27,11 @@ final class TelegramGetUpdatesCommand extends Command
     private MessageBusInterface $bus;
     private array $telegramCommands;
 
-    public function __construct(TelegramClient $telegramClient, MessageBusInterface $bus, array $telegramCommands)
-    {
+    public function __construct(
+        TelegramClient $telegramClient,
+        MessageBusInterface $bus,
+        array $telegramCommands
+    ) {
         $this->telegramClient = $telegramClient;
         $this->bus = $bus;
         $this->telegramCommands = $telegramCommands;
@@ -45,19 +53,26 @@ final class TelegramGetUpdatesCommand extends Command
             }
 
             try {
-                dump($this->getCommand($update));
-                $this->bus->dispatch($this->getCommand($update));
+                $message = $this->getCommand($update);
+
+                if ($message instanceof Query) {
+                    $this->telegramClient->sendMessage(
+                        $update->chatId(),
+                        $this->extractResult($this->bus->dispatch($message)),
+                    );
+                } else {
+                    $this->bus->dispatch($message);
+                }
             } catch (AssertionFailedException $exception) {
-                dump('failed: ' . $exception->getMessage());
+                $this->telegramClient->sendMessage($update->chatId(), 'Invalid arguments.');
                 continue;
-            } catch (\InvalidArgumentException $exception) {
-                dump('not command: ' . $update->command());
+            } catch (InvalidTelegramCommand $exception) {
+                $this->telegramClient->sendMessage($update->chatId(), 'Unknown command.');
+                continue;
+            } catch (UserSetupPendingException $exception) {
+                $this->telegramClient->sendMessage($update->chatId(), 'Set up pending, use the command /help Ocean.');
                 continue;
             }
-
-
-
-            $this->telegramClient->sendMessage($update->chatId(), 'Done.');
         }
 
         return self::SUCCESS;
@@ -77,9 +92,11 @@ final class TelegramGetUpdatesCommand extends Command
                 return $this->getClockInsCommand((string) $update->chatId(), $arguments);
             case \in_array($command, $this->telegramCommands[UserManualClockInCommand::class], true):
                 return $this->getManualClockInCommand((string) $update->chatId());
+            case \in_array($command, $this->telegramCommands[GetHelpQuery::class], true):
+                return $this->getHelpQuery($arguments);
         }
 
-        throw new \InvalidArgumentException('Invalid command');
+        throw new InvalidTelegramCommand();
     }
 
     private function registerCommand(string $reference, string $username): UserRegisterCommand
@@ -128,5 +145,26 @@ final class TelegramGetUpdatesCommand extends Command
                 UserManualClockInCommand::PAYLOAD_REFERENCE => $reference,
             ],
         );
+    }
+
+    private function getHelpQuery(array $arguments): GetHelpQuery
+    {
+        return GetHelpQuery::fromPayload(
+            Uuid::v4(),
+            [
+                GetHelpQuery::PAYLOAD_PLATFORM => $arguments[0] ?? ''
+            ],
+        );
+    }
+
+    private function extractResult(mixed $message): mixed
+    {
+        $stamp = $message->last(HandledStamp::class);
+
+        if (null === $stamp) {
+            return null;
+        }
+
+        return $stamp->getResult();
     }
 }

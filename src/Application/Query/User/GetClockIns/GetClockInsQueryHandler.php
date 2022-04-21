@@ -2,6 +2,7 @@
 
 namespace AdnanMula\ClockInBot\Application\Query\User\GetClockIns;
 
+use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserSetupPendingException;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIns;
 use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
 use AdnanMula\ClockInBot\Infrastructure\Service\ClockIn\ClientFactory;
@@ -21,6 +22,11 @@ final class GetClockInsQueryHandler implements MessageHandlerInterface
     public function __invoke(GetClockInsQuery $query): ClockIns
     {
         $user = $this->userFinder->execute($query->userReference());
+
+        if (null === $user->settings() || null === $user->clientData()) {
+            throw new UserSetupPendingException();
+        }
+
         $client = $this->factory->build($user->settings()->platform(), $user->clientData());
 
         $from = null !== $query->from() ? $query->from() : new \DateTimeImmutable();
