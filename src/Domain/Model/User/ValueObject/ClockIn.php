@@ -2,7 +2,7 @@
 
 namespace AdnanMula\ClockInBot\Domain\Model\User\ValueObject;
 
-final class ClockIn
+final class ClockIn implements \JsonSerializable
 {
     private \DateTimeInterface $clockInDate;
     private ClockInRandomness $randomness;
@@ -26,5 +26,13 @@ final class ClockIn
     public function randomness(): ClockInRandomness
     {
         return $this->randomness;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'time' => $this->clockInDate,
+            'randomness' => $this->randomness,
+        ];
     }
 }

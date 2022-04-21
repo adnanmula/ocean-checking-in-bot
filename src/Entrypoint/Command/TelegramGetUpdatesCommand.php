@@ -2,9 +2,13 @@
 
 namespace AdnanMula\ClockInBot\Entrypoint\Command;
 
+use AdnanMula\ClockInBot\Application\Command\User\ManualClockIn\UserManualClockInCommand;
 use AdnanMula\ClockInBot\Application\Command\User\Register\UserRegisterCommand;
 use AdnanMula\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
 use AdnanMula\ClockInBot\Application\Query\User\GetClockIns\GetClockInsQuery;
+use AdnanMula\ClockInBot\Infrastructure\Service\Telegram\TelegramClient;
+use AdnanMula\ClockInBot\Infrastructure\Service\Telegram\TelegramUpdate;
+use Assert\AssertionFailedException;
 use PcComponentes\Ddd\Domain\Model\ValueObject\Uuid;
 use PcComponentes\Ddd\Util\Message\SimpleMessage;
 use Symfony\Component\Console\Command\Command;
@@ -14,13 +18,13 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class TelegramGetUpdatesCommand extends Command
 {
-    private string $botToken;
+    private TelegramClient $telegramClient;
     private MessageBusInterface $bus;
     private array $telegramCommands;
 
-    public function __construct(string $botToken, MessageBusInterface $bus, array $telegramCommands)
+    public function __construct(TelegramClient $telegramClient, MessageBusInterface $bus, array $telegramCommands)
     {
-        $this->botToken = $botToken;
+        $this->telegramClient = $telegramClient;
         $this->bus = $bus;
         $this->telegramCommands = $telegramCommands;
 
@@ -29,55 +33,67 @@ final class TelegramGetUpdatesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Process telegram messages');
+        $this->setName('clock-in-bot:telegram:update')
+            ->setDescription('Process telegram messages');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $client = new \Telegram($this->botToken);
+        foreach ($this->telegramClient->getUpdates() as $update) {
+            if (false === $update->isCommand()) {
+                continue;
+            }
 
-        $client->getUpdates();
+            try {
+                dump($this->getCommand($update));
+                $this->bus->dispatch($this->getCommand($update));
+            } catch (AssertionFailedException $exception) {
+                dump('failed: ' . $exception->getMessage());
+                continue;
+            } catch (\InvalidArgumentException $exception) {
+                dump('not command: ' . $update->command());
+                continue;
+            }
 
-        for ($i = 0; $i < $client->UpdateCount(); $i++) {
-            $client->serveUpdate($i);
-            $this->bus->dispatch($this->getCommand($client->ChatID(), $client->Text()));
+
+
+            $this->telegramClient->sendMessage($update->chatId(), 'Done.');
         }
 
         return self::SUCCESS;
     }
 
-    private function getCommand(string $reference, array $text): SimpleMessage
+    private function getCommand(TelegramUpdate $update): SimpleMessage
     {
-        $arguments = \explode(' ', $text['text']);
-
-        $command = \array_shift($arguments);
+        $arguments = $update->commandArguments();
+        $command = \substr($update->command(), 1, \strlen($update->command()));
 
         switch (true) {
             case \in_array($command, $this->telegramCommands[UserRegisterCommand::class], true):
-                return $this->registerCommand($reference, $arguments);
-            case \in_array($command, $this->telegramCommands[UserSetUpCommand::class], true)
-                && 0 !== \count($arguments):
-                return $this->setUpCommand($reference, $arguments);
+                return $this->registerCommand((string) $update->chatId(), $update->username());
+            case \in_array($command, $this->telegramCommands[UserSetUpCommand::class], true) && 0 !== \count($arguments):
+                return $this->setUpCommand((string) $update->chatId(), $arguments);
             case \in_array($command, $this->telegramCommands[GetClockInsQuery::class], true):
-                return $this->getClockInsCommand($reference, $arguments);
+                return $this->getClockInsCommand((string) $update->chatId(), $arguments);
+            case \in_array($command, $this->telegramCommands[UserManualClockInCommand::class], true):
+                return $this->getManualClockInCommand((string) $update->chatId());
         }
 
         throw new \InvalidArgumentException('Invalid command');
     }
 
-    private function registerCommand(string $reference, array $arguments): SimpleMessage
+    private function registerCommand(string $reference, string $username): UserRegisterCommand
     {
         return UserRegisterCommand::fromPayload(
             Uuid::v4(),
             [
-                UserRegisterCommand::PAYLOAD_ID => $reference,
-                UserRegisterCommand::PAYLOAD_USERNAME => $arguments[0],
-                UserRegisterCommand::PAYLOAD_REFERENCE => $arguments[1],
+                UserRegisterCommand::PAYLOAD_REFERENCE => $reference,
+                UserRegisterCommand::PAYLOAD_USERNAME => $username,
             ],
         );
     }
 
-    private function setUpCommand(string $reference, array $arguments): SimpleMessage
+    private function setUpCommand(string $reference, array $arguments): UserSetUpCommand
     {
         return UserSetUpCommand::fromPayload(
             Uuid::v4(),
@@ -92,7 +108,7 @@ final class TelegramGetUpdatesCommand extends Command
         );
     }
 
-    private function getClockInsCommand(string $reference, array $arguments): SimpleMessage
+    private function getClockInsCommand(string $reference, array $arguments): GetClockInsQuery
     {
         return GetClockInsQuery::fromPayload(
             Uuid::v4(),
@@ -100,6 +116,16 @@ final class TelegramGetUpdatesCommand extends Command
                 GetClockInsQuery::PAYLOAD_REFERENCE => $reference,
                 GetClockInsQuery::PAYLOAD_FROM => $arguments[0] ?? null,
                 GetClockInsQuery::PAYLOAD_TO => $arguments[1] ?? null,
+            ],
+        );
+    }
+
+    private function getManualClockInCommand(string $reference): UserManualClockInCommand
+    {
+        return UserManualClockInCommand::fromPayload(
+            Uuid::v4(),
+            [
+                UserManualClockInCommand::PAYLOAD_REFERENCE => $reference,
             ],
         );
     }

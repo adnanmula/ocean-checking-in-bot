@@ -12,7 +12,7 @@ use GuzzleHttp\RequestOptions;
 final class OceanClient extends \GuzzleHttp\Client implements Client
 {
     public const PLATFORM = 'ocean';
-    public const VERSION = '';
+    public const VERSION = '1.7.0211.0';
 
     private float $latitude;
     private float $longitude;

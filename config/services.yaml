@@ -22,15 +22,25 @@ services:
         autowire: true
         autoconfigure: true
         resource: '../src/Infrastructure/Service'
+        bind:
+            string $botToken: '%env(TELEGRAM_TOKEN)%'
 
     AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\:
         autowire: true
         autoconfigure: true
         resource: '../src/Infrastructure/Persistence/Doctrine/Repository'
 
+    AdnanMula\ClockInBot\Entrypoint\Command\:
+        autowire: true
+        autoconfigure: true
+        resource: '../src/Entrypoint/Command'
+        bind:
+            array $telegramCommands: '%telegram_commands%'
+            AdnanMula\ClockInBot\Infrastructure\Fixtures\FixturesRegistry $registry: '@repository.dbal.fixture.registry'
+            AdnanMula\ClockInBot\Domain\Service\Persistence\Migration $migration: '@repository.dbal.migration.v001'
+
 imports:
     - { resource: context/system/buses.yaml }
     - { resource: context/system/repository.yaml }
-    - { resource: context/system/command.yaml }
     - { resource: context/system/telegram_commands.yaml }
     - { resource: context/user/repository.yaml }

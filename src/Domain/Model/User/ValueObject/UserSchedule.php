@@ -2,7 +2,7 @@
 
 namespace AdnanMula\ClockInBot\Domain\Model\User\ValueObject;
 
-final class UserSchedule
+final class UserSchedule implements \JsonSerializable
 {
     /** @var array<ClockIn> */
     private array $clockIns;
@@ -20,5 +20,10 @@ final class UserSchedule
     public static function from(ClockIn ...$checkIn)
     {
         return new self($checkIn);
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->clockIns;
     }
 }

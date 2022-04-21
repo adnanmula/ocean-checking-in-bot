@@ -55,15 +55,16 @@ final class GetClockInsQuery extends Query
         $payload = $this->messagePayload();
 
         Assert::lazy()
-            ->that($payload, 'payload')->isArray()->keyExists(self::PAYLOAD_REFERENCE)
-            ->that($payload, 'payload')->isArray()->keyExists(self::PAYLOAD_FROM)
-            ->that($payload, 'payload')->isArray()->keyExists(self::PAYLOAD_TO)
+            ->that($payload, 'payload')->isArray()
+            ->keyExists(self::PAYLOAD_REFERENCE)
+            ->keyExists(self::PAYLOAD_FROM)
+            ->keyExists(self::PAYLOAD_TO)
             ->verifyNow();
 
         Assert::lazy()
             ->that($payload[self::PAYLOAD_REFERENCE], self::PAYLOAD_REFERENCE)->string()->notBlank()
-            ->that($payload[self::PAYLOAD_FROM], self::PAYLOAD_FROM)->nullOr()->date('Y-m-d H:i:s')
-            ->that($payload[self::PAYLOAD_TO], self::PAYLOAD_TO)->nullOr()->date('Y-m-d H:i:s')
+            ->that($payload[self::PAYLOAD_FROM], self::PAYLOAD_FROM)->nullOr()->string()->notBlank()
+            ->that($payload[self::PAYLOAD_TO], self::PAYLOAD_TO)->nullOr()->string()->notBlank()
             ->verifyNow();
 
         $this->userReference = $payload[self::PAYLOAD_REFERENCE];

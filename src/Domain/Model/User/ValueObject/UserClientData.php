@@ -4,7 +4,7 @@ namespace AdnanMula\ClockInBot\Domain\Model\User\ValueObject;
 
 use Symfony\Component\HttpFoundation\Response;
 
-final class UserClientData
+final class UserClientData implements \JsonSerializable
 {
     private array $data;
 
@@ -43,5 +43,10 @@ final class UserClientData
                 throw new \InvalidArgumentException('Invalid client data.', Response::HTTP_BAD_REQUEST);
             }
         }
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->all();
     }
 }

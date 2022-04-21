@@ -24,7 +24,8 @@ final class LoadFixturesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Load fixtures');
+        $this->setName('clock-in-bot:environment:fixtures')
+            ->setDescription('Load fixtures');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

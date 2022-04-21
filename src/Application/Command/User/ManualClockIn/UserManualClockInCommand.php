@@ -47,6 +47,6 @@ final class UserManualClockInCommand extends Command
             ->that($payload[self::PAYLOAD_REFERENCE], self::PAYLOAD_REFERENCE)->string()->notBlank()
             ->verifyNow();
 
-        $this->reference = self::PAYLOAD_REFERENCE;
+        $this->reference = $payload[self::PAYLOAD_REFERENCE];
     }
 }

@@ -60,10 +60,16 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
         $stmt = $this->connection->prepare(
             \sprintf(
                 '
-                INSERT INTO %s (id, reference, username) VALUES (
-                    :id, :reference, :username
-                ) ON CONFLICT (id) DO UPDATE SET
-                    id = :id, reference = :reference, username = :username',
+                    INSERT INTO %s (id, reference, username, settings, client_data, schedule)
+                    VALUES (:id, :reference, :username, :settings, :client_data, :schedule)
+                    ON CONFLICT (id) DO UPDATE SET
+                    id = :id,
+                    reference = :reference,
+                    username = :username,
+                    settings = :settings,
+                    client_data = :client_data,
+                    schedule = :schedule
+                ',
                 self::TABLE_USER,
             ),
         );
@@ -71,6 +77,9 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
         $stmt->bindValue(':id', $user->id()->value());
         $stmt->bindValue(':reference', $user->reference());
         $stmt->bindValue(':username', $user->username());
+        $stmt->bindValue(':settings', null === $user->settings() ? null : Json::encode($user->settings()->jsonSerialize()));
+        $stmt->bindValue(':client_data', null === $user->clientData()? null : Json::encode($user->clientData()->jsonSerialize()));
+        $stmt->bindValue(':schedule', null === $user->schedule()? null : Json::encode($user->schedule()->jsonSerialize()));
 
         $stmt->execute();
     }

@@ -2,7 +2,7 @@
 
 namespace AdnanMula\ClockInBot\Domain\Model\User\ValueObject;
 
-final class UserSettings
+final class UserSettings implements \JsonSerializable
 {
     private ClockInPlatform $platform;
     private ClockInMode $mode;
@@ -26,5 +26,13 @@ final class UserSettings
     public function mode(): ClockInMode
     {
         return $this->mode;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'platform' => $this->platform->value(),
+            'mode' => $this->mode->value(),
+        ];
     }
 }

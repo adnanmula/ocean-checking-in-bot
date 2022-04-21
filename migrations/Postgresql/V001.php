@@ -16,7 +16,7 @@ final class V001 extends DbalMigration
                     CONSTRAINT reference_unique UNIQUE,
                 username character varying(16) NOT NULL,
                 settings jsonb,
-                client_data jsonb NOT NULL,
+                client_data jsonb,
                 schedule jsonb,
                 PRIMARY KEY(id)
             )'
