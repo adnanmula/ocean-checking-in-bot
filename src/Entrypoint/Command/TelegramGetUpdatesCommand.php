@@ -4,9 +4,11 @@ namespace AdnanMula\ClockInBot\Entrypoint\Command;
 
 use AdnanMula\ClockInBot\Application\Command\User\ManualClockIn\UserManualClockInCommand;
 use AdnanMula\ClockInBot\Application\Command\User\Register\UserRegisterCommand;
+use AdnanMula\ClockInBot\Application\Command\User\Remove\UserRemoveCommand;
 use AdnanMula\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
 use AdnanMula\ClockInBot\Application\Query\User\GetClockIns\GetClockInsQuery;
 use AdnanMula\ClockInBot\Application\Query\User\GetHelp\GetHelpQuery;
+use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserNotExistsException;
 use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserSetupPendingException;
 use AdnanMula\ClockInBot\Infrastructure\Service\Telegram\InvalidTelegramCommand;
 use AdnanMula\ClockInBot\Infrastructure\Service\Telegram\TelegramClient;
@@ -72,6 +74,9 @@ final class TelegramGetUpdatesCommand extends Command
             } catch (UserSetupPendingException $exception) {
                 $this->telegramClient->sendMessage($update->chatId(), 'Set up pending, use the command /help Ocean.');
                 continue;
+            } catch (UserNotExistsException $exception) {
+                $this->telegramClient->sendMessage($update->chatId(), 'User not found.');
+                continue;
             }
         }
 
@@ -94,6 +99,8 @@ final class TelegramGetUpdatesCommand extends Command
                 return $this->getManualClockInCommand((string) $update->chatId());
             case \in_array($command, $this->telegramCommands[GetHelpQuery::class], true):
                 return $this->getHelpQuery($arguments);
+            case \in_array($command, $this->telegramCommands[UserRemoveCommand::class], true):
+                return $this->getRemoveCommand((string) $update->chatId());
         }
 
         throw new InvalidTelegramCommand();
@@ -152,7 +159,17 @@ final class TelegramGetUpdatesCommand extends Command
         return GetHelpQuery::fromPayload(
             Uuid::v4(),
             [
-                GetHelpQuery::PAYLOAD_PLATFORM => $arguments[0] ?? ''
+                GetHelpQuery::PAYLOAD_PLATFORM => $arguments[0] ?? '',
+            ],
+        );
+    }
+
+    private function getRemoveCommand(string $reference): UserRemoveCommand
+    {
+        return UserRemoveCommand::fromPayload(
+            Uuid::v4(),
+            [
+                UserRemoveCommand::PAYLOAD_REFERENCE => $reference,
             ],
         );
     }

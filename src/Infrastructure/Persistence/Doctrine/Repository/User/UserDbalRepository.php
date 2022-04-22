@@ -84,6 +84,15 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
         $stmt->execute();
     }
 
+    public function remove(Uuid $id): void
+    {
+        $this->connection->createQueryBuilder()
+            ->delete('users', 'a')
+            ->where('a.id = :id')
+            ->setParameter(':id', $id->value())
+            ->execute();
+    }
+
     private function map($user): User
     {
         $rawSettings = null === $user['settings'] ? null : Json::decode($user['settings']);

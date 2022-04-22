@@ -9,4 +9,5 @@ interface UserRepository
     public function byId(Uuid $id): ?User;
     public function byReference(string $reference): ?User;
     public function save(User $user): void;
+    public function remove(Uuid $id): void;
 }

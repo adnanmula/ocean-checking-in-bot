@@ -3,22 +3,21 @@
 namespace AdnanMula\ClockInBot\Application\Command\User\SetUp;
 
 use AdnanMula\ClockInBot\Domain\Model\User\User;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInPlatform;
 use Assert\Assert;
 use PcComponentes\Ddd\Application\Command;
 
 final class UserSetUpCommand extends Command
 {
     public const PAYLOAD_REFERENCE = 'reference';
-    public const PAYLOAD_PLATFORM = 'platform';
-    public const PAYLOAD_DATA = 'data';
+    public const PAYLOAD_KEY = 'key';
+    public const PAYLOAD_VALUE = 'value';
 
-    public const NAME = 'user_set_up';
+    public const NAME = 'set_up';
     public const VERSION = '1';
 
     private string $reference;
-    private ClockInPlatform $platform;
-    private array $data;
+    private string $key;
+    private string $value;
 
     public static function messageName(): string
     {
@@ -39,14 +38,14 @@ final class UserSetUpCommand extends Command
         return $this->reference;
     }
 
-    public function platform(): ClockInPlatform
+    public function key(): string
     {
-        return $this->platform;
+        return $this->key;
     }
 
-    public function data(): array
+    public function value(): string
     {
-        return $this->data;
+        return $this->value;
     }
 
     protected function assertPayload(): void
@@ -56,25 +55,18 @@ final class UserSetUpCommand extends Command
         Assert::lazy()
             ->that($payload, 'payload')->isArray()
             ->keyExists(self::PAYLOAD_REFERENCE)
-            ->keyExists(self::PAYLOAD_PLATFORM)
-            ->keyExists(self::PAYLOAD_DATA)
+            ->keyExists(self::PAYLOAD_KEY)
+            ->keyExists(self::PAYLOAD_VALUE)
             ->verifyNow();
 
         Assert::lazy()
             ->that($payload[self::PAYLOAD_REFERENCE], self::PAYLOAD_REFERENCE)->string()->notBlank()
-            ->that($payload[self::PAYLOAD_PLATFORM], self::PAYLOAD_PLATFORM)->inArray(ClockInPlatform::allowedValues())
-            ->that($payload[self::PAYLOAD_DATA], self::PAYLOAD_DATA)->isArray()
+            ->that($payload[self::PAYLOAD_KEY], self::PAYLOAD_KEY)->string()->notBlank()
+            ->that($payload[self::PAYLOAD_VALUE], self::PAYLOAD_VALUE)->string()->notBlank()
             ->verifyNow();
 
-        foreach ($payload['data'] as $key => $datum) {
-            Assert::lazy()
-                ->that($key, self::PAYLOAD_DATA . $key . 'key')->string()->notBlank()
-                ->that($datum, self::PAYLOAD_DATA . $key . 'value')->string()->notBlank()
-                ->verifyNow();
-        }
-
-        $this->reference = $payload['reference'];
-        $this->platform = ClockInPlatform::from($payload['platform']);
-        $this->data = $payload['data'];
+        $this->reference = $payload[$payload[self::PAYLOAD_REFERENCE]];
+        $this->key = $payload[$payload[self::PAYLOAD_KEY]];
+        $this->value = $payload[$payload[self::PAYLOAD_VALUE]];
     }
 }

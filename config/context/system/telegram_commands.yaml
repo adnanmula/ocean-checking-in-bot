@@ -20,3 +20,5 @@ parameters:
       - 'configuracion'
     AdnanMula\ClockInBot\Application\Query\User\GetHelp\GetHelpQuery:
       - 'help'
+    AdnanMula\ClockInBot\Application\Command\User\Remove\UserRemoveCommand:
+      - 'remove'

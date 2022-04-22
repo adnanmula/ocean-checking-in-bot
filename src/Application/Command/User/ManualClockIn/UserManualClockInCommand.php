@@ -10,7 +10,7 @@ final class UserManualClockInCommand extends Command
 {
     public const PAYLOAD_REFERENCE = 'reference';
 
-    public const NAME = 'user_manual_clock_in';
+    public const NAME = 'manual_clock_in';
     public const VERSION = '1';
 
     private string $reference;
