@@ -4,28 +4,25 @@ namespace AdnanMula\ClockInBot\Domain\Model\User\ValueObject;
 
 use Symfony\Component\HttpFoundation\Response;
 
-final class UserClientData implements \JsonSerializable
+abstract class UserClientData implements \JsonSerializable
 {
     private array $data;
 
-    private function __construct(array $data)
-    {
-        $this->data = $data;
-    }
-
-    public static function from(array $data): self
+    protected function __construct(array $data)
     {
         self::assert($data);
 
-        return new self($data);
+        $this->data = $data;
     }
 
-    public function all(): array
+    abstract static function from(array $data): self;
+
+    final public function all(): array
     {
         return $this->data;
     }
 
-    public function __call(string $key, array $arguments): ?string
+    final public function __call(string $key, array $arguments): ?string
     {
         $key = \lcfirst(\substr($key, 3, \strlen($key)));
 
@@ -36,6 +33,11 @@ final class UserClientData implements \JsonSerializable
         return null;
     }
 
+    final public function jsonSerialize(): array
+    {
+        return $this->all();
+    }
+
     private static function assert(array $data): void
     {
         foreach ($data as $key => $datum) {
@@ -43,10 +45,5 @@ final class UserClientData implements \JsonSerializable
                 throw new \InvalidArgumentException('Invalid client data.', Response::HTTP_BAD_REQUEST);
             }
         }
-    }
-
-    public function jsonSerialize(): mixed
-    {
-        return $this->all();
     }
 }

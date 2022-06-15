@@ -20,7 +20,8 @@ final class GetHelpQueryHandler implements MessageHandlerInterface
                 . PHP_EOL . 'Use /help Ocean to learn how to set it up.';
         }
 
-//        TODO help command
-        return 'Set up guide todo...';
+        return 'Use the command /setup followed by the platform and required parameters for it.' . PHP_EOL
+            . 'For ocean: lat, lon, baseurl, user, pass' . PHP_EOL
+            . 'Example: /setup ocean lat=0.0 lon=0.0 baseurl=https://example.com/ user=user pass=pass';
     }
 }

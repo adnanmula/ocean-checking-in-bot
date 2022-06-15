@@ -18,7 +18,10 @@ down: ## down all containers
 	UID=${UID} GID=${GID} docker-compose -f ${FILE} down
 
 init: ## initialize environment
-	UID=${UID} GID=${GID} docker-compose -f ${FILE} run php php bin/console clock-in-bot:environment:init
+	UID=${UID} GID=${GID} docker-compose -f ${FILE} run php php bin/console environment:init
+
+fixtures: ## load fixtures
+	UID=${UID} GID=${GID} docker-compose -f ${FILE} run php php bin/console environment:fixtures
 
 install: ## install dependencies
 	docker-compose -f ${FILE} exec --user=${UID} php sh -c "php bin/composer.phar install"
@@ -41,6 +44,9 @@ ps: ## status from all containers
 
 grump: ## run grumphp
 	docker-compose -f ${FILE} exec --user=${UID} php sh -c "grumphp run"
+
+process-updates: ##
+	UID=${UID} GID=${GID} docker-compose -f ${FILE} run php php bin/console bot:telegram:update
 
 help: ## Display this help message
 	@cat $(MAKEFILE_LIST) | grep -e "^[a-zA-Z_\-]*: *.*## *" | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

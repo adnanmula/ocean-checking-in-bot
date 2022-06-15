@@ -8,6 +8,7 @@ use AdnanMula\ClockInBot\Application\Command\User\Remove\UserRemoveCommand;
 use AdnanMula\ClockInBot\Application\Command\User\SetUp\UserSetUpCommand;
 use AdnanMula\ClockInBot\Application\Query\User\GetClockIns\GetClockInsQuery;
 use AdnanMula\ClockInBot\Application\Query\User\GetHelp\GetHelpQuery;
+use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserAlreadyExistsException;
 use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserNotExistsException;
 use AdnanMula\ClockInBot\Domain\Model\User\Exception\UserSetupPendingException;
 use AdnanMula\ClockInBot\Infrastructure\Service\Telegram\InvalidTelegramCommand;
@@ -43,7 +44,7 @@ final class TelegramGetUpdatesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('clock-in-bot:telegram:update')
+        $this->setName('bot:telegram:update')
             ->setDescription('Process telegram messages');
     }
 
@@ -64,6 +65,11 @@ final class TelegramGetUpdatesCommand extends Command
                     );
                 } else {
                     $this->bus->dispatch($message);
+
+                    $this->telegramClient->sendMessage(
+                        $update->chatId(),
+                        'Done!',
+                    );
                 }
             } catch (AssertionFailedException $exception) {
                 $this->telegramClient->sendMessage($update->chatId(), 'Invalid arguments.');
@@ -76,6 +82,9 @@ final class TelegramGetUpdatesCommand extends Command
                 continue;
             } catch (UserNotExistsException $exception) {
                 $this->telegramClient->sendMessage($update->chatId(), 'User not found.');
+                continue;
+            } catch (UserAlreadyExistsException $exception) {
+                $this->telegramClient->sendMessage($update->chatId(), 'You are already registered.');
                 continue;
             }
         }
@@ -91,7 +100,7 @@ final class TelegramGetUpdatesCommand extends Command
         switch (true) {
             case \in_array($command, $this->telegramCommands[UserRegisterCommand::class], true):
                 return $this->registerCommand((string) $update->chatId(), $update->username());
-            case \in_array($command, $this->telegramCommands[UserSetUpCommand::class], true) && 0 !== \count($arguments):
+            case \in_array($command, $this->telegramCommands[UserSetUpCommand::class], true):
                 return $this->setUpCommand((string) $update->chatId(), $arguments);
             case \in_array($command, $this->telegramCommands[GetClockInsQuery::class], true):
                 return $this->getClockInsCommand((string) $update->chatId(), $arguments);
@@ -119,17 +128,32 @@ final class TelegramGetUpdatesCommand extends Command
 
     private function setUpCommand(string $reference, array $arguments): UserSetUpCommand
     {
+        $platform = $arguments[0];
+
+        \array_shift($arguments);
+
+        $arguments = $this->argumentsToArray($arguments);
+
         return UserSetUpCommand::fromPayload(
             Uuid::v4(),
             [
                 UserSetUpCommand::PAYLOAD_REFERENCE => $reference,
-                UserSetUpCommand::PAYLOAD_PLATFORM => $arguments[0],
-                UserSetUpCommand::PAYLOAD_DATA => [
-                    'key' => $arguments[1],
-                    'key2' => $arguments[2],
-                ],
+                UserSetUpCommand::PAYLOAD_PLATFORM => $platform,
+                UserSetUpCommand::PAYLOAD_PARAMETERS => $arguments,
             ],
         );
+    }
+
+    public function argumentsToArray(array $arguments): array
+    {
+        $result = [];
+
+        foreach ($arguments as $argument) {
+            $arg = \explode('=', $argument);
+            $result[$arg[0]] = $arg[1];
+        }
+
+        return $result;
     }
 
     private function getClockInsCommand(string $reference, array $arguments): GetClockInsQuery

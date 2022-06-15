@@ -21,7 +21,7 @@ final class InitEnvironmentCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('clock-in-bot:environment:init')
+        $this->setName('environment:init')
             ->setDescription('Environment init');
     }
 
