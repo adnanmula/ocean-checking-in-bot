@@ -86,6 +86,9 @@ final class TelegramGetUpdatesCommand extends Command
             } catch (UserAlreadyExistsException $exception) {
                 $this->telegramClient->sendMessage($update->chatId(), 'You are already registered.');
                 continue;
+            } catch (\InvalidArgumentException $exception) {
+                $this->telegramClient->sendMessage($update->chatId(), 'Invalid request parameters.');
+                continue;
             }
         }
 

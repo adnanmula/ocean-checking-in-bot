@@ -3,6 +3,7 @@
 namespace AdnanMula\ClockInBot\Domain\Model\User\ValueObject\Ocean;
 
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserClientData;
+use Symfony\Component\HttpFoundation\Response;
 
 final class OceanUserData extends UserClientData
 {
@@ -17,6 +18,19 @@ final class OceanUserData extends UserClientData
 
     private static function assert(array $data): void
     {
-//        TODO
+        $currentKeys = self::PARAMETERS;
+
+        foreach ($data as $key => $datum) {
+            if (false === \in_array($key, $currentKeys)) {
+                throw new \InvalidArgumentException('Invalid client data.', Response::HTTP_BAD_REQUEST);
+            }
+
+            $keyPosition = \array_search($key, $currentKeys);
+            unset($currentKeys[$keyPosition]);
+        }
+
+        if (\count($currentKeys) > 0) {
+            throw new \InvalidArgumentException('Invalid client data.', Response::HTTP_BAD_REQUEST);
+        }
     }
 }

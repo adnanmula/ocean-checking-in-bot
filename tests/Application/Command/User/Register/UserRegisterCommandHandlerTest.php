@@ -30,7 +30,7 @@ final class UserRegisterCommandHandlerTest extends TestCase
 
         $this->repository->expects($this->once())->method('save');
 
-        ($this->handler)($this->command($user->id(), $user->reference()));
+        ($this->handler)($this->command($user->reference()));
     }
 
     /** @test */
@@ -48,7 +48,7 @@ final class UserRegisterCommandHandlerTest extends TestCase
 
         $this->repository->expects($this->never())->method('save');
 
-        ($this->handler)($this->command($user->id(), $user->reference()));
+        ($this->handler)($this->command($user->reference()));
     }
 
     protected function setUp(): void
@@ -60,12 +60,11 @@ final class UserRegisterCommandHandlerTest extends TestCase
         );
     }
 
-    private function command(Uuid $userId, string $userReference): UserRegisterCommand
+    private function command(string $userReference): UserRegisterCommand
     {
         return UserRegisterCommand::fromPayload(
             Uuid::v4(),
             [
-                UserRegisterCommand::PAYLOAD_ID => $userId->value(),
                 UserRegisterCommand::PAYLOAD_REFERENCE => $userReference,
                 UserRegisterCommand::PAYLOAD_USERNAME => 'username',
             ],

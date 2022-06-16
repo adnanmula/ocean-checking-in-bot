@@ -7,7 +7,7 @@ use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockIn;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInMode;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInPlatform;
-use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserClientData;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\Ocean\OceanUserData;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserSchedule;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserSettings;
 use AdnanMula\ClockInBot\Infrastructure\Persistence\Doctrine\Repository\DbalRepository;
@@ -100,16 +100,19 @@ final class UserDbalRepository extends DbalRepository implements UserRepository
         $rawSchedule = null === $user['schedule'] ? null : Json::decode($user['schedule']);
 
         $settings = null;
+        $clientData = null;
+
         if (null !== $rawSettings) {
             $settings = UserSettings::from(
                 ClockInPlatform::from($rawSettings['platform']),
                 ClockInMode::from($rawSettings['mode']),
             );
-        }
 
-        $clientData = null;
-        if (null !== $rawClientData) {
-            $clientData = UserClientData::from($rawClientData);
+            if ($settings->platform()->isOcean()) {
+                if (null !== $rawClientData) {
+                    $clientData = OceanUserData::from($rawClientData);
+                }
+            }
         }
 
         $schedule = null;

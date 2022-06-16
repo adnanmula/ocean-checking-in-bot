@@ -4,6 +4,7 @@ namespace AdnanMula\ClockInBot\Application\Command\User\SetUp;
 
 use AdnanMula\ClockInBot\Domain\Model\User\Exception\PlatformNotSupportedException;
 use AdnanMula\ClockInBot\Domain\Model\User\UserRepository;
+use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\ClockInMode;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\Ocean\OceanUserData;
 use AdnanMula\ClockInBot\Domain\Model\User\ValueObject\UserSettings;
 use AdnanMula\ClockInBot\Domain\Service\User\UserFinderByReference;
@@ -30,7 +31,7 @@ final class UserSetUpCommandHandler implements MessageHandlerInterface
 
         $user->updateSettings(UserSettings::from(
             $command->platform(),
-            $user->settings()->mode(),
+            $user->settings()?->mode() ?? ClockInMode::from(ClockInMode::MODE_MANUAL),
         ));
 
         $user->updateClientData(OceanUserData::from($command->parameters()));

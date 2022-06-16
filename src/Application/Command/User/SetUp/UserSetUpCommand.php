@@ -66,8 +66,8 @@ final class UserSetUpCommand extends Command
             ->that($payload[self::PAYLOAD_PARAMETERS], self::PAYLOAD_PARAMETERS)->all()->string()
             ->verifyNow();
 
-        $this->reference = $payload[$payload[self::PAYLOAD_REFERENCE]];
-        $this->platform = ClockInPlatform::from($payload[$payload[self::PAYLOAD_PLATFORM]]);
-        $this->parameters = $payload[$payload[self::PAYLOAD_PARAMETERS]];
+        $this->reference = $payload[self::PAYLOAD_REFERENCE];
+        $this->platform = ClockInPlatform::from($payload[self::PAYLOAD_PLATFORM]);
+        $this->parameters = $payload[self::PAYLOAD_PARAMETERS];
     }
 }

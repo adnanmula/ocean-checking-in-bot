@@ -22,10 +22,26 @@ final class UserSetUpCommandHandlerTest extends TestCase
         $userId = Uuid::from('b99ca941-89b4-4ecc-9ecc-c48f46f15db2');
         $reference = '123456';
         $data = [
-            'key1' => 'value1',
-            'key2' => 'value2',
-            'key3' => 'value3',
+            'baseurl' => 'value',
+            'lat' => 'value',
+            'lon' => 'value',
+            'user' => 'value',
+            'pass' => 'value',
         ];
+
+        $this->prepareUserRepository($userId, $reference);
+
+        ($this->handler)($this->command($reference, $data));
+    }
+
+    /** @test */
+    public function given_invalid_data_then_throw_exception(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $userId = Uuid::from('b99ca941-89b4-4ecc-9ecc-c48f46f15db2');
+        $reference = '123456';
+        $data = [];
 
         $this->prepareUserRepository($userId, $reference);
 
@@ -62,7 +78,7 @@ final class UserSetUpCommandHandlerTest extends TestCase
             [
                 UserSetUpCommand::PAYLOAD_PLATFORM => 'ocean',
                 UserSetUpCommand::PAYLOAD_REFERENCE => $reference,
-                UserSetUpCommand::PAYLOAD_DATA => $data,
+                UserSetUpCommand::PAYLOAD_PARAMETERS => $data,
             ],
         );
     }
